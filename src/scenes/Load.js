@@ -78,8 +78,21 @@ class Load extends Phaser.Scene {
         this.load.image('CrinoFront', './assets/character/crino.png');
         this.load.image('CrinoHit', './assets/character/CrinoHit.png');
         
-        
-        
+        //level2
+        this.load.image('SunnyMilk1', './assets/character/SunnyMilk1.png');
+        this.load.image('SunnyMilk2', './assets/character/SunnyMilk2.png');
+        this.load.image('SunnyMilkFly1', './assets/character/SunnyMilkFly1.png');
+        this.load.image('SunnyMilkFly2', './assets/character/SunnyMilkFly2.png');
+
+        this.load.image('StarSapphire2', './assets/character/StarSapphire2.png');
+        this.load.image('StarSapphire1', './assets/character/StarSapphire1.png');
+        this.load.image('Luna1', './assets/character/Luna1.png');    
+        this.load.image('Luna2', './assets/character/Luna2.png'); 
+        this.load.image('Satellite1', './assets/character/Satellite1.png');
+        this.load.image('Satellite2', './assets/character/Satellite2.png');
+        this.load.image('KawashiroIdle', './assets/character/KawashiroIdle.png');        
+        this.load.image('KawashiroSecondState', './assets/character/KawashiroSecondState.png');   
+        this.load.image('KawashiroSecondStateHit', './assets/character/KawashiroSecondStateHit.png');   
         
         
         

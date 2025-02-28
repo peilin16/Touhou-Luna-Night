@@ -1,0 +1,283 @@
+
+
+
+class Level2 extends Mainlevel {
+    constructor() {
+        super('level2Scene'); // Scene Key
+    }
+
+    create() {
+        // Create the animation for Rumia=
+
+
+        this.startfield = this.add.tileSprite(0, 0, boardwidth, boardheigh, 'backgroundtop').setOrigin(0, 0);
+        this.backgroundforest = this.add.tileSprite(0, 420, boardwidth, boardheigh, 'backgrounddown').setOrigin(0, 0);
+        rumia = new Rumia(this, 150, 100, ).setOrigin(0.5, 0);
+        //rumia = new Rumia(this, 150, 100, ).setOrigin(0.5, 0);
+
+        super.create(); // Call MainLevel create method
+        
+        /*this.time.addEvent({
+            delay: 2000, // Fire every 2 seconds
+            callback: () => {
+                if (rumia) {
+                    let bullet = new BlueCircleBullet(this, 200, 400, rumia,'s');
+                    this.bulletGroup.add(bullet);
+                    bullet.moving(); // Start moving towards Rumia
+                }
+            },
+            callbackScope: this,
+            loop: true
+        });*/
+        
+        
+        this.current = 0;
+        this.emenySpawn = [
+            this.finalBossSpawn.bind(this),
+            //this.emenySpawn11.bind(this),
+
+            
+            this.emenySpawn1.bind(this),
+            this.emenySpawn2.bind(this),
+            this.emenySpawn3.bind(this),
+            this.emenySpawn4.bind(this),
+            this.emenySpawn5.bind(this),
+            this.emenySpawn6.bind(this),
+            this.midBossSpawn.bind(this),
+            this.midBossSpawn2.bind(this),
+            this.emenySpawn9.bind(this),
+            this.emenySpawn10.bind(this),
+            this.emenySpawn11.bind(this),
+            this.emenySpawn12.bind(this),
+            this.emenySpawn13.bind(this),
+
+            
+            this.finalBossSpawn.bind(this),
+            
+        ];
+
+        
+        this.rumiaSpeechWithKawashiro = ['aaa','test','test1'];
+        this.rumiaSpeechWithKawashiroAfter = ['aaa','test','test1'];
+        this.KawashiroSpeech = ['www','aa','test']
+        this.KawashiroSpeechAfter = ['www','aa','test']
+
+        this.rumiaSpeechWithGood = ['aaa','test','test1'];
+        this.goodSpeech = ['agag','agag1','gggg']
+
+
+        this.rumiaSpeechWithSangetsusei = ['aaa','test','test1'];
+        this.rumiaSpeechWithSangetsuseiAfter = ['aaa','test','test1'];
+
+
+        this.rumiaSpeechWithSunnyMilk = ['aaa','test','test1'];
+        this.SunnyMilkSpeech = ['ccc','cbc','ccca']
+
+        this.SangetsuseiSpeech = ['ccc','cbc','ccca']
+        this.SangetsuseiSpeechAfter = ['ccc','cbc','ccca']
+        
+        this.isSpeech = false;
+
+        this.Sangetsusei = new Character(this,-50,-50,'');//super(scene, x, y, 'Kedama','Kedama', frame)
+        this.Sangetsusei.healthly = 1500;
+        this.Sangetsusei.setVisible(false); // Hide the sprite
+
+        // ✅ Start the first wave
+        this.nextWave();
+
+        //music
+        /*
+        this.bgMusic = this.sound.add('background', { 
+            loop: true, // Loop the music infinitely
+            volume: 0.5 // Adjust volume (0.0 to 1.0)
+            });
+    
+        this.bgMusic.play();*/
+    }
+
+
+
+
+
+    update(){
+        if(this.isSpeech)
+            return;
+        super.update();
+        
+        this.backgroundforest.tilePositionX += 2; // Adjust speed as needed
+        // ✅ If no enemies are left, move to the next wave
+        //
+        this.nextWave();
+    }
+    emenySpawn1(){
+        if(!this.isSprawn){
+            this.isSprawn = true;
+            this.time.delayedCall(1000, () =>{super.DelayXspawnEmeny(15,1700,1,'list','MaidFairy','MaidFairy1','b_srf3t_t',130)} , [], this);//step2
+            this.time.delayedCall(1000, () =>{super.DelayXspawnEmeny(15,1700,1,'list','MaidFairy','MaidFairy1','b_sbf3t_t',430)} , [], this);//step2
+            this.time.delayedCall(27500, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
+        } 
+    }
+    emenySpawn2(){
+        if(!this.isSprawn){
+            this.isSprawn = true;
+            this.time.delayedCall(2000, () => {this.spawnEmeny(1, 'list', 'Daiyousei','','healthly',200);});
+            //this.time.delayedCall(4600, () =>{super.DelayXspawnEmeny(7,2200,5,'list','Kedama','','l2',80)} , [], this);//step2
+            this.time.delayedCall(4000, () =>{super.DelayXspawnEmeny(13,1700,1,'list','MaidFairy','MaidFairy2','b_srf3t_t',130)} , [], this);//step2
+            this.time.delayedCall(4000, () =>{super.spawnEmeny(1,'list','SunFlowerFairy','SunFlowerFairy','r5_s5Fs6L_tL',520)} , [], this);//step2
+            this.time.delayedCall(32500, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
+        }
+    }
+    emenySpawn3(){
+        if(!this.isSprawn){
+            this.isSprawn = true;
+            this.boss = super.spawnEmeny(1,'list','SunnyMilk','SunnyMilkFly','r_sbrF',320)
+            this.bossHealthTotal = this.boss.healthly;
+            this.bossHealthBar.setVisible(true);
+            /*
+            this.time.delayedCall(2800, () => {
+                this.startDialogue('Rumia', this.rumiaSpeechWithCrino, 'Crino', this.crinoSpeech);
+            });*/
+        }else if(this.boss.isDrop){
+            this.current += 1;
+            this.isSprawn = false;
+            this.boss = null;
+        }
+    }
+    emenySpawn4(){
+        if(!this.isSprawn){
+            this.isSprawn = true;
+            this.time.delayedCall(2000, () => {this.spawnEmeny(1, 'list', 'Daiyousei','','healthly',200);});
+            this.time.delayedCall(4000, () =>{super.DelayXspawnEmeny(13,2300,1,'list','MaidFairy','MaidFairy2','b_srf3t_t',130)} , [], this);//step2
+            this.time.delayedCall(4000, () =>{super.DelayXspawnEmeny(13,2300, 1,'list','MaidFairy','MaidFairy1','r_sbf3t_srf2t',480)} , [], this);//step2
+            
+            this.time.delayedCall(32000, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
+        }
+    }
+    emenySpawn5(){
+        if(!this.isSprawn){
+            this.isSprawn = true;
+            this.time.delayedCall(27500, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
+        }
+    }
+    emenySpawn6(){
+        if(!this.isSprawn){
+            this.isSprawn = true;
+            this.time.delayedCall(27500, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
+        }
+    }
+    midBossSpawn(){
+        if(!this.isSprawn){
+            this.isSprawn = true;
+            this.boss = super.spawnEmeny(1,'list','Kawashiro','Kawashiro','r_sbo_sro',320)
+            this.bossHealthTotal = this.boss.healthly;
+            this.bossHealthBar.setVisible(true);
+            
+            this.time.delayedCall(2800, () => {
+                this.startDialogue('Rumia', this.rumiaSpeechWithKawashiro, 'Kawashiro', this.KawashiroSpeech);
+            });
+        }else if(this.boss.isDrop){
+            this.current += 1;
+            this.isSprawn = false;
+            this.boss = null;
+
+
+            this.time.delayedCall(100, () => {
+                this.startDialogue('Rumia', this.rumiaSpeechWithKawashiroAfter, 'Kawashiro',this.KawashiroSpeechAfter);
+            });
+        }
+    }
+    midBossSpawn2(){
+        if(!this.isSprawn){
+            this.isSprawn = true;
+            this.boss = super.spawnEmeny(1,'list','Satellite','Satellite','r_sbo_sro',320,730)
+            this.bossHealthTotal = this.boss.healthly;
+            this.bossHealthBar.setVisible(true);
+            /*
+            this.time.delayedCall(2800, () => {
+                this.startDialogue('Rumia', this.rumiaSpeechWithCrino, 'Crino', this.crinoSpeech);
+            });*/
+        }else if(this.boss.isDrop){
+            this.current += 1;
+            this.isSprawn = false;
+            this.boss = null;
+        }
+    }
+    emenySpawn9(){
+        if(!this.isSprawn){
+            this.isSprawn = true;
+            this.time.delayedCall(200, () => {this.spawnEmeny(1, 'list', 'Daiyousei','','healthly',200);});
+            this.time.delayedCall(1000, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy1','r_sbf3t_srf2t')} , [], this);//step2
+            this.time.delayedCall(3000, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy1','r_sbf3t_srf2t')} , [], this);//step2
+            this.time.delayedCall(1000, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy2','r_sb4f_at',150)} , [], this);//step2
+            this.time.delayedCall(1000, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy2','r_sb4f_at',450)} , [], this);//step2
+            this.time.delayedCall(3500, () =>{super.spawnEmeny(5,'list','Kedama','','l2',160)} , [], this);//step2
+            this.time.delayedCall(5000, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy1','r_sbf3t_srf2t')} , [], this);//step2
+            this.time.delayedCall(3400, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy2','r_sb4f_at',150)} , [], this);//step2
+            this.time.delayedCall(3400, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy2','r_sb4f_at',450)} , [], this);//step2
+            this.time.delayedCall(7000, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy1','r_sbf3t_srf2t')} , [], this);//step2
+            this.time.delayedCall(5500, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy2','r_sb4f_at',150)} , [], this);//step2
+            this.time.delayedCall(5500, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy2','r_sb4f_at',450)} , [], this);//step2
+            this.time.delayedCall(8000, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy1','r_sbf3t_srf2t')} , [], this);//step2
+            this.time.delayedCall(7500, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy2','r_sb4f_at',150)} , [], this);//step2
+            this.time.delayedCall(7500, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy2','r_sb4f_at',450)} , [], this);//step2
+            this.time.delayedCall(9000, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy1','r_sbf3t_srf2t')} , [], this);//step2
+            this.time.delayedCall(8500, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy2','r_sb4f_at',150)} , [], this);//step2
+            this.time.delayedCall(8500, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy2','r_sb4f_at',450)} , [], this);//step2
+            this.time.delayedCall(20000, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
+        }
+    }
+    emenySpawn10(){
+        if(!this.isSprawn){
+            this.isSprawn = true;
+            this.time.delayedCall(1000, () =>{super.spawnEmeny(1,'list','DandelionFairy','DandelionFairy','r_sbTF_srTF',430)} , [], this);//step2
+            this.time.delayedCall(5500, () =>{super.spawnEmeny(5,'diagonal','Kedama','','l2',160)} , [], this);//step2
+
+            this.time.delayedCall(8500, () =>{super.spawnEmeny(5,'arrow','Kedama','','l2',160)} , [], this);//step2
+            this.time.delayedCall(14500, () =>{super.spawnEmeny(5,'arrow','Kedama','','l2',160)} , [], this);//step2
+            this.time.delayedCall(20500, () =>{super.spawnEmeny(5,'arrow','Kedama','','l2',160)} , [], this);//step2
+            this.time.delayedCall(25500, () =>{super.spawnEmeny(5,'list','Kedama','','l2',160)} , [], this);//step2
+            this.time.delayedCall(32500, () =>{super.spawnEmeny(5,'arrow','Kedama','','l2',160)} , [], this);//step2
+            this.time.delayedCall(38500, () =>{super.spawnEmeny(5,'arrow','Kedama','','l2',160)} , [], this);//step2
+            this.time.delayedCall(42000, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
+        }
+    }
+    emenySpawn11(){
+        if(!this.isSprawn){
+            this.isSprawn = true;
+            this.time.delayedCall(1000, () =>{super.spawnEmeny(1,'list','SunFlowerFairy','SunFlowerFairy','r5_s5Fs6L_tL',180)} , [], this);//step2
+            this.time.delayedCall(1000, () =>{super.DelayXspawnEmeny(15,1700,1,'list','MaidFairy','MaidFairy1','b_sbf3t_t',430)} , [], this);//step2
+            this.time.delayedCall(27000, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
+        }
+    }
+    emenySpawn12(){
+
+    }
+    emenySpawn13(){
+
+    }
+    finalBossSpawn(){
+        if(!this.isSprawn){
+            this.isSprawn = true;
+            let m =super.spawnEmeny(1,'list','SunnyMilk','SunnyMilk','r_sbrF',320);
+            m.firstState = false;
+            super.spawnEmeny(1,'list','StarSapphire','StarSapphire','r_sbrF',120);
+            super.spawnEmeny(1,'list','Luna','Luna','r_sbo_sro',520);
+            this.boss = this.Sangetsusei; 
+            this.bossHealthTotal = this.boss.healthly;
+            this.bossHealthBar.setVisible(true);
+            
+            /*this.time.delayedCall(2800, () => {
+                this.startDialogue('Rumia', this.rumiaSpeechWithKawashiro, 'Kawashiro', this.KawashiroSpeech);
+            });*/
+        }else if(this.boss.isDrop){
+            this.current += 1;
+            this.isSprawn = false;
+            this.boss = null;
+
+
+            /*this.time.delayedCall(100, () => {
+                this.startDialogue('Rumia', this.rumiaSpeechWithKawashiroAfter, 'Kawashiro',this.KawashiroSpeechAfter);
+            });*/
+        }
+    }
+}

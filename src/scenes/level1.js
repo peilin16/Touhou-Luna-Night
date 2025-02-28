@@ -71,7 +71,7 @@ class Level1 extends Mainlevel {
         
         this.current = 0;
         this.emenySpawn = [
-            this.midBossSpawn.bind(this),
+            this.finalBossSpawn.bind(this),
             this.emenySpawn1.bind(this),
             this.emenySpawn2.bind(this),
             this.emenySpawn3.bind(this),
@@ -92,8 +92,10 @@ class Level1 extends Mainlevel {
         this.rumiaSpeechWithCrino = ['aaa','test','test1'];
         this.wriggleSpeech = ['www','aa','test']
         this.crinoSpeech = ['ccc','cbc','ccca']
+        this.rumiaSpeechWithCrinoAfter = ['ccc','cbc','ccca']
         this.isSpeech = false;
         // ✅ Start the first wave
+        //this.scene.start('level2Scene');
         this.nextWave();
 
         //music
@@ -125,15 +127,7 @@ class Level1 extends Mainlevel {
         //
         this.nextWave();
     }
-    nextWave() {
-        this.emenySpawn[this.current](); // ✅ Call the current wave function
-        // update emeny state
-        this.EmenyGroup.children.iterate(enemy => {
-            if (enemy && typeof enemy.update === 'function') {
-                enemy.update(); // ✅ Ensure each enemy's update() is called
-            }
-        });
-    }
+    
     //spawn emeny
     emenySpawn1(){
         if(!this.isSprawn){
@@ -248,14 +242,14 @@ class Level1 extends Mainlevel {
             //this.time.delayedCall(20, () => {;})
             this.bossHealthTotal = this.boss.healthly;
             this.bossHealthBar.setVisible(true);
-            if(this.boss.isDrop){
-                this.current += 1;
-                this.isSprawn = false;
-                this.boss = null;
-            }
+            
             this.time.delayedCall(2600, () => {
                 this.startDialogue('Rumia', this.rumiaSpeechWithWriggle, 'Wriggle Nightbug', this.wriggleSpeech);
             });
+        }else if(this.boss.isDrop){
+            this.current += 1;
+            this.isSprawn = false;
+            this.boss = null;
         }
     }
     emenySpawn9(){
@@ -324,6 +318,7 @@ class Level1 extends Mainlevel {
     emenySpawn13(){
         if(!this.isSprawn){
             this.isSprawn = true;
+            this.time.delayedCall(200, () => {this.spawnEmeny(1, 'list', 'Daiyousei','','healthly',200);});
             this.time.delayedCall(1000, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy1','r_sbf3t_srf2t')} , [], this);//step2
             this.time.delayedCall(3000, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy1','r_sbf3t_srf2t')} , [], this);//step2
             this.time.delayedCall(1000, () =>{super.spawnEmeny(1,'list','MaidFairy','MaidFairy2','r_sb4f_at',150)} , [], this);//step2
@@ -350,14 +345,19 @@ class Level1 extends Mainlevel {
             this.boss =super.spawnEmeny(1,'list','Crino','Crino','r_sTf9_sTf8')//step2
             this.bossHealthTotal = this.boss.healthly;
             this.bossHealthBar.setVisible(true);
-            if(this.boss.isDrop){
-                this.current += 1;
-                this.isSprawn = false;
-                this.boss = null;
-            }
+            
             this.time.delayedCall(2800, () => {
                 this.startDialogue('Rumia', this.rumiaSpeechWithCrino, 'Crino', this.crinoSpeech);
             });
+        }
+        else if(this.boss.isDrop){
+            this.current += 1;
+            this.isSprawn = false;
+            this.boss = null;
+            this.time.delayedCall(1000, () => {
+                this.startDialogue('Rumia', this.rumiaSpeechWithCrinoAfter, '', []);
+            });
+            this.scene.start('level2');
         }
     }
   

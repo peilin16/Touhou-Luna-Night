@@ -19,7 +19,7 @@ class Mainlevel extends Phaser.Scene {
         keyShift = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         
         
-
+        this.current = 0;
         this.EmenyGroup = this.physics.add.group(); // Create a Emeny group
         this.bulletGroup = this.physics.add.group(); // Create a bullet group
         this.helperGroup = this.physics.add.group();
@@ -108,7 +108,15 @@ class Mainlevel extends Phaser.Scene {
             // this.bossHealthBar.x = boardwidth / 2 - 200 + (newWidth / 2);
         }
     }
-
+    nextWave() {
+        this.emenySpawn[this.current](); // ✅ Call the current wave function
+        // update emeny state
+        this.EmenyGroup.children.iterate(enemy => {
+            if (enemy && typeof enemy.update === 'function') {
+                enemy.update(); // ✅ Ensure each enemy's update() is called
+            }
+        });
+    }
     startDialogue(playerName, playerSpeech, bossName, bossSpeech) {
         this.isSpeech = true; // ✅ Pause the game
         this.playerName = playerName;
@@ -216,7 +224,7 @@ class Mainlevel extends Phaser.Scene {
     bulletCollision(obj, bullet){
         if(!obj.isDrop){
             if(obj.type == 'Rumia'){
-                if(!obj.isHit  && !bullet.isReflected ){
+                if( !bullet.isReflected ){
                     if (obj.isdefence ) { // ✅ Reflect the bullet when defending
                         if(bullet.isRed && rumia.unableDefence <= 0){
                             rumia.endDefenseMode();
@@ -251,9 +259,10 @@ class Mainlevel extends Phaser.Scene {
                     {
                         bullet.dropOff();
                         return;
-                    } 
-                    obj.collideToBullet(bullet);
-                    bullet.dropOff();
+                    }else if(!obj.isHit){
+                        obj.collideToBullet(bullet);
+                        bullet.dropOff();
+                    }
                     //this.colliderObject.destroy();
                 }
             }else{
@@ -280,10 +289,10 @@ class Mainlevel extends Phaser.Scene {
         this.CurrentScoreText.setText('[P]:'+rumia.score);
         //rumia.isHit = true;
     }
-    DelayXspawnEmeny(numY, type, Emeny, subtype = '', behavior = '', startY = boardheigh / 2, startX = game.config.width + 120 ,numX = 1 , sprateMin = 1){
+    DelayXspawnEmeny(numX = 1 , sprateMin = 1,numY, type, Emeny, subtype = '', behavior = '', startY = boardheigh / 2, startX = game.config.width + 120 ){
         for (let i = 0; i < numX; i++) {
-            this.time.delayedCall(sprateMin, () =>{
-                spawnEmeny(numY, type, Emeny, subtype , behavior, startY , startX )
+            this.time.delayedCall(sprateMin * i, () =>{
+                this.spawnEmeny(numY, type, Emeny, subtype , behavior, startY , startX )
             } , [], this);//step2
         }
     }
@@ -308,6 +317,10 @@ class Mainlevel extends Phaser.Scene {
                         enemyWidth = data.getData('sunflowerFairy_width');
                         enemyHeight = data.getData('sunflowerFairy_height');
                         break;
+                    case 'DandelionFairy':
+                        enemyWidth = data.getData('dandelionFairy_width');
+                        enemyHeight = data.getData('dandelionFairy_height');
+                        break;
                     case 'MaidFairy':
                         enemyWidth = data.getData('MaidFairy1_width');
                         enemyHeight = data.getData('MaidFairy1_height');
@@ -328,6 +341,7 @@ class Mainlevel extends Phaser.Scene {
                         enemyWidth = data.getData('Crino_width');
                         enemyHeight = data.getData('Crino_height');
                         break;
+                        
                     default:
                         enemyWidth = 50;
                         enemyHeight = 50;
@@ -406,7 +420,10 @@ class Mainlevel extends Phaser.Scene {
             case 'DivineSpirit':
                 emeny = new DivineSpirit(this, posX, posY,subtype);
                 break;
-            case 'SunFlowerFairy':
+            case 'SunFlowerFairy' :
+                emeny = new FlowerFairy(this, posX, posY, subtype);
+                break;
+            case 'DandelionFairy':
                 emeny = new FlowerFairy(this, posX, posY, subtype);
                 break;
             case 'MaidFairy':
@@ -424,6 +441,29 @@ class Mainlevel extends Phaser.Scene {
             case 'DestructionIce':
                 emeny = new Destruction(this, posX, posY, subtype);
                 break;
+
+            case 'SunnyMilk':
+                emeny = new SunnyMilk(this, posX, posY, subtype);
+                break;
+                
+            case 'Luna':
+                emeny = new Luna(this, posX, posY, subtype);
+                break; 
+            case 'StarSapphire':
+                emeny = new StarSapphire(this, posX, posY, subtype);
+                break;     
+            case 'Satellite':
+                emeny = new Satellite(this, posX, posY, subtype);
+                break;                    
+            case 'Kawashiro':
+                emeny = new Kawashiro(this, posX, posY, subtype);
+                break;     
+            case 'Satellite':
+                emeny = new Satellite(this, posX, posY, subtype);
+                break;     
+
+
+                
             default:
                 console.warn(`Unknown enemy type: ${Emeny}`);
                 return;
@@ -434,18 +474,21 @@ class Mainlevel extends Phaser.Scene {
         let rate = 70; // ✅ Default reflection rate
     
         // ✅ Adjust reflection rate based on bullet type
-        /*
+        
         switch (bulletType) {
             case 'blueSmallCircleBullet':
-                rate = 40;
+                rate = 60;
                 break;
             case 'blueMediumCircleBullet':
-                rate = 50;
+                rate = 70;
                 break;
             case 'blueLargeCircleBullet':
-                rate = 60;
-                break;    
-        }*/
+                rate = 70;
+                break;
+            case 'blueSpeedPauseBullet':
+                rate = 100;
+                break;      
+        }
     
         return rate;
     }
@@ -456,7 +499,15 @@ class Mainlevel extends Phaser.Scene {
         if(bullet.isReflected)
             return;
         let rate = this.getReflection(bullet.type); // ✅ Get reflection rate
-        let newBullet = this.shootingLogic.getBullet( bullet.type, rumia, bullet.speed,false);
+        let newBullet
+        if(bullet.type == 'blueSpeedPauseBullet' ){
+            newBullet = this.shootingLogic.getBullet( 'blueArrowBullet', rumia, bullet.periousSpeed ,false);
+        }
+        else{
+            newBullet = this.shootingLogic.getBullet( bullet.type, rumia, bullet.speed,false);
+        }
+        
+        
         newBullet.x = bullet.x;
         newBullet.y = bullet.y;
         
