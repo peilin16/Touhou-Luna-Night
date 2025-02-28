@@ -52,7 +52,7 @@ class Kedama extends Character{
 
     
     collide(obj) {
-        if(obj.type == 'player'){
+        if(obj.type == 'Rumia'){
             this.healthly -=5;
         }
     }

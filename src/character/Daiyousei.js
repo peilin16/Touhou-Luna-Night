@@ -1,6 +1,6 @@
 class Daiyousei extends Character{
     constructor(scene, x, y, texture, frame) {
-        super(scene, x, y, texture, frame)
+        super(scene, x, y, 'DaiyouseiScore1', frame)
         this.anims.create({
             key: 'DaiyouseiNothing',
             frames: [
@@ -22,27 +22,21 @@ class Daiyousei extends Character{
         });
         scene.add.existing(this);
         scene.physics.add.existing(this);
-        this.play('DaiyouseiScore'); // Play the 'rumiaFly' animation
+        //this.play('DaiyouseiScore'); // Play the 'rumiaFly' animation
 
-        
+        this.behavior = 'healthly'
         this.isEmeny = false;
         this.isDrop = false;
-        this.kind = 'd'
-        this.Speed = -2.5;
         this.ableToDefence = false; 
         this.body.setSize(75, 75, true); // Adjust hitbox size
         this.body.setOffset(0, 5);  
     }
     update() {
-        this.x -= 2;
-        if(this.isTouch){
-            this.y -= 1;
-        }
-
-        // Destroy when off-screen
-        if (this.x < -100 || this.y > 700 || this.y < -50) {
-            this.destroy();
-        }
+        super.update();
+        if(!this.isDrop)
+            this.exitScreen('left')
+        else
+            this.exitScreen('top',2,-2);
     }
     /*
     behavior(key){
@@ -55,11 +49,17 @@ class Daiyousei extends Character{
     }*/
     dropOff(){
         this.setTexture('DaiyouseiNothing1')
-        this.anims.stop();
-        this.play('DaiyouseiNothing'); // Play the 'rumiaFly' animation
+        //this.anims.stop();
+        //this.play('DaiyouseiNothing'); // Play the 'rumiaFly' animation
     }
-    collide(){
-        
+    collide(obj){
+        if(obj.type == 'player' && !this.isDrop){
+            if(this.behavior == 'healthly'){
+                obj.healthly += 1;
+                this.isDrop = true;
+            }
+        }
+        this.dropOff();
     }
 
 

@@ -16,6 +16,7 @@ class FlowerFairy extends Character{
             this.subtype = 'sunflower'
             this.body.setSize(data.getData('sunflowerFairy_width') , data.getData('sunflowerFairy_height'), true); // Adjust hitbox size
             this.body.setOffset(5, 5); 
+            this.healthly = 145;
             //this.speed = data.getData('sunflowerFairy_speed') 
         }else{
             super(scene, x, y, 'dandelionFairy1', frame)
@@ -33,19 +34,20 @@ class FlowerFairy extends Character{
             this.subtype = 'dandelion'
             this.body.setSize(data.getData('dandelionFairy_width') , data.getData('dandelionFairy_height'), true); // Adjust hitbox size
             this.body.setOffset(5, 5); 
+            this.healthly = 165;
             //this.speed = data.getData('dandelionFairy_speed') 
         }
         
         
         scene.add.existing(this);
         scene.physics.add.existing(this);
-        this.healthly = 37;
+        
         this.isDrop = false;
         this.kind = 'f'
         //this.speed = emenySpeed; 
         this.ableToDefence = false; 
         this.isEmeny = true;
-        
+        this.score = 7
 
     }
 
@@ -53,8 +55,13 @@ class FlowerFairy extends Character{
         super.update();
         if(this.isDrop)
             return
-        if(this.behavior == 'r5_s5Fs6L_tL' ){
-            this.r5_s5Fs6L_tL();
+        switch(this.behavior){
+            case 'r_sbTF_srTF':
+                this.r_sbTF_srTF();
+                break;
+            case 'r5_s5Fs6L_tL':
+                this.r5_s5Fs6L_tL();
+                break;
         }
                 
         
@@ -65,33 +72,41 @@ class FlowerFairy extends Character{
     r5_s5Fs6L_tL() {
         if(this.step == 0 && this.moveTo(850)){
             this.step += 1;
-            //fanShapedType_ToDirection(bulletType, num, angleStart, angleEnd, shooter, speed)
-            //fanShapedType_ToTarget(bulletType, num, target, offsetAngle, shooter, speed) 
-            for (let i = 0; i < 4; i++) {
-                this.scene.time.delayedCall(i * 30, () => {
+            for (let i = 0; i < 70; i++) {
+                this.scene.time.delayedCall(i * 330, () => {
                     // ✅ Get a new bullet instance
-                    this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircle', 5, 170, 190, this, 2);//shooting 
-                    
+                    //this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 12, 80, 260, this, data.getData('Bullet_speed_130'));//shooting
+                    if(!this.isDrop){
+                        if(i%3 != 0 ){
+                            this.scene.shootingLogic.fanShapedType_ToTarget('redLargeCircleBullet', 6, 100 , this, rumia, data.getData('Bullet_speed_150'))
+                        }
+                        this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 17, 0, 324, this,data.getData('Bullet_speed_130'));//shooting 
+                    }
                 });
             }
-            this.scene.time.delayedCall(400, () => this.step +=1, [], this);//step2
+            this.scene.time.delayedCall(24000, () => this.step +=1, [], this);//step2
+        }else if(this.step == 2){
+            this.exitScreen('autoTB');
         }
-
-        if(this.step == 2){
-            this.step +=1
-            
-            this.scene.shootingLogic.listType_ToTarget('redMediumCircle', 5, 200, this, rumia, 4);//shooting 
-            this.scene.time.delayedCall(2400, () => this.step +=1, [], this);//step2
-        }
-        if(this.step == 4){
-            this.exitScreen('autoTB')
+    }
+    r_sbTF_srTF(){
+        if(this.step == 0 && this.moveTo(850,-1,3)){
+            this.step += 1
+            this.scene.shootingLogic.twirlFanType_ToDirection('redSpeedPauseBullet',   4, 0, 180, 800, 3, 0, 360,  this,data.getData('Bullet_speed_130'))
+           
+            this.scene.shootingLogic.twirlFanType_ToDirection('blueSpeedPauseBullet',   4, 90, 270, 800, 4, 0, 360,  this,data.getData('Bullet_speed_130'))
+            this.scene.time.delayedCall(38000, () => this.step +=1, [], this);//step2
+        }else if(this.step == 2){
+            this.exitScreen('autoTB');
         }
 
     }
-
     dropOff(){
         this.anims.stop();
-        this.setTexture('sunflowerFairyHit');
+        if(this.type == 'sunflowerFairyHit')
+            this.setTexture('sunflowerFairyHit');
+        else
+            this.setTexture('dandelionFairyHit');
         super.dropOff();
         
     }
