@@ -21,6 +21,7 @@ class Character extends Phaser.GameObjects.Sprite {
         this.body.setVelocity(0, 0);  // ✅ Ensures Rumia stays in place
         this.scoreFlag = false;
         // Adjust hitbox
+        this.isDone = true;
         this.body.setSize(50, 50);
         this.body.setCollideWorldBounds(true);
     }
@@ -223,6 +224,8 @@ class Character extends Phaser.GameObjects.Sprite {
             this.healthly -= bullet.atk;
         }
     } 
+
+    
     // Movement logic (to be overridden)
     moving() {
         console.log(`${this.type} moving`);
