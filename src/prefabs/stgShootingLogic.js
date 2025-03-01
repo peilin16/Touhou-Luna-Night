@@ -38,7 +38,7 @@ class stgShootingLogic{
         return bullet
     }
 
-    sniperBullet(bulletType, shooter, target, speed, offset = 'No') {
+        sniperBullet(bulletType, shooter, target, speed, offset = 'No') {
         if (!target) return; // Ensure target exists
         let bullet = this.getBullet(bulletType, shooter, speed);
         // Calculate direction from bullet to target
@@ -63,27 +63,53 @@ class stgShootingLogic{
         return bullet
         // ✅ Set bullet velocity toward the target
        // bullet.body.setVelocity(direction.x * bullet.speed, direction.y * bullet.speed);
+    }    
+    sniperBullet(bulletType, shooter, target, speed, offset = 'No') {
+        if (!target) return; // Ensure target exists
+        let bullet = this.getBullet(bulletType, shooter, speed);
+        // Calculate direction from bullet to target
+        let direction = new Phaser.Math.Vector2(target.x - bullet.x, target.y - bullet.y).normalize();
+    
+        // ✅ Apply offset adjustments
+        switch (offset) {
+            case 'Top':
+                direction.y -= 0.1; // Slightly move upward
+                break;
+            case 'Down':
+                direction.y += 0.1; // Slightly move downward
+                break;
+        }
+    
+        direction.normalize(); // Re-normalize after applying offset
+        bullet.vx = direction.x * bullet.speed
+        bullet.vy = direction.y * bullet.speed
+        if(!bullet.isTwirl){
+            bullet.setOrientation(direction.x,direction.y);
+        }
+        return bullet
+        // ✅ Set bullet velocity toward the target
+       // bullet.body.setVelocity(direction.x * bullet.speed, direction.y * bullet.speed);
     }
     //setUp bullet
-    getBullet(key, shooter, speed) {
+    getBullet(key, shooter, speed, isOverlap = true) {
         let bullet;
         switch (key) {
-            case 'blueSmallCircle':
+            case 'blueSmallCircleBullet':
                 bullet = new CircleBullet(this.scene, shooter.x, shooter.y, null,speed , 'bs');
                 break;
-            case 'blueMediumCircle':
+            case 'blueMediumCircleBullet':
                 bullet = new CircleBullet(this.scene, shooter.x, shooter.y, null,speed, 'bm');
                 break;
-            case 'blueLargeCircle':
+            case 'blueLargeCircleBullet':
                 bullet = new CircleBullet(this.scene, shooter.x, shooter.y, null,speed, 'bl');
                 break;
-            case 'redSmallCircle':
+            case 'redSmallCircleBullet':
                 bullet = new CircleBullet(this.scene, shooter.x, shooter.y, null,speed, 'rs');
                 break;
-            case 'redMediumCircle':
+            case 'redMediumCircleBullet':
                 bullet = new CircleBullet(this.scene, shooter.x, shooter.y, null,speed, 'rm');
                 break;
-            case 'redLargeCircle':
+            case 'redLargeCircleBullet':
                 bullet = new CircleBullet(this.scene, shooter.x, shooter.y, null,speed, 'rl');
                 break;
             case 'blueCapsuleBullet':
@@ -98,7 +124,21 @@ class stgShootingLogic{
             case 'redLongSemicircleBullet':
                 bullet = new LongSemicircleBullet(this.scene, shooter.x, shooter.y, null, speed,'rls');
                 break;
-
+            case 'redExtremeLongSemicircleBullet':
+                bullet = new LongSemicircleBullet(this.scene, shooter.x, shooter.y, null, speed,'res');
+                break;
+            case 'blueArrowBullet':
+                bullet = new arrowBullet(this.scene, shooter.x, shooter.y, null, speed,'ba');
+                break;
+            case 'redArrowBullet':
+                bullet = new arrowBullet(this.scene, shooter.x, shooter.y, null, speed,'ra');
+                break;
+            case 'redSpeedPauseBullet':
+                bullet = new speedPauseBullet(this.scene, shooter.x, shooter.y, null, speed,'rs');
+                break;
+            case 'blueSpeedPauseBullet':
+                bullet = new speedPauseBullet(this.scene, shooter.x, shooter.y, null, speed,'bs');
+                break;    
             default:
                 console.warn(`Unknown bullet key: ${key}`);
                 return null;
@@ -107,42 +147,58 @@ class stgShootingLogic{
         //bullet.isRed = true;
 
         bullet.shooter = shooter;//set shooter
-        this.scene.physics.add.overlap(rumia, bullet, (rumia, bullet) => {
-            if (!rumia.isHit && !bullet.isReflected) { 
-                this.scene.bulletCollision(rumia, bullet);
-            }
-        });
+        if (isOverlap) {
+            
+                this.scene.physics.add.overlap(rumia, bullet, (rumia, bullet) => {
+                    //if (!rumia.isHit && !bullet.isReflected    ) { 
+                    this.scene.bulletCollision(rumia, bullet);
+                    //}
+                });
+    
+                
+            
+        }
+        bullet.target = rumia;
         return bullet;
     }
 
     //advanced bullet method
     listType_ToTarget(bulletType, num, sperate, shooter, target, speed, offset = 'No') { 
+        let bulletGroup = []
         for (let i = 0; i < num; i++) {
             this.scene.time.delayedCall(i * sperate, () => {
+                if(shooter.isDrop)
+                    return;
                 // ✅ Get a new bullet instance
                 let bullet =this.sniperBullet(bulletType, shooter, target, speed, offset); // ✅ Shoot at target with optional offset
                 this.scene.bulletGroup.add(bullet);
-                
+                bulletGroup.push(bullet);
             });
         }
+        return bulletGroup;
     }
     listType_ToDirection(bulletType,num, sperateMinute, shooter ,angle,speed){
+        let bulletGroup = []
         for (let i = 0; i < num; i++) {
             this.scene.time.delayedCall(i * sperateMinute, () => {
-                this.scene.bulletGroup.add(bullet);
                 let bullet = this.NormalBullet(bulletType, angle, shooter, speed);
                 this.scene.bulletGroup.add(bullet);
+                bulletGroup.push(bullet);
             });
         }
+        return bulletGroup;
     }
 
     fanShapedType_ToDirection(bulletType, num, angleStart, angleEnd, shooter, speed) {
         // ✅ If only one bullet, place it at the center of the range
+        let bulletGroup = []
         if (num === 1) {
-            this.NormalBullet(bulletType, (angleStart + angleEnd) / 2, shooter, speed);
-            return;
+           let bullet =  this.NormalBullet(bulletType, angleStart, shooter, speed);
+            this.scene.bulletGroup.add(bullet);
+            bulletGroup.push(bullet);
+            return bulletGroup;
         }
-    
+        
         // ✅ Calculate the angle step to evenly distribute bullets
         let angleStep = (angleEnd - angleStart) / (num - 1);
     
@@ -150,7 +206,9 @@ class stgShootingLogic{
             let angle = angleStart + i * angleStep; // ✅ Calculate each bullet's angle
             let bullet = this.NormalBullet(bulletType, angle, shooter, speed); // ✅ Shoot each bullet
             this.scene.bulletGroup.add(bullet);
+            bulletGroup.push(bullet);
         }
+        return bulletGroup
     }
 
     fanShapedType_ToTarget(bulletType, num,  offsetAngle, shooter, target, speed) {
@@ -160,7 +218,7 @@ class stgShootingLogic{
         let centerAngle = Phaser.Math.RadToDeg(Phaser.Math.Angle.Between(shooter.x, shooter.y, target.x, target.y));
     
         let angles = [];
-    
+        let bulletGroup = [];
         if (num === 1) {
             angles.push(centerAngle); // ✅ If only 1 bullet, shoot directly at the target
         } else {
@@ -183,16 +241,19 @@ class stgShootingLogic{
                 bullet = this.NormalBullet(bulletType, angle, shooter, speed); // ✅ Fan-shaped bullets
             }
             this.scene.bulletGroup.add(bullet);
+            bulletGroup.push(bullet);
         });
+        return bulletGroup
     }
     randomfanShapedType_toDirection(bulletType, num, angleStart, angleEnd, shooter, speed){
-        
+        let bulletGroup = []
         for (let i = 0; i < num; i++) {
             let randomAngle = Phaser.Math.Between(angleStart, angleEnd); // ✅ Pick a random angle
             let bullet = this.NormalBullet(bulletType, randomAngle, shooter, speed);
             this.scene.bulletGroup.add(bullet);
+            bulletGroup.push(bullet);
         }
-
+        return bulletGroup
     }
 
 
@@ -201,7 +262,7 @@ class stgShootingLogic{
     
         // ✅ Calculate the central angle to the target
         let centerAngle = Phaser.Math.RadToDeg(Phaser.Math.Angle.Between(shooter.x, shooter.y, target.x, target.y));
-    
+        let bulletGroup = []
         let angles = [];
     
         if (num === 1) {
@@ -233,41 +294,159 @@ class stgShootingLogic{
         angles.forEach(angle => {
             let bullet = this.NormalBullet(bulletType, angle, shooter, speed);
             this.scene.bulletGroup.add(bullet);
+            bulletGroup.push(bullet);
         });
+        return bulletGroup;
+    }
+
+    twirlListType_ToDirection(bulletType, anglespace, angleStart, angleEnd, sprateSpace, shooter, speed, isCounterclockwise = false) {
+        let currentAngle = angleStart;
+        if(isCounterclockwise)
+            currentAngle = angleEnd;
+
+        let bulletGroup = []
+        let fireInterval = this.scene.time.addEvent({
+            delay: sprateSpace, // ✅ Delay between each shot
+            callback: () => {
+                if(shooter.isDrop)
+                    return;
+                if (currentAngle > angleEnd && !isCounterclockwise) {
+                    fireInterval.remove(); // ✅ Stop firing when exceeding `angleEnd`
+                    return;
+                }else if(currentAngle < angleStart && isCounterclockwise){
+                    return;
+                }
+    
+                let bullet = this.NormalBullet(bulletType, currentAngle, shooter, speed); // ✅ Fire bullet
+                this.scene.bulletGroup.add(bullet);
+                bulletGroup.push(bullet);
+
+                if(isCounterclockwise)
+                    currentAngle -= anglespace;
+                else
+                    currentAngle += anglespace; // ✅ Increment angle for next shot
+            },
+            callbackScope: this,
+            loop: true
+        });
+
+        return bulletGroup;
+    }
+    twirlFanType_ToDirection(bulletType,   anglespace, angleStart, angleEnd, sprateSpace, num, fanAngleStart, fanAngleEnd,  shooter, speed,isCounterclockwise = false){
+        let currentAngle = angleStart;
+        if(isCounterclockwise)
+            currentAngle = angleEnd;
+        let bulletGroup = []
+        let fireInterval = this.scene.time.addEvent({
+            delay: sprateSpace, // ✅ Delay between each wave
+            callback: () => {
+                if(shooter.isDrop )
+                    return;
+                if (currentAngle > angleEnd && ! isCounterclockwise) {
+                    fireInterval.remove(); // ✅ Stop firing when exceeding `angleEnd`
+                    return;
+                }else if(currentAngle < angleStart &&  isCounterclockwise){
+                    return;
+                }
+                if(isCounterclockwise)
+                    bulletGroup = this.fanShapedType_ToDirection(bulletType, num, fanAngleStart + currentAngle, fanAngleEnd + currentAngle, shooter, speed);
+                else
+                    bulletGroup = this.fanShapedType_ToDirection(bulletType, num, fanAngleStart + currentAngle, fanAngleEnd + currentAngle, shooter, speed);
+                if(bulletType == 'redSpeedPauseBullet' || bulletType == 'blueSpeedPauseBullet'){
+                    for (let i = 0; i < bulletGroup.length; ++i) {
+                        bulletGroup[i].pauseMin = 700; // Pause for 1.2 seconds
+                        bulletGroup[i].delayPauseMin = 1000; // Pause starts after 0.8 seconds
+                        bulletGroup[i].isSniper = true; // Will re-aim at target after pause
+                        bulletGroup[i].accelerate = 1.5; // Increases speed by 50% after pausing
+                    }
+                }
+                if(isCounterclockwise)
+                    currentAngle -= anglespace
+                else
+                    currentAngle += anglespace; // ✅ Increment angle for next wave
+            },
+            callbackScope: this,
+            loop: true
+        });
+        return bulletGroup;
+
+    }
+    expandFanType_ToDirection(bulletType, angleSpace, angleStart, angleEnd, sprateSpace, shooter, speed, isCounterclockwise = false) {
+        let currentNum = 1; // ✅ Number of bullets to fire
+        let StartAngle = angleStart
+        let EndAngle = angleEnd
+        if(isCounterclockwise){
+            EndAngle = angleStart;
+            StartAngle = angleEnd;
+        }
+            
+        
+        let currentAngleEnd = StartAngle; // ✅ Initial angle range
+        
+        
+
+
+        let expandFanLoop = () => {
+            if ((!isCounterclockwise && currentAngleEnd > EndAngle) || (isCounterclockwise && currentAngleEnd < EndAngle)) return; // ✅ Stop when max angle is reached
+            if(shooter.isDrop)
+                return;
+            // ✅ Fire bullets in an expanding fan shape
+            this.fanShapedType_ToDirection(bulletType, currentNum, StartAngle, currentAngleEnd, shooter, speed);
+    
+            // ✅ Increase bullet count for next loop
+            currentNum++;
+            if(!isCounterclockwise)
+                currentAngleEnd = StartAngle + (currentNum - 1) * angleSpace;
+            else
+                currentAngleEnd = StartAngle - (currentNum - 1) * angleSpace;
+            // ✅ Schedule next step in the expanding fan
+            this.scene.time.delayedCall(sprateSpace, expandFanLoop);
+        };
+    
+        expandFanLoop(); // ✅ Start expansion
+    }
+
+
+    outScreenType_ToDirection(bulletType, num, side, angleStart, angleEnd, rangeStart, rangeEnd, shooter, speed) {
+        let bulletGroup=[];
+    
+        for (let i = 0; i < num; i++) {
+            let bulletX, bulletY;
+            
+            // ✅ Determine spawn position based on side
+            if (side === 'top') {
+                bulletX = Phaser.Math.Between(rangeStart, rangeEnd);
+                bulletY = -30; // Off-screen above
+            } else if (side === 'bottom') {
+                bulletX = Phaser.Math.Between(rangeStart, rangeEnd);
+                bulletY = boardheigh + 30; // Off-screen below
+            } else if (side === 'right') {
+                bulletX = boardwidth + 20; // Off-screen right
+                bulletY = Phaser.Math.Between(rangeStart, rangeEnd);
+            } else {
+                console.warn(`Invalid side: ${side}`);
+                return bulletGroup;
+            }
+    
+            // ✅ Determine firing angle
+            let bulletAngle = (angleStart === angleEnd) ? angleStart : Phaser.Math.Between(angleStart, angleEnd);
+            
+            // ✅ Generate bullet and fire it into the screen
+            let bullet = this.NormalBullet(bulletType, bulletAngle, shooter, speed);
+            bullet.x = bulletX;
+            bullet.y = bulletY;
+            bulletGroup.push(bullet);
+            this.scene.bulletGroup.add(bullet);
+        }
+        return bulletGroup;
     }
 
 
     rightArrowSniperType_ToTarget(bulletType, num, shooter, target, speed, Xspacing = 10, Yspacing = 10) {
-        let middle = Math.floor(num / 2);
-    
-        for (let i = 0; i < num; i++) {
-            this.scene.time.delayedCall(i * 100, () => { // Slight delay for each bullet
-                let offsetX = (i - middle) * Xspacing; // ✅ Rightward offset
-                let offsetY = (i - middle) * Yspacing; // ✅ Vertical spacing
-                
-                let bullet = this.sniperBullet(bulletType, shooter, target, speed);
-                bullet.x += offsetX; // Move bullet rightward
-                bullet.y += offsetY; // Adjust vertical spacing
-    
-                this.scene.bulletGroup.add(bullet);
-            });
-        }
+        
     }
     leftArrowSniperType_ToTarget(bulletType, num, shooter, target, speed, Xspacing = 10, Yspacing = 10) {
-        let middle = Math.floor(num / 2);
-    
-        for (let i = 0; i < num; i++) {
-            this.scene.time.delayedCall(i * 100, () => { // Slight delay for each bullet
-                let offsetX = (middle - i) * Xspacing; // ✅ Leftward offset
-                let offsetY = (i - middle) * Yspacing; // ✅ Vertical spacing
-                
-                let bullet = this.sniperBullet(bulletType, shooter, target, speed);
-                bullet.x -= offsetX; // Move bullet leftward
-                bullet.y += offsetY; // Adjust vertical spacing
-    
-                this.scene.bulletGroup.add(bullet);
-            });
-        }
+        
     }
 
     //special bullet method

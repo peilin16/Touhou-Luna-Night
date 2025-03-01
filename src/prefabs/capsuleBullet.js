@@ -20,13 +20,22 @@ class CapsuleBullet extends Bullet {
         this.body.setCollideWorldBounds(true);
         this.body.setImmovable(true);
         this.body.setVelocity(0, 0);
-        this.body.setSize(27,15)
+        this.body.setCircle(12)
+        this.body.setOffset(-5,-5)
+        this.rotationSpeed = 1000;
         this.setDepth(10);
         this.isTwirl = true;
         // ✅ If red, mark as non-reflectable
         if (subtype === 'rc') {
             this.isRed = true;
             this.ableToReflect = false;
+        }
+    }
+    
+    update(time, delta) {
+        super.update(time, delta);
+        if (this.isTwirl) {
+            this.angle += this.rotationSpeed * (delta / 1000); // ✅ Rotate continuously
         }
     }
 
