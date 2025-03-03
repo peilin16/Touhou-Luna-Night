@@ -33,6 +33,7 @@ class Level2 extends Mainlevel {
         
         this.current = 0;
         this.emenySpawn = [
+            this.emenySpawn13.bind(this),
             this.finalBossSpawn.bind(this),
             //this.emenySpawn11.bind(this),
 
@@ -78,10 +79,11 @@ class Level2 extends Mainlevel {
         
         this.isSpeech = false;
 
-        this.Sangetsusei = new Character(this,-50,-50,'');//super(scene, x, y, 'Kedama','Kedama', frame)
-        this.Sangetsusei.healthly = 1500;
+        this.Sangetsusei = new Character(this,760,310,'');//super(scene, x, y, 'Kedama','Kedama', frame)
+        this.Sangetsusei.healthly = 191;
         this.Sangetsusei.setVisible(false); // Hide the sprite
-
+        this.Sangetsusei.setSize(130,130); // Hide the sprite
+        this.Sangetsusei.isEmeny = false;
         // ✅ Start the first wave
         this.nextWave();
 
@@ -156,13 +158,16 @@ class Level2 extends Mainlevel {
     emenySpawn5(){
         if(!this.isSprawn){
             this.isSprawn = true;
+            this.time.delayedCall(1000, () =>{super.spawnEmeny(1,'list','SunFlowerFairy','SunFlowerFairy','r5_s5Fs6L_tL',220)} , [], this);//step2
+            this.time.delayedCall(4000, () =>{super.DelayXspawnEmeny(11,2300, 1,'list','MaidFairy','MaidFairy1','fromRight_shoot3List_autoTB',480)} , [], this);//step2
             this.time.delayedCall(27500, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
         }
     }
     emenySpawn6(){
         if(!this.isSprawn){
             this.isSprawn = true;
-            this.time.delayedCall(27500, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
+            this.time.delayedCall(1000, () =>{super.DelayXspawnEmeny(13,1200, 5,'list','Kedama','Kedama','l2',100)} , [], this);//step2
+            this.time.delayedCall(17000, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
         }
     }
     midBossSpawn(){
@@ -244,40 +249,53 @@ class Level2 extends Mainlevel {
     emenySpawn11(){
         if(!this.isSprawn){
             this.isSprawn = true;
+            this.time.delayedCall(1000, () =>{super.DelayXspawnEmeny(10 ,1200,1,'list','MaidFairy','MaidFairy3','fromBottom_shootRedFan3ToTarget_toTop',180)} , [], this);//step2
+            this.time.delayedCall(1000, () =>{super.DelayXspawnEmeny(12,1700,1,'list','MaidFairy','MaidFairy1','fromBottom_shootRedFan3ToTarget_toTop',430)} , [], this);//step2
+            this.time.delayedCall(22000, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
+        }
+    }
+    emenySpawn12(){
+        if(!this.isSprawn){
+            this.isSprawn = true;
             this.time.delayedCall(1000, () =>{super.spawnEmeny(1,'list','SunFlowerFairy','SunFlowerFairy','r5_s5Fs6L_tL',180)} , [], this);//step2
             this.time.delayedCall(1000, () =>{super.DelayXspawnEmeny(15,1700,1,'list','MaidFairy','MaidFairy1','b_sbf3t_t',430)} , [], this);//step2
             this.time.delayedCall(27000, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
         }
-    }
-    emenySpawn12(){
-
+        
     }
     emenySpawn13(){
-
+        if(!this.isSprawn){
+            this.isSprawn = true;
+            this.time.delayedCall(1000, () =>{super.DelayXspawnEmeny(10 ,1200,1,'list','MaidFairy','MaidFairy3','fromRight_shootBlue4Fan_autoTB',100)} , [], this);//step2
+            this.time.delayedCall(1000, () =>{super.DelayXspawnEmeny(10 ,1200,1,'list','MaidFairy','MaidFairy3','fromRight_shootFanRedBlue_autoTB',270)} , [], this);//step2
+            this.time.delayedCall(1000, () =>{super.DelayXspawnEmeny(10 ,1200,1,'list','MaidFairy','MaidFairy3','fromRight_shootBlue4Fan_autoTB',440)} , [], this);//step2
+            this.time.delayedCall(27000, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
+        }
     }
     finalBossSpawn(){
         if(!this.isSprawn){
             this.isSprawn = true;
             let m =super.spawnEmeny(1,'list','SunnyMilk','SunnyMilk','r_sbrF',320);
             m.firstState = false;
-            super.spawnEmeny(1,'list','StarSapphire','StarSapphire','r_sbrF',120);
-            super.spawnEmeny(1,'list','Luna','Luna','r_sbo_sro',520);
+            
+            m.startSapphire = super.spawnEmeny(1,'list','StarSapphire','StarSapphire','r_sbrF',120);
+            m.luna = super.spawnEmeny(1,'list','Luna','Luna','r_sbo_sro',520);
             this.boss = this.Sangetsusei; 
             this.bossHealthTotal = this.boss.healthly;
             this.bossHealthBar.setVisible(true);
             
-            /*this.time.delayedCall(2800, () => {
-                this.startDialogue('Rumia', this.rumiaSpeechWithKawashiro, 'Kawashiro', this.KawashiroSpeech);
-            });*/
+            this.time.delayedCall(2800, () => {
+                this.startDialogue('Rumia', this.rumiaSpeechWithSangetsusei, 'Sangetsusei', this.SangetsuseiSpeech);
+            });
         }else if(this.boss.isDrop){
             this.current += 1;
             this.isSprawn = false;
             this.boss = null;
+            this.startDialogue('Rumia', this.rumiaSpeechWithSangetsuseiAfter, 'Sangetsusei',this.SangetsuseiSpeechAfter);
 
-
-            /*this.time.delayedCall(100, () => {
-                this.startDialogue('Rumia', this.rumiaSpeechWithKawashiroAfter, 'Kawashiro',this.KawashiroSpeechAfter);
-            });*/
+            this.time.delayedCall(100, () => {
+                
+            });
         }
     }
 }

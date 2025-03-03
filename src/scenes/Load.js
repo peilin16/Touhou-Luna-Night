@@ -66,8 +66,13 @@ class Load extends Phaser.Scene {
         this.load.image('MaidFairy2_3', './assets/character/MaidFairy2_3.png');
         this.load.image('MaidFairy2_Hit', './assets/character/MaidFairy2_Hit.png');
 
+        this.load.image('MaidFairy3_1', './assets/character/MaidFairy3_1.png');
+        this.load.image('MaidFairy3_2', './assets/character/MaidFairy3_2.png');
+        this.load.image('MaidFairy3_3', './assets/character/MaidFairy3_3.png');
+        this.load.image('MaidFairy3_Hit', './assets/character/MaidFairy3_Hit.png');
 
         //boss load
+        //level 1
         this.load.image('Wriggle1', './assets/character/Wriggle1.png');
         this.load.image('Wriggle2', './assets/character/Wriggle2.png');
         this.load.image('Wriggle3', './assets/character/Wriggle3.png');
@@ -83,19 +88,34 @@ class Load extends Phaser.Scene {
         this.load.image('SunnyMilk2', './assets/character/SunnyMilk2.png');
         this.load.image('SunnyMilkFly1', './assets/character/SunnyMilkFly1.png');
         this.load.image('SunnyMilkFly2', './assets/character/SunnyMilkFly2.png');
-
+        this.load.image('SunnyMilkHit', './assets/character/SunnyMilkHit.png');
         this.load.image('StarSapphire2', './assets/character/StarSapphire2.png');
         this.load.image('StarSapphire1', './assets/character/StarSapphire1.png');
+        this.load.image('StarSapphireHit', './assets/character/StarSapphireHit.png');
         this.load.image('Luna1', './assets/character/Luna1.png');    
         this.load.image('Luna2', './assets/character/Luna2.png'); 
+        this.load.image('LunaHit', './assets/character/LunaHit.png'); 
         this.load.image('Satellite1', './assets/character/Satellite1.png');
         this.load.image('Satellite2', './assets/character/Satellite2.png');
         this.load.image('KawashiroIdle', './assets/character/KawashiroIdle.png');        
         this.load.image('KawashiroSecondState', './assets/character/KawashiroSecondState.png');   
         this.load.image('KawashiroSecondStateHit', './assets/character/KawashiroSecondStateHit.png');   
+        //level3
+        this.load.image('LilyWhite1', './assets/character/LilyWhite1.png');
+        this.load.image('LilyWhite2', './assets/character/LilyWhite2.png');
+        this.load.image('MystiaLorelei1', './assets/character/MystiaLorelei1.png');
+        this.load.image('MystiaLoreleiHit', './assets/character/MystiaLoreleiHit.png');
+        this.load.image('MystiaLoreleiState2', './assets/character/MystiaLoreleiState2.png');
+        //level4
         
-        
-        
+        this.load.image('LilyBlack1', './assets/character/LilyBlack1.png');
+        this.load.image('LilyBlack2', './assets/character/LilyBlack2.png');
+        this.load.image('reimu-idle1', './assets/character/reimu-idle1.png');
+        this.load.image('reimu-idle2', './assets/character/reimu-idle2.png');
+        this.load.image('reimu-fly-left1', './assets/character/reimu-fly-left1.png');
+        this.load.image('reimu-fly-left2', './assets/character/reimu-fly-left2.png');
+
+
         //bullet load
         this.load.image('blueSmallCircleBullet','./assets/img/blueSmallCircleBullet.png');
         this.load.image('blueMediumCircleBullet','./assets/img/blueMediumCircleBullet.png');
@@ -114,9 +134,23 @@ class Load extends Phaser.Scene {
         
         this.load.image('blueArrowBullet','./assets/img/blueArrowBullet.png');
         this.load.image('redArrowBullet','./assets/img/redArrowBullet.png');
+
+        this.load.image('blueSquareSpecialBullet','./assets/img/BlueSquareSpecialBullet.png');
+        this.load.image('redSquareSpecialBullet','./assets/img/RedSquareSpecialBullet.png');
+
+
+
+        this.load.image('blueMusicSign1Bullet','./assets/img/BlueMusicSign1Bullet.png');
+        this.load.image('blueMusicSign2Bullet','./assets/img/BlueMusicSign2Bullet.png');
+        this.load.image('redMusicSign1Bullet','./assets/img/RedMusicSign1Bullet.png');
+        this.load.image('redMusicSign2Bullet','./assets/img/RedMusicSign2Bullet.png');
+
+
         this.load.image('bug','./assets/img/bug.png');
+        this.load.image('flower','./assets/img/flower.png');
         this.load.image('ice','./assets/img/ice.png');
         this.load.image('iceTop','./assets/img/iceTop.png');
+        this.load.image('yinYangOrbs','./assets/img/yinYangOrbs.png');
         //element load
         this.load.image('score','./assets/img/score.png');
         //test load

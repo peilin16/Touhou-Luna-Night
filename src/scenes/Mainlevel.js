@@ -441,7 +441,6 @@ class Mainlevel extends Phaser.Scene {
             case 'DestructionIce':
                 emeny = new Destruction(this, posX, posY, subtype);
                 break;
-
             case 'SunnyMilk':
                 emeny = new SunnyMilk(this, posX, posY, subtype);
                 break;
@@ -458,12 +457,21 @@ class Mainlevel extends Phaser.Scene {
             case 'Kawashiro':
                 emeny = new Kawashiro(this, posX, posY, subtype);
                 break;     
-            case 'Satellite':
-                emeny = new Satellite(this, posX, posY, subtype);
+            case 'Lily':
+                emeny = new Lily(this, posX, posY, subtype);
                 break;     
-
-
-                
+            case 'MystiaLorelei':
+                emeny = new MystiaLorelei(this, posX, posY, subtype);
+                break;     
+            case 'Reimu':
+                emeny = new Reimu(this, posX, posY, subtype);
+                break;   
+            case 'yinYangOrbs':
+            case 'flower':
+            case'Flower':
+                emeny = new Destruction(this, posX, posY, subtype);
+                break;
+                  
             default:
                 console.warn(`Unknown enemy type: ${Emeny}`);
                 return;
@@ -501,10 +509,10 @@ class Mainlevel extends Phaser.Scene {
         let rate = this.getReflection(bullet.type); // ✅ Get reflection rate
         let newBullet
         if(bullet.type == 'blueSpeedPauseBullet' ){
-            newBullet = this.shootingLogic.getBullet( 'blueArrowBullet', rumia, bullet.periousSpeed ,false);
+            newBullet = this.shootingLogic.getBullet( 'blueArrowBullet', rumia, bullet.periousSpeed + 4 ,false);
         }
         else{
-            newBullet = this.shootingLogic.getBullet( bullet.type, rumia, bullet.speed,false);
+            newBullet = this.shootingLogic.getBullet( bullet.type, rumia, bullet.speed + 4,false);
         }
         
         
