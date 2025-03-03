@@ -21,7 +21,7 @@ class Character extends Phaser.GameObjects.Sprite {
         this.body.setVelocity(0, 0);  // ✅ Ensures Rumia stays in place
         this.scoreFlag = false;
         // Adjust hitbox
-        this.isDone = true;
+        this.isDone = false;
         this.body.setSize(50, 50);
         this.body.setCollideWorldBounds(true);
     }
@@ -158,7 +158,121 @@ class Character extends Phaser.GameObjects.Sprite {
     
         return false; // ✅ Return false until target is within offset range
     }
-
+/*
+    teleport(Xpos, Ypos, currentX = this.x, currentY = this.y, duration = 800, particleColor = 0x00ffff) {
+        return new Promise((resolve) => {
+            // Store original position if not provided
+            const startX = currentX !== undefined ? currentX : this.x;
+            const startY = currentY !== undefined ? currentY : this.y;
+            
+            // Store original alpha and scale
+            const originalAlpha = this.alpha;
+            const originalScaleX = this.scaleX;
+            const originalScaleY = this.scaleY;
+            
+            // Create particle emitter for disappearing effect
+            const disappearEmitter = this.scene.add.particles(startX, startY, 'particle', {
+                frame: 'white', // Use a white particle texture that can be tinted
+                color: [particleColor],
+                colorEase: 'quad.out',
+                lifespan: { min: 400, max: 600 },
+                speed: { min: 50, max: 100 },
+                scale: { start: 0.4, end: 0 },
+                quantity: 1,
+                blendMode: 'ADD',
+                emitting: false
+            });
+            
+            // Create particle emitter for reappearing effect
+            const reappearEmitter = this.scene.add.particles(Xpos, Ypos, 'particle', {
+                frame: 'white', // Use a white particle texture that can be tinted
+                color: [particleColor],
+                colorEase: 'quad.in',
+                lifespan: { min: 400, max: 600 },
+                speed: { min: 50, max: 100 },
+                scale: { start: 0, end: 0.4 },
+                quantity: 1,
+                blendMode: 'ADD',
+                emitting: false
+            });
+            
+            // Disable physics during teleport to prevent collisions
+            const wasPhysicsEnabled = this.body.enable;
+            this.body.enable = false;
+            
+            // Timeline for coordinating the teleport effect
+            const timeline = this.scene.tweens.createTimeline();
+            
+            // Phase 1: Disappear from current location
+            timeline.add({
+                targets: this,
+                alpha: 0,
+                scaleX: 0.1,
+                scaleY: 0.1,
+                duration: duration / 2,
+                ease: 'Power2',
+                onStart: () => {
+                    // Emit particles at start position
+                    disappearEmitter.explode(30, startX, startY);
+                    
+                    // Optional: Add a flash effect
+                    this.scene.cameras.main.flash(100, 255, 255, 255, 0.3);
+                    
+                    // Optional: Add sound effect
+                    if (this.scene.sound && this.scene.sound.add) {
+                        const teleportSound = this.scene.sound.add('teleport_start', { volume: 0.5 });
+                        teleportSound.play();
+                    }
+                }
+            });
+            
+            // Phase 2: Move to new position while invisible
+            timeline.add({
+                targets: this,
+                x: Xpos,
+                y: Ypos,
+                duration: 50, // Quick position change
+                onComplete: () => {
+                    // Emit particles at destination
+                    reappearEmitter.explode(30, Xpos, Ypos);
+                    
+                    // Optional: Add a flash effect
+                    this.scene.cameras.main.flash(100, 255, 255, 255, 0.3);
+                    
+                    // Optional: Add sound effect
+                    if (this.scene.sound && this.scene.sound.add) {
+                        const teleportSound = this.scene.sound.add('teleport_end', { volume: 0.5 });
+                        teleportSound.play();
+                    }
+                }
+            });
+            
+            // Phase 3: Reappear at new location
+            timeline.add({
+                targets: this,
+                alpha: originalAlpha,
+                scaleX: originalScaleX,
+                scaleY: originalScaleY,
+                duration: duration / 2,
+                ease: 'Power2',
+                onComplete: () => {
+                    // Re-enable physics if it was enabled before
+                    this.body.enable = wasPhysicsEnabled;
+                    
+                    // Clean up particle emitters
+                    disappearEmitter.destroy();
+                    reappearEmitter.destroy();
+                    
+                    // Resolve the promise
+                    resolve();
+                }
+            });
+            
+            // Start the timeline
+            timeline.play();
+        });
+    }
+*/
 
     moveTo(Xpos = -1, Ypos = -1, speed = 2) {
         let reachedX = false;

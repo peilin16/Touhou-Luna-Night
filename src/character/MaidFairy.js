@@ -17,8 +17,24 @@ class MaidFairy extends Character{
             this.body.setSize(data.getData('MaidFairy1_width') , data.getData('MaidFairy1_height'), true); // Adjust hitbox size
             this.body.setOffset(5, 5); 
             //this.speed = data.getData('sunflowerFairy_speed') 
+        }else if(type == 'MaidFairy3'){
+            super(scene, x, y, 'MaidFairy3_1', frame)
+            this.anims.create({
+                key: 'MaidFairy3',
+                frames: [
+                    { key: 'MaidFairy3_1' },
+                    { key: 'MaidFairy3_2' },
+                    { key: 'MaidFairy3_3' },
+                ],
+                frameRate: 10, // 10 frames per second
+                repeat: -1 // Loop infinitely
+            });
+            this.play('MaidFairy3'); // Play the 'rumiaFly' animation
+            this.healthly = 17;
+            this.body.setSize(data.getData('MaidFairy1_width') , data.getData('MaidFairy1_height'), true); // Adjust hitbox size
+            this.body.setOffset(5, 5); 
         }else{
-            super(scene, x, y, 'MaidFairy1_2', frame)
+            super(scene, x, y, 'MaidFairy2_1', frame)
             this.anims.create({
                 key: 'MaidFairy2',
                 frames: [
@@ -53,44 +69,66 @@ class MaidFairy extends Character{
             return
         switch(this.behavior){
             case 'r_sb4f_at':
-                this.r_sb4f_at();
+            case 'fromRight_shootBlue4Fan_autoTB':
+                this.fromRight_shootBlue4Fan_autoTB();
                 break;
             case 'r_sr3f_at':
-                this.r_sr3f_at();
+            case 'fromRight_shootRed3Fan_autoTB':
+                this.fromRight_shootRed3Fan_autoTB();
                 break;
             case 'r_sbf3t_srf2t':
-                this.r_sbf3t_srf2t();
+            case 'fromRight_shoot3List_autoTB':
+                this.fromRight_shoot3List_autoTB();
                 break; 
             case 't_sbf2t_srl1_b':
-                this.t_sbf2t_srl1_b();
+            case 'fromRight_shootBlueFan3ToTarget_shootRedFan2ToTarget_toTop':
+                this.fromRight_shootBlueFan3ToTarget_shootRedFan2ToTarget_toTop();
                 break; 
             case 'b_srf3t_t':
-                this.b_srf3t_t();
+            case 'fromTop_shootBlueFan2ToTarget_shootRedList1_toBottom':
+                this.fromTop_shootBlueFan2ToTarget_shootRedList1_toBottom();
                 break;
             case 'b_sbf3t_t':
-                this.b_sbf3t_t();
+            case 'fromBottom_shootRedFan3ToTarget_toTop':
+                this.fromBottom_shootRedFan3ToTarget_toTop();
+                break;
+            case 'fromRight_shootExpandFanRedBlue_autoTB':
+                this.fromRight_shootExpandFanRedBlue_autoTB();
                 break;    
+            case 'fromRight_shootFanRedBlue_autoTB':
+                this.fromRight_shootFanRedBlue_autoTB();
+                break;
         }
         
     }
-
-    r_sb4f_at(){
-        if(this.moveTo(700,-1,1.8) && this.step == 0){
+    //fromRight_shootBlue4Fan_autoTBr_sb4f_at
+    fromRight_shootBlue4Fan_autoTB(){
+        if(this.step == 0 && this.moveTo(800,-1,1.8)){
             this.step +=1
             for (let i = 0; i < 3; i++) {
                 this.scene.time.delayedCall(i * 150, () => {
                     // ✅ Get a new bullet instance
-                    this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 4, 160, 180, this, data.getData('Bullet_speed_130'));//shooting 
+                    //fanShapedType_ToTarget(bulletType, num,  offsetAngle, shooter, target, speed)
+                    this.scene.shootingLogic.fanShapedType_ToTarget('blueMediumCircleBullet', 3, 20, this,rumia, data.getData('Bullet_speed_130'));//shooting 
                 });
             }
-            this.scene.time.delayedCall(300, () => this.step +=1, [], this);//step2
-        }
-        if(this.step == 2){
+           // this.scene.time.delayedCall(300, () => this.step +=1, [], this);//step2
+        }else if(this.step == 1 && this.moveTo(700,-1,1.8)){
+            this.step +=1
+            for (let i = 0; i < 3; i++) {
+                this.scene.time.delayedCall(i * 150, () => {
+                    // ✅ Get a new bullet instance
+                    this.scene.shootingLogic.fanShapedType_ToTarget('redMediumCircleBullet', 3, 20, this,rumia, data.getData('Bullet_speed_130'));//shooting 
+                    //this.scene.shootingLogic.fanShapedType_ToDirection('redMediumCircleBullet', 4, 160, 180, this, data.getData('Bullet_speed_130'));//shooting 
+                });
+            }
+           // this.scene.time.delayedCall(300, () => this.step +=1, [], this);//step2
+        }else if(this.step == 2){
             this.exitScreen('autoTB')
         }
     }
-    //fan
-    r_sr3f_at(){
+    //fanr_sr3f_at
+    fromRight_shootRed3Fan_autoTB(){
         if(this.moveTo(700,-1,1.8) && this.step == 0){
             this.step +=1
             for (let i = 0; i < 3; i++) {
@@ -105,8 +143,8 @@ class MaidFairy extends Character{
             this.exitScreen('autoTB')
         }
     }
-    //list
-    r_r3l_at(){
+    //list r_r3l_at
+    fromRight_shoot3List_autoTB(){
         
         if(this.step == 0&& this.moveTo(850,-1,1.8)  ){
             
@@ -124,8 +162,8 @@ class MaidFairy extends Character{
         }
     }
 
-
-    r_sbf3t_srf2t(){
+    //r_sbf3t_srf2t
+    fromRight_shootBlueFan3ToTarget_shootRedFan2ToTarget_toTop(){
         
         if(this.step == 0 && this.moveTo(750,-1,1.8)){
             this.step +=1
@@ -149,11 +187,14 @@ class MaidFairy extends Character{
             this.exitScreen('top',1,-1.5);
         }
     }
-    t_sbf2t_srl1_b(){
+    //t_sbf2t_srl1_b
+    fromRight_shootBlueFan3ToTarget_shootRedFan2ToTarget_toTop(){
         if(this.step == 0 && this.moveTo(-1,120,1)){
             this.step += 1
             for (let i = 0; i < 3; i++) {
                 this.scene.time.delayedCall(i * 180, () => {
+                    if(this.isDrop)
+                        return;
                 this.scene.shootingLogic.fanShapedType_ToTarget('blueSmallCircleBullet', 3, 8,  this, rumia, data.getData('Bullet_speed_130')) ;//shooting 
                 });
             }
@@ -166,7 +207,8 @@ class MaidFairy extends Character{
             this.exitScreen('bottom', 1 ,0);
         }
     }
-    b_srf3t_t(){
+    //b_srf3t_t
+    fromTop_shootBlueFan2ToTarget_shootRedList1_toBottom(){
         if(this.step == 0 && this.moveTo(950,-1,3)){
             this.step += 1
             for (let i = 0; i < 2; i++) {
@@ -192,7 +234,8 @@ class MaidFairy extends Character{
         }
         
     }
-    b_sbf3t_t(){
+    //b_sbf3t_t
+    fromBottom_shootRedFan3ToTarget_toTop(){
 
         if(this.step == 0 && this.moveTo(950,-1,3)){
             this.step += 1
@@ -218,11 +261,64 @@ class MaidFairy extends Character{
             this.exitScreen('autoTB',2,-1.5);
         }
     }
+
+    fromRight_shootExpandFanRedBlue_autoTB(){
+        if(this.step == 0 && this.moveTo(600,-1,2)){
+            this.step += 1
+            let b = ['blueLongSemicircleBullet', 'redLongSemicircleBullet'];
+            let choose;
+            choose = Phaser.Math.RND.pick(b);
+            
+            this.scene.shootingLogic.expandFanType_ToTarget(choose, 15, 70, 200, this, rumia,  data.getData('Bullet_speed_150') );//shooting
+
+           // this.scene.time.delayedCall(5000, () => this.isDone = true, this.step += 1, [], this);//step2
+        }else if(this.step == 1 && this.moveTo(570,-1,3)){
+            this.exitScreen('autoTB', 1 , 2);
+        }
+    }
+
+    fromRight_shootFanRedBlue_autoTB(){
+        if(this.step == 0 && this.moveTo(900,-1,2)){
+            this.step += 1
+            this.fromRight_shootFanRedBlue_autoTBHelp();
+           // this.scene.time.delayedCall(5000, () => this.isDone = true, this.step += 1, [], this);//step2
+        }else if(this.step == 1 && this.moveTo(750,-1,2)){
+            this.step += 1
+            this.fromRight_shootFanRedBlue_autoTBHelp();
+           // this.scene.time.delayedCall(5000, () => this.isDone = true, this.step += 1, [], this);//step2
+        }else if(this.step == 2 && this.moveTo(550,-1,2)){
+            this.step += 1
+            this.fromRight_shootFanRedBlue_autoTBHelp();
+           // this.scene.time.delayedCall(5000, () => this.isDone = true, this.step += 1, [], this);//step2
+        }else if(this.step == 3 ){
+            this.exitScreen('autoTB', 1 , 2);
+        }
+    }
+    fromRight_shootFanRedBlue_autoTBHelp(){
+        let b = ['blueLongSemicircleBullet', 'redLongSemicircleBullet'];
+        let choose;
+        choose = Phaser.Math.RND.pick(b);
+        this.scene.shootingLogic.randomFanShapedType_ToTarget(choose, 4, 55, this, rumia, data.getData('Bullet_speed_150'));
+    }
+
     dropOff(){
         this.anims.stop();
 
-        if(!this.isDrop)
-            this.setTexture('MaidFairy1_Hit');
+        if(!this.isDrop){
+            switch(this.subtype){
+                case 'MaidFairy1':
+                    this.setTexture('MaidFairy1_Hit');
+                    break;
+                case 'MaidFairy2':
+                    this.setTexture('MaidFairy2_Hit');
+                    break;
+                case 'MaidFairy3':
+                    this.setTexture('MaidFairy3_Hit');
+                    break;
+            }
+            
+        }
+            
         super.dropOff(3300,3,2);
         
     }

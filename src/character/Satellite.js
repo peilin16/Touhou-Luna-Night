@@ -20,7 +20,7 @@ class Satellite extends Character{
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.setOffset(3, 0);
-        this.healthly = 10;
+        this.healthly = 800;
         this.isDrop = false;
         this.kind = 'f'
         this.firstState = true;

@@ -58,12 +58,18 @@ class SunnyMilk extends Character{
                 return
             }   
         }else{
-
+            if(this.scene.Sangetsusei.healthly <= 0)
+            {
+                this.dropOff();
+                return
+            }   
         }
-        
+        if(this.scene.Sangetsusei.healthly < 290){
+            this.isDone = true
+        }
         //super.update();
         
-        if(this.isDone || this.scene.Sangetsusei.isDone){
+        if(this.isDone || this.scene.Sangetsusei.isDone ){
             if(this.firstState){
                 this.behavior = 'r_sbrF'
                 this.isFirst = false
@@ -105,7 +111,7 @@ class SunnyMilk extends Character{
                     this.b_srfts();
                     break;
                 case 'b_hit_player':
-                    this.b_hit_player(3.5);
+                    this.b_hit_player(4);
                     break;
             }
 
@@ -115,17 +121,19 @@ class SunnyMilk extends Character{
 
     }
     dropOff(){
-        
+        this.isDrop = true;
         if(this.firstState){
-            this.isDrop = true;
+            
             this.exitScreen('top', 2, 1);
         }else{
-            
+            this.scene.Sangetsusei.isDrop = true;
+            this.setTexture('SunnyMilkHit')
+            super.dropOff();
         }
     }
 
     getBehavior(previous) {
-        if(this.scene.Sangetsusei.healthly <= 240){
+        if(this.scene.Sangetsusei.healthly <= 290){
             return 'b_hit_player';
         }
         let behaviors = ['b_sbf3t_t', 'b_srf4t_t','b_srfts'];
@@ -190,7 +198,7 @@ class SunnyMilk extends Character{
                         // ✅ Get a new bullet instance
                         choose = Phaser.Math.RND.pick(b);
                         if(!this.isDrop){
-                            this.scene.shootingLogic.outScreenType_ToDirection(choose, 24, 'top', 60,100,  0,990, this,data.getData('Bullet_speed_120'));//shooting 
+                            this.scene.shootingLogic.outScreenType_ToDirection(choose, 29, 'top', 60,100,  0,990, this,data.getData('Bullet_speed_120'));//shooting 
                         }
                     });
                 }
@@ -234,12 +242,12 @@ class SunnyMilk extends Character{
                     // ✅ Get a new bullet instance
                     choose = Phaser.Math.RND.pick(r);
                     //this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 12, 80, 260, this, data.getData('Bullet_speed_130'));//shooting
-                    if(!this.isDrop){
+                    if(!this.isDrop && this.behavior == 'b_srfts'){
                         this.scene.shootingLogic.fanShapedType_ToTarget(choose, 17,  180 , this, rumia, data.getData('Bullet_speed_130'))
                     }
                 });
             }
-            this.scene.time.delayedCall(27600, () => this.scene.Sangetsusei.isDone = true, [], this);//step2
+            this.scene.time.delayedCall(29600, () => this.scene.Sangetsusei.isDone = true, [], this);//step2
         }
     }
 
@@ -256,7 +264,7 @@ class SunnyMilk extends Character{
                     // ✅ Get a new bullet instance
                     choose = Phaser.Math.RND.pick(r);
                     //this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 12, 80, 260, this, data.getData('Bullet_speed_130'));//shooting
-                    if(!this.isDrop){
+                    if(!this.isDrop && this.behavior == 'b_srf4t_t'){
                         this.scene.shootingLogic.randomfanShapedType_toDirection(choose, 18, 0, 324, this,data.getData('Bullet_speed_120'));//shooting 
                     }
                 });
@@ -274,7 +282,7 @@ class SunnyMilk extends Character{
             let choose;
             for (let i = 0; i < 14; i++) {
                 this.scene.time.delayedCall(i * 1100, () => {
-                    if(this.isDrop)
+                    if(this.isDrop || this.behavior != 'b_sbf3t_t')
                         return
                     // ✅ Get a new bullet instance
                     //this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 12, 80, 260, this, data.getData('Bullet_speed_130'));//shooting

@@ -55,9 +55,15 @@ class DivineSpirit extends Character {
             case 'r_sbl1_srl1_srl1_tb':
                 this.r_sbl1_srl1_srl1_tb();
                 break;
+            case 'right_shootingFan2BlueBullet_AutoTopDown':
             case 'r_sr4_tb':
-                this.r_sr4_tb();
+                this.right_shootingFan2BlueBullet_AutoTopDown();
                 break; 
+
+            case 'right_shootingFan2RedBullet_AutoTopDown':
+                this.right_shootingFan2RedBullet_AutoTopDown();
+                break; 
+
         }
 
     }
@@ -66,12 +72,12 @@ class DivineSpirit extends Character {
     r_shooting2_l() {
         if (this.step == 0 && this.moveTo(850,-1,2)){
             this.step +=1
-            this.scene.shootingLogic.listType_ToTarget('blueMediumCircle', 5, 200, this, rumia,3);
+            this.scene.shootingLogic.listType_ToTarget('blueMediumCircleBullet', 5, 200, this, rumia,data.getData('Bullet_speed_150'));
             this.scene.time.delayedCall(4400, () => this.step +=1, [], this);//step2
         } 
         if(this.step == 2){
             this.step +=1;
-            this.scene.shootingLogic.listType_ToTarget('redMediumCircle', 2, 300, this, rumia,3);
+            this.scene.shootingLogic.listType_ToTarget('redMediumCircleBullet', 2, 300, this, rumia,rumia,data.getData('Bullet_speed_150'));
             this.scene.time.delayedCall(3400, () => this.step +=1, [], this);//step2
         }
         if(this.step == 4){
@@ -82,26 +88,56 @@ class DivineSpirit extends Character {
     r_sbl1_srl1_srl1_tb(){
         if(this.step == 0 && this.moveTo(900,-1,1.8)){
             this.step +=1
-            this.scene.shootingLogic.listType_ToTarget('blueMediumCircle', 1, 200, this, rumia,4);
+            //listType_ToTarget(bulletType, num, sperate, shooter, target, speed, offset = 'No')
+            this.scene.shootingLogic.listType_ToTarget('blueMediumCircleBullet', 3, 100, this, rumia,data.getData('Bullet_speed_150'));
         }else if(this.step == 1 && this.moveTo(850,-1,1.8)){
             this.step +=1
-            this.scene.shootingLogic.listType_ToTarget('redMediumCircle', 1, 200, this, rumia,4);
+            this.scene.shootingLogic.listType_ToTarget('blueMediumCircleBullet', 3, 100, this, rumia,data.getData('Bullet_speed_150'));
         }else if(this.step == 2 && this.moveTo(700,-1,1.8)){
             this.step +=1
-            this.scene.shootingLogic.listType_ToTarget('blueMediumCircle', 1, 200, this, rumia,4);
+            this.scene.shootingLogic.listType_ToTarget('blueMediumCircleBullet', 3, 100, this, rumia,data.getData('Bullet_speed_150'));
         }else if(this.step == 3 && this.moveTo(630,-1,1.8)){
             this.step +=1
-            this.scene.shootingLogic.listType_ToTarget('redMediumCircle', 1, 200, this, rumia,4);
+            this.scene.shootingLogic.listType_ToTarget('redMediumCircleBullet', 3, 100, this, rumia,data.getData('Bullet_speed_150'));
         }else if(this.step == 4 && this.moveTo(540,-1,1.8)){
             this.step +=1
-            this.scene.shootingLogic.listType_ToTarget('blueMediumCircle', 1, 200, this, rumia,4);
+            this.scene.shootingLogic.listType_ToTarget('redMediumCircleBullet', 3, 100, this, rumia,data.getData('Bullet_speed_150'));
         }else if(this.step == 5){
             this.exitScreen('autoTB',1.8 , -1);
         }
     }
     //fanType 360
-    r_sr4_tb(){
-        
+    right_shootingFan2BlueBullet_AutoTopDown(){
+        if (this.step == 0 && this.moveTo(850,-1,2)){
+            this.step +=1
+            //fanShapedType_ToTarget(bulletType, num,  offsetAngle, shooter, target, speed) 
+            this.scene.shootingLogic.fanShapedType_ToTarget('blueMediumCircleBullet', 2,5, this, rumia,data.getData('Bullet_speed_150'));
+            this.scene.time.delayedCall(4400, () => this.step +=1, [], this);//step2
+        } 
+        if(this.step == 2){
+            this.step +=1;
+            this.scene.shootingLogic.fanShapedType_ToTarget('blueMediumCircleBullet', 2,5, this, rumia,data.getData('Bullet_speed_150'));
+            this.scene.time.delayedCall(3400, () => this.step +=1, [], this);//step2
+        }
+        if(this.step == 4){
+            this.exitScreen('autoTB', 1.5, -0.7)
+        }
+    }
+    right_shootingFan2RedBullet_AutoTopDown(){
+        if (this.step == 0 && this.moveTo(850,-1,2)){
+            this.step +=1
+            //fanShapedType_ToTarget(bulletType, num,  offsetAngle, shooter, target, speed) 
+            this.scene.shootingLogic.fanShapedType_ToTarget('redMediumCircleBullet', 2,5, this, rumia,data.getData('Bullet_speed_150'));
+            this.scene.time.delayedCall(4400, () => this.step +=1, [], this);//step2
+        } 
+        if(this.step == 2){
+            this.step +=1;
+            this.scene.shootingLogic.fanShapedType_ToTarget('redMediumCircleBullet', 2,5, this, rumia,data.getData('Bullet_speed_150'));
+            this.scene.time.delayedCall(4400, () => this.step +=1, [], this);//step2
+        }
+        if(this.step == 4){
+            this.exitScreen('autoTB', 1.5, -0.7)
+        }
     }
     collide(){
         this.healthly -=5
