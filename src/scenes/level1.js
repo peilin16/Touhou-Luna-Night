@@ -71,7 +71,7 @@ class Level1 extends Mainlevel {
         
         this.current = 0;
         this.emenySpawn = [
-            this.finalBossSpawn.bind(this),
+            //this.finalBossSpawn.bind(this),
             this.emenySpawn1.bind(this),
             this.emenySpawn2.bind(this),
             this.emenySpawn3.bind(this),
@@ -133,8 +133,8 @@ class Level1 extends Mainlevel {
         if(!this.isSprawn){
             //alert('emenySpawn1')
             this.isSprawn = true;
-            super.spawnEmeny(3,'wideList','Kedama','','l2')
-            this.time.delayedCall(2000, () => {
+            super.spawnEmeny(5,'list','Kedama','','l2',200)
+            this.time.delayedCall(3000, () => {
                 this.spawnEmeny(4, 'list', 'DivineSpirit','blue','r_shooting2_l',200); // ✅ Spawns one DivineSpirit
                 this.time.delayedCall(6000, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
             }, [], this);//step2

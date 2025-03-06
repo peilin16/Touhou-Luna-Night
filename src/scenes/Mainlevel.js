@@ -87,7 +87,7 @@ class Mainlevel extends Phaser.Scene {
 
     update() {
         
-        rumia.update();
+        rumia.update(this.time.now, this.game.loop.delta);
         // update bullet
         this.bulletGroup.children.iterate(bullet => {
             if (bullet && typeof bullet.update === 'function') {
@@ -113,7 +113,7 @@ class Mainlevel extends Phaser.Scene {
         // update emeny state
         this.EmenyGroup.children.iterate(enemy => {
             if (enemy && typeof enemy.update === 'function') {
-                enemy.update(); // ✅ Ensure each enemy's update() is called
+                enemy.update(this.time.now, this.game.loop.delta); // ✅ Ensure each enemy's update() is called
             }
         });
     }
