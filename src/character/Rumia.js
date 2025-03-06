@@ -12,7 +12,6 @@ class Rumia extends Character{
         this.isSpecialanimePlaying = false;
         this.collideCircleRadius = 22;
         this.collideCircleRadiusOffset = [30,14]
-        this.Xspeed = 0;
         this.unableDefence = 0;
         
         this.isHit = false;
@@ -68,8 +67,8 @@ class Rumia extends Character{
         this.play('rumiaFly'); // Play the 'rumiaFly' animation
         
     }
-    update(){
-        super.update();
+    update(time, delta){
+        super.update(time, delta);
         if(!this.isDrop){
             this.playerMoving();
         }else{
@@ -107,28 +106,28 @@ class Rumia extends Character{
     playerMoving(){
         // Remove obstacles when they leave the screen
         
-            if (keyA.isDown && this.x > 32) {
+            if (keyA.isDown && this.x > 28) {
             
-                this.x -= this.speed
+                this.x -= this.speed * this.dt;
             }
-            if (keyS.isDown && this.y < 480) {
+            if (keyS.isDown && this.y < 500) {
                    
-                this.y += this.speed
+                this.y += this.speed* this.dt;
             }
             
             if (keyW.isDown && this.y > 0) {
-                this.y -= this.speed
+                this.y -= this.speed* this.dt;
             }
             if (keyD.isDown && this.x < 950) {
-                this.x += this.speed
+                this.x += this.speed* this.dt;
             }
         
         
             if (!keyShift.isDown) {
-                this.speed =  data.getData('rumia_speed_Normal');
+                this.speed =  data.getData('rumia_speed_Normal')  ;
             }
             if (keyShift.isDown) {
-                this.speed =  data.getData('rumia_speed_Slow');
+                this.speed =  data.getData('rumia_speed_Slow') ;
             }
         
        

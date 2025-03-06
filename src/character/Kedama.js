@@ -19,11 +19,9 @@ class Kedama extends Character{
         this.width = 45;
     }
 
-    update() {
-        //super.update();
-        if(this.healthly <= 0){
-            this.dropOff();
-        }
+    update(time, delta) {
+        super.update(time, delta);
+        
         if(!this.isDrop){
             if(this.behavior == 'l2'){
                 this.l2();
@@ -39,11 +37,11 @@ class Kedama extends Character{
     }
 
     l2(){
-        this.exitScreen('left',2)
+        this.exitScreen('left',data.getData('emeny_speed_normal1'));
     }
     hp_3o6(){
         if(this.step == 0) {
-            if(this.moveToTarget(rumia,4.5,0 ) || rumia.isDrop || rumia.isHit)
+            if(this.moveToTarget(rumia,data.getData('emeny_speed_normal4'),data.getData('emeny_speed_normal4') ) || rumia.isDrop || rumia.isHit)
                 this.step +=1
         }
         if(this.step == 1)

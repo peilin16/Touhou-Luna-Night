@@ -8,6 +8,8 @@ class Character extends Phaser.GameObjects.Sprite {
         this.score = 3;
         // Default properties for all characters
         this.healthly = 3; 
+        this.dt = 0;
+        
         this.isEmeny = false; 
         this.isDrop = false; 
         this.type = type; 
@@ -22,11 +24,13 @@ class Character extends Phaser.GameObjects.Sprite {
         this.scoreFlag = false;
         // Adjust hitbox
         this.isDone = false;
+        this.lastFrameTime = performance.now();
         this.body.setSize(50, 50);
         this.body.setCollideWorldBounds(true);
+
     }
-    update(){
-        
+    update(time, delta){
+        this.dt = delta / 1000; // Update time delta
         if(this.healthly <= 0){
             this.dropOff();
         }
@@ -91,47 +95,47 @@ class Character extends Phaser.GameObjects.Sprite {
         //this.body.enable = false; // ✅ Disable physics body
         this.destroy();
     }
-    exitScreen(key, speed = 2,sec_speed = 0) { 
+    exitScreen(key, speed = 100,sec_speed = 0) { 
         switch (key) {
             case 'top':
-                this.y -= speed; // Move upwards
-                this.x += sec_speed;
+                this.y -= speed * this.dt; // Move upwards
+                this.x += sec_speed  * this.dt;
                 this.checkDestroy('top')
                 break;
             case 'bottom':
-                this.y += speed; // Move downwards
-                this.x += sec_speed;
+                this.y += speed  * this.dt; // Move downwards
+                this.x += sec_speed  * this.dt;
                 this.checkDestroy('bottom')
                 break;
             case 'left':
-                this.x -= speed; // Move left
-                this.y += sec_speed;
+                this.x -= speed  * this.dt; // Move left
+                this.y += sec_speed  * this.dt;
                 this.checkDestroy('left')
                 break;
             case 'right':
-                this.x += speed; // Move right
-                this.y += sec_speed;
+                this.x += speed  * this.dt; // Move right
+                this.y += sec_speed  * this.dt;
                 this.checkDestroy('right')
                 break;
             case 'autoLR':
                 if (this.x < game.config.width / 2) {
-                    this.x -= speed; // Move left if closer to left
-                    this.y += sec_speed;
+                    this.x -= speed  * this.dt; // Move left if closer to left
+                    this.y += sec_speed  * this.dt;
                     this.checkDestroy('left')
                 } else {
-                    this.x += speed; // Move right if closer to right
-                    this.y += sec_speed;
+                    this.x += speed * this.dt; // Move right if closer to right
+                    this.y += sec_speed * this.dt;
                     this.checkDestroy('right')
                 }
                 break;
             case 'autoTB':
                 if (this.y < game.config.height / 2) {
-                    this.y -= speed; // Move up if closer to top
-                    this.x += sec_speed;
+                    this.y -= speed * this.dt; // Move up if closer to top
+                    this.x += sec_speed * this.dt;
                     this.checkDestroy('top')
                 } else {
-                    this.y += speed; // Move down if closer to bottom
-                    this.x += sec_speed;
+                    this.y += speed * this.dt; // Move down if closer to bottom
+                    this.x += sec_speed * this.dt;
                     this.checkDestroy('bottom')
                 }
                 break;
@@ -153,8 +157,8 @@ class Character extends Phaser.GameObjects.Sprite {
         let direction = new Phaser.Math.Vector2(target.x - this.x, target.y - this.y).normalize();
     
         // ✅ Move towards the target
-        this.x += direction.x * speed;
-        this.y += direction.y * speed;
+        this.x += direction.x * speed * this.dt;
+        this.y += direction.y * speed * this.dt;
     
         return false; // ✅ Return false until target is within offset range
     }
@@ -274,38 +278,46 @@ class Character extends Phaser.GameObjects.Sprite {
     }
 */
 
-    moveTo(Xpos = -1, Ypos = -1, speed = 2) {
+
+    moveTo(Xpos = -1, Ypos = -1, speed = 100) {
+        // Use a minimum delta time to prevent issues when tab is inactive or on very slow frames
+        const safeDeltaTime = Math.min(this.dt, 0.1); 
+        
+        // Convert speed to units per second
+        const frameIndependentSpeed = speed * safeDeltaTime;
+        
         let reachedX = false;
         let reachedY = false;
-    
+
         // ✅ Move on the X-axis if Xpos is specified
         if (Xpos !== -1) {
-            let directionX = Math.sign(Xpos - this.x); // ✅ Determine movement direction
-            if (Math.abs(this.x - Xpos) > speed) {
-                this.x += directionX * speed; // ✅ Move towards the target
+            let directionX = Math.sign(Xpos - this.x);
+            if (Math.abs(this.x - Xpos) > frameIndependentSpeed) {
+                this.x += directionX * frameIndependentSpeed;
             } else {
                 this.x = Xpos;
                 reachedX = true;
             }
         } else {
-            reachedX = true; // ✅ Skip X check if not specified
+            reachedX = true;
         }
-    
+
         // ✅ Move on the Y-axis if Ypos is specified
         if (Ypos !== -1) {
-            let directionY = Math.sign(Ypos - this.y); // ✅ Determine movement direction
-            if (Math.abs(this.y - Ypos) > speed) {
-                this.y += directionY * speed; // ✅ Move towards the target
+            let directionY = Math.sign(Ypos - this.y);
+            if (Math.abs(this.y - Ypos) > frameIndependentSpeed) {
+                this.y += directionY * frameIndependentSpeed;
             } else {
                 this.y = Ypos;
                 reachedY = true;
             }
         } else {
-            reachedY = true; // ✅ Skip Y check if not specified
+            reachedY = true;
         }
-    
-        return reachedX && reachedY; // ✅ Return true when both positions are reached
+
+        return reachedX && reachedY;
     }
+
     
     // Collision handling
     collide(obj) {
