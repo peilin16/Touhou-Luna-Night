@@ -31,36 +31,27 @@ class Daiyousei extends Character{
         this.body.setSize(75, 75, true); // Adjust hitbox size
         this.body.setOffset(0, 5);  
     }
-    update() {
-        super.update();
+    update(time, delta) {
+        super.update(time, delta);
         if(!this.isDrop)
             this.exitScreen('left')
         else
             this.exitScreen('top',2,-2);
     }
-    /*
-    behavior(key){
-        if(!this.isTouch){
-            this.isTouch = true
-            score += 20 + (ScoreRate * 10);
-            ScoreRate += 1
+    
+    behavior(player){
+        this.isDrop = true;
+        if(this.behavior == 'healthly'){
+            player.healthly += 1;
         }
         
-    }*/
+    }
     dropOff(){
         this.setTexture('DaiyouseiNothing1')
         //this.anims.stop();
         //this.play('DaiyouseiNothing'); // Play the 'rumiaFly' animation
     }
-    collide(obj){
-        if(obj.type == 'player' && !this.isDrop){
-            if(this.behavior == 'healthly'){
-                obj.healthly += 1;
-                this.isDrop = true;
-            }
-        }
-        this.dropOff();
-    }
+
 
 
 }

@@ -51,8 +51,8 @@ class FlowerFairy extends Character{
 
     }
 
-    update() {
-        super.update();
+    update(time, delta) {
+        super.update(time, delta);
         if(this.isDrop)
             return
         switch(this.behavior){
@@ -74,6 +74,9 @@ class FlowerFairy extends Character{
             case 'fromRight_shootRedTwrilFan_shootBlueTwirlFan_UNSniper_autoTB':
                 this.fromRight_shootRedTwrilFan_shootBlueTwirlFan_UNSniper_autoTB();
                 break;
+            case 'fromRight_shootRedFanBlueFan_autoTB2':
+                this.fromRight_shootRedFanBlueFan_autoTB2();
+                break;
         }
                 
         
@@ -92,7 +95,7 @@ class FlowerFairy extends Character{
                         if(i%3 != 0 ){
                             this.scene.shootingLogic.fanShapedType_ToTarget('redLargeCircleBullet', 6, 100 , this, rumia, data.getData('Bullet_speed_150'))
                         }
-                        this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 17, 0, 324, this,data.getData('Bullet_speed_130'));//shooting 
+                        this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet',22, 0, 324, this,data.getData('Bullet_speed_130'));//shooting 
                     }
                 });
             }
@@ -101,8 +104,30 @@ class FlowerFairy extends Character{
             this.exitScreen('autoTB');
         }
     }
+
+    fromRight_shootRedFanBlueFan_autoTB2() {
+        if(this.step == 0 && this.moveTo(850)){
+            this.step += 1;
+            for (let i = 0; i < 93; i++) {
+                this.scene.time.delayedCall(i * 330, () => {
+                    // ✅ Get a new bullet instance
+                    //this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 12, 80, 260, this, data.getData('Bullet_speed_130'));//shooting
+                    if(!this.isDrop){
+                        if(i%3 != 0 ){
+                            this.scene.shootingLogic.fanShapedType_ToTarget('redLargeCircleBullet', 6, 100 , this, rumia, data.getData('Bullet_speed_150'))
+                        }
+                        this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 17, 0, 324, this,data.getData('Bullet_speed_130'));//shooting 
+                    }
+                });
+            }
+            this.scene.time.delayedCall(31000, () => this.step +=1, [], this);//step2
+        }else if(this.step == 2){
+            this.exitScreen('autoTB');
+        }
+    }
+
     fromRight_shootRedTwrilFan_shootBlueTwirlFan_autoTB(){
-        if(this.step == 0 && this.moveTo(850,-1,3)){
+        if(this.step == 0 && this.moveTo(850,-1,data.getData('emeny_speed_normal120'))){
             this.step += 1
             this.scene.shootingLogic.twirlFanType_ToDirection('redSpeedPauseBullet',   4, 0, 180, 800, 3, 0, 360,  this,data.getData('Bullet_speed_130'))
            
@@ -113,7 +138,7 @@ class FlowerFairy extends Character{
         }
     }
     fromRight_shootRedTwrilFan_shootBlueTwirlFan_UNSniper_autoTB(){
-        if(this.step == 0 && this.moveTo(850,-1,3)){
+        if(this.step == 0 && this.moveTo(850,-1,data.getData('emeny_speed_normal120'))){
             this.step += 1
             //twirlFanType_ToDirection(bulletType,   anglespace, angleStart, angleEnd, sprateSpace, num, fanAngleStart, fanAngleEnd,  shooter, speed,isCounterclockwise = false, isSniper = true){
    
@@ -153,7 +178,7 @@ class FlowerFairy extends Character{
        
     }
     fromRight_ShootRandomTwirFan360_TwrilListBullet_autoTB(){
-        if(this.step == 0 && this.moveTo(800,-1,2)){
+        if(this.step == 0 && this.moveTo(800,-1,data.getData('emeny_speed_normal120'))){
             this.step +=1
             let choose
             let b = ['blueLongSemicircleBullet', 'redLongSemicircleBullet'];
@@ -184,7 +209,7 @@ class FlowerFairy extends Character{
 
     dropOff(){
         this.anims.stop();
-        if(this.type == 'sunflowerFairy')
+        if(this.type == 'sunflowerFairy' || this.type == 'SunFlowerFairy')
             this.setTexture('sunflowerFairyHit');
         else
             this.setTexture('dandelionFairyHit');

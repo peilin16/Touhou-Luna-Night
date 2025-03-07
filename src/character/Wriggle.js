@@ -1,10 +1,10 @@
 class Wriggle extends Character{
     constructor(scene, x, y,subtype , frame) {
-        super(scene, x, y, 'Wriggle1','Wriggle'); // Start with the first texture
+        super(scene, x, y, 'WriggleFly1','Wriggle'); // Start with the first texture
         //this.Xspeed = data.getData('blueDivineSpirit_speed'); // Move speed
         this.body.setSize(data.getData('Wriggle_width'), data.getData('Wriggle_height'));
         this.anims.create({
-            key: 'Wriggle1',
+            key: 'Wriggle',
             frames: [
                 { key: 'Wriggle1' },
                 { key: 'Wriggle2' },
@@ -13,40 +13,56 @@ class Wriggle extends Character{
             frameRate: 10, // 10 frames per second
             repeat: -1 // Loop infinitely
         });
+        this.anims.create({
+            key: 'WriggleFly',
+            frames: [
+                { key: 'WriggleFly1' },
+                { key: 'WriggleFly2' },
+                { key: 'WriggleFly3' },
+            ],
+            frameRate: 10, // 10 frames per second
+            repeat: -1 // Loop infinitely
+        });
         this.subType = subtype;
-        this.anims.play('Wriggle1');
+        this.anims.play('WriggleFly');
         super.healthly = 15;
         
-        
+        this.behaviors = ['r_sbf4_srf1', 'r_bFr8_rFr8', 'r_bFr12_rA12'];
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.setOffset(5, 6);
-        this.healthly = 850;
+        this.healthly = 1050;
         this.isDrop = false;
         this.kind = 'f'
         this.isEmeny = true;
         this.isDone = false;
         this.isFirst = true
+        this.secondState = false
         this.score = 13
-        this.previousBehavior =this.behavior;
+        this.current = 0;
     }
     
 
-    update(){
-        super.update();
+    update(time, delta){
+        super.update(time, delta);
         if(this.isDrop)
             return
-        if(this.isDone){
-            this.behavior = this.getBehavior(this.previousBehavior);
-            this.previousBehavior =this.behavior;
-            this.step = 0;
-            
-        }
         if(this.isFirst){
-            this.behavior = 'r_bFr12_rFr12'
+            if(!this.first_move())
+                return;
+            this.anims.play('Wriggle');
             this.previousBehavior =this.behavior;
+            this.scene.time.delayedCall(1300, () => this.behavior = 'r_bFr8_rFr8', [], this);//step2
             this.isFirst = false
-            
+        }else if(this.healthly <= 180 && !this.secondState){
+            this.secondState = true
+            this.isDone = true;
+            this.sprawnScore(222);
+        }
+        
+        if(this.isDone){
+            this.behavior = this.getBehavior();
+            this.step = 0;
         }
         this.isDone = false;
         switch(this.behavior){
@@ -67,36 +83,39 @@ class Wriggle extends Character{
 
     }
 
-    getBehavior(previous) {
+    getBehavior() {
         if(this.healthly <= 180)
             return 'r_bFr12_rFr12';
-
-        let behaviors = ['r_sbf4_srf1', 'r_bFr8_rFr8', 'r_bFr12_rA12'];
-        
-        if (behaviors.length <= 1) return behaviors[0]; // ✅ Avoid infinite loops if only one element
-    
-        let newBehavior;
-        
-        do {
-            newBehavior = Phaser.Math.RND.pick(behaviors); // ✅ Randomly select from the list
-        } while (newBehavior === previous); // ✅ Ensure it's not the same as before
-
-        return newBehavior;
+        if(this.current >= this.behaviors.length - 1)
+            this.current = 0;
+        else
+            this.current++;
+        return this.behaviors[this.current];
     }
-
+    
     dropOff(){
+        if(!this.isSprawnScore){
+            this.isSprawnScore = true;
+            this.setTexture('WriggleHit');
+            this.sprawnScore(307);
+        }
         
         super.dropOff();
-
+    }
+    first_move(){
+        if(this.moveTo(800,270,data.getData('emeny_speed_normal120')))
+            return true
+        return false;
     }
     r_sbf4_srf1(){
-        if( this.step == 0 &&this.moveTo(800,270,2) ){
+        if( this.step == 0 &&this.moveTo(800,270,data.getData('emeny_speed_normal170')) ){
             this.step +=1
             this.scene.shootingLogic.fanShapedType_ToDirection('redMediumCircleBullet', 10, 0, 324, this, data.getData('Bullet_speed_180'));//shooting 
             this.scene.time.delayedCall(300, () => {
                 for (let i = 0; i < 6; i++) {
                     this.scene.time.delayedCall(i * 150, () => {
                         // ✅ Get a new bullet instance
+                        if(this.isDrop || this.behavior != 'r_sbf4_srf1') return
                         this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 10, 0, 324, this, data.getData('Bullet_speed_180'));//shooting 
                         this.scene.shootingLogic.fanShapedType_ToTarget('blueMediumCircleBullet', 4,  10, this, rumia, data.getData('Bullet_speed_180'))
                     });
@@ -106,17 +125,30 @@ class Wriggle extends Character{
             
             this.scene.time.delayedCall(1300, () => this.step +=1, [], this);//step2
         }
-        else if(this.step == 2){
+        else if(this.step == 2 &&this.moveTo(700,140,data.getData('emeny_speed_normal170'))){
             this.step +=1
-            
+            this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 10, 0, 324, this, data.getData('Bullet_speed_180'));//shooting 
+            this.scene.time.delayedCall(300, () => {
+                for (let i = 0; i < 6; i++) {
+                    this.scene.time.delayedCall(i * 150, () => {
+                        // ✅ Get a new bullet instance
+                        if(this.isDrop || this.behavior != 'r_sbf4_srf1') return
+                        this.scene.shootingLogic.fanShapedType_ToDirection('redMediumCircleBullet', 10, 0, 324, this, data.getData('Bullet_speed_180'));//shooting 
+                        this.scene.shootingLogic.fanShapedType_ToTarget('redMediumCircleBullet', 4,  10, this, rumia, data.getData('Bullet_speed_180'))
+                    });
+                }
+
+            }, [], this);//step2
+            this.scene.time.delayedCall(1300, () => this.step +=1, [], this);//step2
         }
-        else if(this.step == 3 &&this.moveTo(600,170,2) ){
+        else if(this.step == 4 &&this.moveTo(600,170,data.getData('emeny_speed_normal170')) ){
             this.step +=1
             this.scene.shootingLogic.fanShapedType_ToDirection('redMediumCircleBullet', 10, 0, 324, this, data.getData('Bullet_speed_180'));//shooting 
             this.scene.time.delayedCall(300, () => {
                 for (let i = 0; i < 6; i++) {
                     this.scene.time.delayedCall(i * 150, () => {
                         // ✅ Get a new bullet instance
+                        if(this.isDrop || this.behavior != 'r_sbf4_srf1') return
                         this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 10, 0, 324, this, data.getData('Bullet_speed_180'));//shooting 
                         this.scene.shootingLogic.fanShapedType_ToTarget('redMediumCircleBullet', 4,  15, this, rumia, data.getData('Bullet_speed_180'))
                     });
@@ -125,13 +157,14 @@ class Wriggle extends Character{
             }, [], this);//step2
             this.scene.time.delayedCall(1300, () => this.step +=1, [], this);//step2
         }
-        else if(this.step == 5&&this.moveTo(700,520,2)){
+        else if(this.step == 6&&this.moveTo(700,520,data.getData('emeny_speed_normal170'))){
             this.step +=1
             this.scene.shootingLogic.fanShapedType_ToDirection('redMediumCircleBullet', 10, 0, 324, this, data.getData('Bullet_speed_180'));//shooting 
             this.scene.time.delayedCall(300, () => {
                 for (let i = 0; i < 6; i++) {
                     this.scene.time.delayedCall(i * 150, () => {
                         // ✅ Get a new bullet instance
+                        if(this.isDrop || this.behavior != 'r_sbf4_srf1') return
                         this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 10, 0, 324, this, data.getData('Bullet_speed_180'));//shooting 
                         this.scene.shootingLogic.fanShapedType_ToTarget('blueMediumCircleBullet', 4,  15, this, rumia, data.getData('Bullet_speed_180'))
                     });
@@ -139,13 +172,14 @@ class Wriggle extends Character{
 
             }, [], this);//step2
             this.scene.time.delayedCall(1300, () => this.step +=1, [], this);//step2
-        }else if(this.step == 7&&this.moveTo(650,320,2)){
+        }else if(this.step == 8&&this.moveTo(650,320,data.getData('emeny_speed_normal170'))){
             this.step +=1
             this.scene.shootingLogic.fanShapedType_ToDirection('redMediumCircleBullet', 10, 0, 324, this, data.getData('Bullet_speed_180'));//shooting 
             this.scene.time.delayedCall(300, () => {
                 for (let i = 0; i < 6; i++) {
                     this.scene.time.delayedCall(i * 150, () => {
                         // ✅ Get a new bullet instance
+                        if(this.isDrop || this.behavior != 'r_sbf4_srf1') return
                         this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 10, 0, 324, this, data.getData('Bullet_speed_180'));//shooting 
                         this.scene.shootingLogic.fanShapedType_ToTarget('redMediumCircleBullet', 4,  15, this, rumia, data.getData('Bullet_speed_180'))
                     });
@@ -153,18 +187,19 @@ class Wriggle extends Character{
 
             }, [], this);//step2
             this.scene.time.delayedCall(1300, () => this.step +=1, [], this);//step2
-        }else if(this.step == 9){
+        }else if(this.step == 10){
             this.step +=1
             this.scene.time.delayedCall(1300, () => this.isDone = true, [], this);//step2
         }
 
     }
     r_bFr8_rFr8(){
-        if( this.step == 0 &&this.moveTo(800,270,2) ){
+        if( this.step == 0 &&this.moveTo(800,270,data.getData('emeny_speed_normal180')) ){
             this.step +=1
             for (let i = 0; i < 66; i++) {
                 this.scene.time.delayedCall(i * 320, () => {
                     // ✅ Get a new bullet instance
+                    if(this.isDrop || this.behavior != 'r_bFr8_rFr8') return
                     this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 17, 0, 324, this,data.getData('Bullet_speed_130'));//shooting 
                     this.scene.shootingLogic.randomfanShapedType_toDirection('redMediumCircleBullet',8, 0, 324, this, data.getData('Bullet_speed_150'));//shooting 
                 });
@@ -174,26 +209,27 @@ class Wriggle extends Character{
         
     }
     r_bFr12_rA12(){
-        if( this.step == 0 &&this.moveTo(800,100,2) ){
+        if( this.step == 0 &&this.moveTo(800,100,data.getData('emeny_speed_normal180')) ){
             this.step +=1
             let rl = ['redLongSemicircleBullet','blueLongSemicircleBullet']
             for (let i = 0; i < 76; i++) {
                 this.scene.time.delayedCall(i * 450, () => {
                     // ✅ Get a new bullet instance
+                    if(this.isDrop || this.behavior != 'r_bFr12_rA12') return
                     this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 13, 0, 324, this, data.getData('Bullet_speed_130'));//shooting 
                 });
             }
             for (let i = 0; i < 52; i++) {
                 this.scene.time.delayedCall(i * 650, () => {
                     // ✅ Get a new bullet instance
-
+                    if(this.isDrop|| this.behavior != 'r_bFr12_rA12') return
                     let t = Phaser.Math.RND.pick(rl);
                     this.scene.shootingLogic.fanShapedType_ToTarget(t, 3,  2, this, rumia, data.getData('Bullet_speed_130'))
                 });
             }
             for (let i = 0; i < 36; i++) {
                 this.scene.time.delayedCall(i * 950, () => {
-                    // ✅ Get a new bullet instance
+                    if(this.isDrop || this.behavior != 'r_bFr12_rA12') return
                     this.scene.shootingLogic.fanShapedType_ToDirection('redMediumCircleBullet', 13, 0, 324, this, data.getData('Bullet_speed_150'))
                 });
             }
@@ -202,11 +238,11 @@ class Wriggle extends Character{
 
     }
     r_bFr12_rFr12(){
-        if( this.step == 0 &&this.moveTo(800,270,2) ){
+        if( this.step == 0 &&this.moveTo(800,270,data.getData('emeny_speed_normal180')) ){
             this.step +=1
             for (let i = 0; i < 67; i++) {
                 this.scene.time.delayedCall(i * 320, () => {
-                    // ✅ Get a new bullet instance
+                    if(this.isDrop|| this.behavior != 'r_bFr12_rFr12') return
                     this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 20, 0, 324, this,data.getData('Bullet_speed_130'));//shooting 
                     this.scene.shootingLogic.randomfanShapedType_toDirection('redMediumCircleBullet',9, 0, 324, this, data.getData('Bullet_speed_150'));//shooting 
                 });

@@ -12,7 +12,6 @@ class Kedama extends Character{
         this.subType = 'Kedama-White'; 
         this.body.setSize(data.getData('kedama_width'), data.getData('kedama_height'), true); // Adjust hitbox size
         this.body.setOffset(0, 5); 
-        this.Xspeed = data.getData('kedama_speed')
         this.ableToDefence = true; //decide the object able to defence
         this.isRebound = false; // if object in rebound state
         this.heigh = 45;
@@ -32,20 +31,23 @@ class Kedama extends Character{
     }
     dropOff(){
         this.setTexture('KedamaHit');
-        
+        if(!this.isSprawnScore){
+            this.isSprawnScore = true;
+            this.sprawnScore(2);
+        }
         super.dropOff();
     }
 
     l2(){
-        this.exitScreen('left',data.getData('emeny_speed_normal1'));
+        this.exitScreen('left',data.getData('emeny_speed_normal140'));
     }
     hp_3o6(){
         if(this.step == 0) {
-            if(this.moveToTarget(rumia,data.getData('emeny_speed_normal4'),data.getData('emeny_speed_normal4') ) || rumia.isDrop || rumia.isHit)
+            if(this.moveToTarget(rumia,data.getData('emeny_speed_normal200'),0) || rumia.isDrop || rumia.isHit)
                 this.step +=1
         }
         if(this.step == 1)
-            this.exitScreen('left')
+            this.exitScreen('autoTB')
     }
 
     

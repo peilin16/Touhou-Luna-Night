@@ -5,7 +5,7 @@ class Character extends Phaser.GameObjects.Sprite {
         // Add to scene and enable physics
         scene.add.existing(this);
         scene.physics.add.existing(this);
-        this.score = 3;
+        this.score = 35;
         // Default properties for all characters
         this.healthly = 3; 
         this.dt = 0;
@@ -21,7 +21,7 @@ class Character extends Phaser.GameObjects.Sprite {
         this.width = 0;
         this.body.setImmovable(true); // ✅ Prevents movement from collisions
         this.body.setVelocity(0, 0);  // ✅ Ensures Rumia stays in place
-        this.scoreFlag = false;
+        this.isSprawnScore = false;
         // Adjust hitbox
         this.isDone = false;
         this.lastFrameTime = performance.now();
@@ -34,13 +34,14 @@ class Character extends Phaser.GameObjects.Sprite {
         if(this.healthly <= 0){
             this.dropOff();
         }
-        this.sprawnScore();
+        //this.sprawnScore();
     }
     // Method to drop when hit
-    dropOff(duration = 700,yspeed = 3 , xspeed = 0) {
+    dropOff(duration = 700, yspeed = 160 , xspeed = 0) {
         this.isDrop = true;
         
-        this.y +=yspeed
+        this.y +=yspeed * this.dt;
+        this.x +=xspeed * this.dt;
         this.scene.tweens.add({
             targets: this,
             angle: -360, 
@@ -52,7 +53,43 @@ class Character extends Phaser.GameObjects.Sprite {
         
         this.checkDestroy('bottom');
     }
-    
+    getRandomColorBullet(key) {
+        let bulletGroup;
+        switch(key) {
+            case 'smallCircle':
+                bulletGroup = ['blueSmallCircleBullet', 'redSmallCircleBullet'];
+                break;
+            case 'mediumCircle':
+                bulletGroup = ['blueMediumCircleBullet', 'redMediumCircleBullet'];
+                break;
+            case 'largeCircle':
+                bulletGroup = ['blueLargeCircleBullet', 'redLargeCircleBullet'];
+                break;
+            case 'capsule':
+                bulletGroup = ['blueCapsuleBullet', 'redCapsuleBullet'];
+                break;
+            case 'longSemicircle':
+                bulletGroup = ['blueLongSemicircleBullet', 'redLongSemicircleBullet', 'redExtremeLongSemicircleBullet'];
+                break;
+            case 'arrow':
+                bulletGroup = ['blueArrowBullet', 'redArrowBullet'];
+                break;
+            case 'squareSpecial':
+                bulletGroup = ['blueSquareSpecialBullet', 'redSquareSpecialBullet'];
+                break;
+            case 'speedPause':
+                bulletGroup = ['blueSpeedPauseBullet', 'redSpeedPauseBullet'];
+                break;
+            case 'musicSign':
+                bulletGroup = ['redMusicSign1Bullet', 'redMusicSign2Bullet', 'blueMusicSign1Bullet', 'blueMusicSign2Bullet'];
+                break;
+            default:
+                bulletGroup = ['blueMediumCircleBullet', 'redMediumCircleBullet'];
+        }
+        let choose = Phaser.Math.RND.pick(bulletGroup);
+        return choose;
+    }
+
 
     // ✅ Check if the character should be destroyed when off-screen
     checkDestroy(board) {
@@ -95,7 +132,7 @@ class Character extends Phaser.GameObjects.Sprite {
         //this.body.enable = false; // ✅ Disable physics body
         this.destroy();
     }
-    exitScreen(key, speed = 100,sec_speed = 0) { 
+    exitScreen(key, speed = 130,sec_speed = 0) { 
         switch (key) {
             case 'top':
                 this.y -= speed * this.dt; // Move upwards
@@ -142,7 +179,7 @@ class Character extends Phaser.GameObjects.Sprite {
         }
     }
     
-    moveToTarget(target, speed = 2, offset = 0) {
+    moveToTarget(target, speed = 110, offset = 0) {
         if (!target) return true; // ✅ Return true if no target
     
         // ✅ Calculate distance to target
@@ -323,25 +360,52 @@ class Character extends Phaser.GameObjects.Sprite {
     collide(obj) {
         
     }
-    sprawnScore() {
-        /*if (!this.scoreFlag && this.isEmeny && this.isDrop) {
-            this.scoreFlag = true; // ✅ Prevent multiple spawns
-            
-            for (let i = 0; i < this.score; i++) {
-                let offsetX = Phaser.Math.Between(-30, 30); // ✅ Small random offset
-                let offsetY = Phaser.Math.Between(-30, 30);
+
+    sprawnScore(score) {
+        if (!this.scene) return;
     
-                let scoreObj = new Score(this.scene, this.x + offsetX, this.y + offsetY);
-                scoreObj.target = rumia; // ✅ Make the score move to the player
-                this.scene.EmenyGroup.add(scoreObj);
+        let scoreValues = { small: 1, medium: 10, large: 50 };
+        let scoreTypes = { large: "scoreLarge", medium: "scoreMedium", small: "scoreSmall" };
     
-                this.scene.physics.add.overlap(rumia, scoreObj, (rumia, scoreObj) => {
-                    
-                    this.scene.handleCollision(rumia, scoreObj);
-                    
-                });
-            }
-        }*/
+        let numLarge = Math.floor(score / scoreValues.large);
+        score %= scoreValues.large;
+    
+        let numMedium = Math.floor(score / scoreValues.medium);
+        score %= scoreValues.medium;
+    
+        let numSmall = Math.floor(score / scoreValues.small);
+    
+        let totalObjects = numLarge + numMedium + numSmall;
+        let spreadRadius = 30; // Radius to spread out the score items
+    
+        let spawnScoreItem = (type, xOffset, yOffset) => {
+            let scoreObj = new Score(this.scene, this.x + xOffset, this.y + yOffset, scoreTypes[type]);
+            this.scene.physics.add.overlap(rumia, scoreObj, (rumia, scoreObj) => {
+                if(!this || !this.scene)return;
+                this.scene.handleCollision(rumia, scoreObj);
+            });
+            this.scene.EmenyGroup.add(scoreObj);
+        };
+    
+        let index = 0;
+        for (let i = 0; i < numLarge; i++, index++) {
+            let angle = (index / totalObjects) * Math.PI * 2;
+            let xOffset = Math.cos(angle) * spreadRadius;
+            let yOffset = Math.sin(angle) * spreadRadius;
+            spawnScoreItem("large", xOffset, yOffset);
+        }
+        for (let i = 0; i < numMedium; i++, index++) {
+            let angle = (index / totalObjects) * Math.PI * 2;
+            let xOffset = Math.cos(angle) * spreadRadius;
+            let yOffset = Math.sin(angle) * spreadRadius;
+            spawnScoreItem("medium", xOffset, yOffset);
+        }
+        for (let i = 0; i < numSmall; i++, index++) {
+            let angle = (index / totalObjects) * Math.PI * 2;
+            let xOffset = Math.cos(angle) * spreadRadius;
+            let yOffset = Math.sin(angle) * spreadRadius;
+            spawnScoreItem("small", xOffset, yOffset);
+        }
     }
 
 

@@ -196,11 +196,10 @@ class Rumia extends Character{
     collide(obj) {
         
         if (!this.isDrop && !obj.isDrop ) {
-            if (!obj.isEmeny) { // If colliding with a friendly object
-                if (!obj.isTouch) {
-                    let pickUpSound = this.scene.getAudio('p'); // ✅ Call from scene
-                    if (pickUpSound) pickUpSound.play();
-                }
+            if (!obj.isEmeny && !obj.isDrop) { // If colliding with a friendly object
+                
+                //let pickUpSound = this.scene.getAudio('p'); // ✅ Call from scene
+                //if (pickUpSound) pickUpSound.play();
                 //obj.behavior(this);
                 //obj.dropOff();
             } else if (!this.isHit) { // If colliding with an enemy

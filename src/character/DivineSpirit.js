@@ -43,8 +43,8 @@ class DivineSpirit extends Character {
         
     }
 
-    update() {
-        super.update();
+    update(time, delta) {
+        super.update(time, delta);
         if(this.isDrop){
             return
         }
@@ -70,10 +70,10 @@ class DivineSpirit extends Character {
 
 
     r_shooting2_l() {
-        if (this.step == 0 && this.moveTo(850,-1,2)){
+        if (this.step == 0 && this.moveTo(850,-1,data.getData('emeny_speed_normal130'))){
             this.step +=1
             this.scene.shootingLogic.listType_ToTarget('blueMediumCircleBullet', 5, 200, this, rumia,data.getData('Bullet_speed_150'));
-            this.scene.time.delayedCall(4400, () => this.step +=1, [], this);//step2
+            this.scene.time.delayedCall(3400, () => this.step +=1, [], this);//step2
         } 
         if(this.step == 2){
             this.step +=1;
@@ -81,34 +81,34 @@ class DivineSpirit extends Character {
             this.scene.time.delayedCall(3400, () => this.step +=1, [], this);//step2
         }
         if(this.step == 4){
-            this.exitScreen('autoTB', 1.5, -0.7)
+            this.exitScreen('autoTB', data.getData('emeny_speed_normal130'), -data.getData('emeny_speed_normal100'))
         }
     }
     
     r_sbl1_srl1_srl1_tb(){
-        if(this.step == 0 && this.moveTo(900,-1,1.8)){
+        if(this.step == 0 && this.moveTo(900,-1,data.getData('emeny_speed_normal120'))){
             this.step +=1
             //listType_ToTarget(bulletType, num, sperate, shooter, target, speed, offset = 'No')
             this.scene.shootingLogic.listType_ToTarget('blueMediumCircleBullet', 3, 100, this, rumia,data.getData('Bullet_speed_150'));
-        }else if(this.step == 1 && this.moveTo(850,-1,1.8)){
+        }else if(this.step == 1 && this.moveTo(850,-1,data.getData('emeny_speed_normal120'))){
             this.step +=1
             this.scene.shootingLogic.listType_ToTarget('blueMediumCircleBullet', 3, 100, this, rumia,data.getData('Bullet_speed_150'));
-        }else if(this.step == 2 && this.moveTo(700,-1,1.8)){
+        }else if(this.step == 2 && this.moveTo(700,-1,data.getData('emeny_speed_normal120'))){
             this.step +=1
             this.scene.shootingLogic.listType_ToTarget('blueMediumCircleBullet', 3, 100, this, rumia,data.getData('Bullet_speed_150'));
-        }else if(this.step == 3 && this.moveTo(630,-1,1.8)){
+        }else if(this.step == 3 && this.moveTo(630,-1,data.getData('emeny_speed_normal120'))){
             this.step +=1
             this.scene.shootingLogic.listType_ToTarget('redMediumCircleBullet', 3, 100, this, rumia,data.getData('Bullet_speed_150'));
-        }else if(this.step == 4 && this.moveTo(540,-1,1.8)){
+        }else if(this.step == 4 && this.moveTo(540,-1,data.getData('emeny_speed_normal120'))){
             this.step +=1
             this.scene.shootingLogic.listType_ToTarget('redMediumCircleBullet', 3, 100, this, rumia,data.getData('Bullet_speed_150'));
         }else if(this.step == 5){
-            this.exitScreen('autoTB',1.8 , -1);
+            this.exitScreen('autoTB',data.getData('emeny_speed_normal100'), -1);
         }
     }
     //fanType 360
     right_shootingFan2BlueBullet_AutoTopDown(){
-        if (this.step == 0 && this.moveTo(850,-1,2)){
+        if (this.step == 0 && this.moveTo(850,-1,data.getData('emeny_speed_normal120'))){
             this.step +=1
             //fanShapedType_ToTarget(bulletType, num,  offsetAngle, shooter, target, speed) 
             this.scene.shootingLogic.fanShapedType_ToTarget('blueMediumCircleBullet', 2,5, this, rumia,data.getData('Bullet_speed_150'));
@@ -120,11 +120,11 @@ class DivineSpirit extends Character {
             this.scene.time.delayedCall(3400, () => this.step +=1, [], this);//step2
         }
         if(this.step == 4){
-            this.exitScreen('autoTB', 1.5, -0.7)
+            this.exitScreen('autoTB', data.getData('emeny_speed_normal120'), -data.getData('emeny_speed_normal130'))
         }
     }
     right_shootingFan2RedBullet_AutoTopDown(){
-        if (this.step == 0 && this.moveTo(850,-1,2)){
+        if (this.step == 0 && this.moveTo(850,-1,data.getData('emeny_speed_normal130'))){
             this.step +=1
             //fanShapedType_ToTarget(bulletType, num,  offsetAngle, shooter, target, speed) 
             this.scene.shootingLogic.fanShapedType_ToTarget('redMediumCircleBullet', 2,5, this, rumia,data.getData('Bullet_speed_150'));
@@ -136,12 +136,18 @@ class DivineSpirit extends Character {
             this.scene.time.delayedCall(4400, () => this.step +=1, [], this);//step2
         }
         if(this.step == 4){
-            this.exitScreen('autoTB', 1.5, -0.7)
+            this.exitScreen('autoTB', data.getData('emeny_speed_normal130'), -data.getData('emeny_speed_normal100'))
         }
     }
     collide(){
         this.healthly -=5
     }
-
+    dropOff(){
+        if(!this.isSprawnScore){
+            this.isSprawnScore = true;
+            this.sprawnScore(26);
+        }
+        super.dropOff();
+    }
     
 }

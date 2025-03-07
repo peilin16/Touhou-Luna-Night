@@ -44,8 +44,8 @@ class Destruction extends Character {
         this.vy = 0;
         this.Ypos = 300
     }
-    update() {
-        super.update();
+    update(time, delta) {
+        super.update(time, delta);
         if(this.isDrop)
             return
         let posX
@@ -97,43 +97,43 @@ class Destruction extends Character {
         
     }
     iceSelfDestructBulletX(posX){
-        if( this.step == 0 &&this.moveTo(posX[0], -1, 3) ){
+        if( this.step == 0 &&this.moveTo(posX[0], -1, data.getData('emeny_speed_normal110')) ){
             this.step +=1;
             this.scene.shootingLogic.randomfanShapedType_toDirection('blueCapsuleBullet', 17, 0, 324, this ,data.getData('Bullet_speed_120'));//shooting 
             this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 17, 0, 324,  this,data.getData('Bullet_speed_130'));//shooting 
-        }else if( this.step == 1 &&this.moveTo(posX[1], -1, 3) ){
+        }else if( this.step == 1 &&this.moveTo(posX[1], -1,  data.getData('emeny_speed_normal110')) ){
             this.step +=1;
             this.scene.shootingLogic.randomfanShapedType_toDirection('blueCapsuleBullet', 17, 0, 324,  this,data.getData('Bullet_speed_150'));//shooting 
-        }else if( this.step == 2 &&this.moveTo(posX[2], -1, 3) ){
+        }else if( this.step == 2 &&this.moveTo(posX[2], -1,  data.getData('emeny_speed_normal110')) ){
             this.step +=1;
             this.scene.shootingLogic.randomfanShapedType_toDirection('redCapsuleBullet', 15, 0, 324,  this,data.getData('Bullet_speed_120'));//shooting 
             this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 17, 0, 324,  this,data.getData('Bullet_speed_150'));//shooting 
-        }else if( this.step == 3 &&this.moveTo(posX[3], -1, 3) ){
+        }else if( this.step == 3 &&this.moveTo(posX[3], -1,  data.getData('emeny_speed_normal110')) ){
             this.step +=1;
             this.scene.shootingLogic.randomfanShapedType_toDirection('redCapsuleBullet', 12, 0, 324,  this,data.getData('Bullet_speed_120'));//shooting 
             this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 17, 0, 324,  this,data.getData('Bullet_speed_150'));//shooting 
-        }else if( this.step == 4 &&this.moveTo(posX[4], -1, 3) ){
+        }else if( this.step == 4 &&this.moveTo(posX[4], -1,  data.getData('emeny_speed_normal110')) ){
             this.step +=1;
             this.healthly = 0;
         }
     }
     iceSelfDestructBulletY(posY){
-        if( this.step == 0 &&this.moveTo(-1, posY[0], 3) ){
+        if( this.step == 0 &&this.moveTo(-1, posY[0], data.getData('emeny_speed_normal100')) ){
             this.step +=1;
             this.scene.shootingLogic.randomfanShapedType_toDirection('blueCapsuleBullet', 17, 0, 324, this ,data.getData('Bullet_speed_120'));//shooting 
             this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 17, 0, 324,  this,data.getData('Bullet_speed_130'));//shooting 
-        }else if( this.step == 1 &&this.moveTo(-1, posY[1], 3) ){
+        }else if( this.step == 1 &&this.moveTo(-1, posY[1], data.getData('emeny_speed_normal100')) ){
             this.step +=1;
             this.scene.shootingLogic.randomfanShapedType_toDirection('blueCapsuleBullet', 17, 0, 324,  this,data.getData('Bullet_speed_150'));//shooting 
-        }else if( this.step == 2 &&this.moveTo(-1, posY[2], 3) ){
+        }else if( this.step == 2 &&this.moveTo(-1, posY[2], data.getData('emeny_speed_normal100')) ){
             this.step +=1;
             this.scene.shootingLogic.randomfanShapedType_toDirection('redCapsuleBullet', 15, 0, 324,  this,data.getData('Bullet_speed_120'));//shooting 
             this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 17, 0, 324,  this,data.getData('Bullet_speed_150'));//shooting 
-        }else if( this.step == 3 &&this.moveTo(-1, posY[3], 3) ){
+        }else if( this.step == 3 &&this.moveTo(-1, posY[3], data.getData('emeny_speed_normal100')) ){
             this.step +=1;
             this.scene.shootingLogic.randomfanShapedType_toDirection('redCapsuleBullet', 12, 0, 324,  this,data.getData('Bullet_speed_120'));//shooting 
             this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 17, 0, 324,  this,data.getData('Bullet_speed_150'));//shooting 
-        }else if( this.step == 4 &&this.moveTo(-1, posY[4], 3) ){
+        }else if( this.step == 4 &&this.moveTo(-1, posY[4], data.getData('emeny_speed_normal100')) ){
             this.step +=1;
             this.healthly = 0;
         }
@@ -168,7 +168,7 @@ class Destruction extends Character {
             this.rotationSpeed = 0.03; // Adjust for faster/slower rotation
             this.rotationDirection = Phaser.Math.RND.pick([-1, 1]); // Random direction
         }
-        if( this.step == 0 &&this.moveTo(-1, 100, 3) ){
+        if( this.step == 0 &&this.moveTo(-1, 100,  data.getData('emeny_speed_normal100')) ){
             this.Ypos = Phaser.Math.RND.pick([200,300,400,500])
             this.step +=1;
             this.scene.shootingLogic.randomfanShapedType_toDirection('blueCapsuleBullet', 17, 0, 324, this ,data.getData('Bullet_speed_120'));//shooting 
