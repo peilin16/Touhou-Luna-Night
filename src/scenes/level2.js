@@ -8,12 +8,14 @@ class Level2 extends Mainlevel {
 
     create() {
         // Create the animation for Rumia=
-
-
+       
         this.startfield = this.add.tileSprite(0, 0, boardwidth, boardheigh, 'backgroundtop').setOrigin(0, 0);
         this.backgroundforest = this.add.tileSprite(0, 420, boardwidth, boardheigh, 'backgrounddown').setOrigin(0, 0);
-        rumia = new Rumia(this, 150, 100, ).setOrigin(0.5, 0);
         //rumia = new Rumia(this, 150, 100, ).setOrigin(0.5, 0);
+        //rumia = new Rumia(this, 150, 100, ).setOrigin(0.5, 0);
+        rumia = new Rumia(this, 150, 100, ).setOrigin(0.5, 0);
+        rumia.Playerscore = playerScore;
+        rumia.healthly = playerHealthly;
 
         super.create(); // Call MainLevel create method
         
@@ -33,8 +35,8 @@ class Level2 extends Mainlevel {
         
         this.current = 0;
         this.emenySpawn = [
-            this.emenySpawn13.bind(this),
-            this.finalBossSpawn.bind(this),
+            /*this.emenySpawn13.bind(this),
+            this.finalBossSpawn.bind(this),*/
             //this.emenySpawn11.bind(this),
 
             
@@ -114,9 +116,9 @@ class Level2 extends Mainlevel {
     emenySpawn1(){
         if(!this.isSprawn){
             this.isSprawn = true;
-            this.time.delayedCall(1000, () =>{super.DelayXspawnEmeny(15,1700,1,'list','MaidFairy','MaidFairy1','b_srf3t_t',130)} , [], this);//step2
-            this.time.delayedCall(1000, () =>{super.DelayXspawnEmeny(15,1700,1,'list','MaidFairy','MaidFairy1','b_sbf3t_t',430)} , [], this);//step2
-            this.time.delayedCall(27500, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
+            this.time.delayedCall(4500, () =>{super.DelayXspawnEmeny(14,2800,1,'list','MaidFairy','MaidFairy1','shoot_fanShapeTypeSniperBulletToTarget_AutoTB',130)} , [], this);//step2
+            this.time.delayedCall(4500, () =>{super.DelayXspawnEmeny(14,2800,1,'list','MaidFairy','MaidFairy3','shoot_fanShapeTypeSniperBulletToTarget_AutoTB',430)} , [], this);//step2
+            this.time.delayedCall(45700, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
         } 
     }
     emenySpawn2(){
@@ -125,7 +127,7 @@ class Level2 extends Mainlevel {
             this.time.delayedCall(2000, () => {this.spawnEmeny(1, 'list', 'Daiyousei','','healthly',200);});
             //this.time.delayedCall(4600, () =>{super.DelayXspawnEmeny(7,2200,5,'list','Kedama','','l2',80)} , [], this);//step2
             this.time.delayedCall(4000, () =>{super.DelayXspawnEmeny(13,1700,1,'list','MaidFairy','MaidFairy2','b_srf3t_t',130)} , [], this);//step2
-            this.time.delayedCall(4000, () =>{super.spawnEmeny(1,'list','SunFlowerFairy','SunFlowerFairy','r5_s5Fs6L_tL',520)} , [], this);//step2
+            this.time.delayedCall(4000, () =>{super.spawnEmeny(1,'list','dandelionFairy','dandelionFairy','fromRight_shootRedTwrilFan_shootBlueTwirlFan_UNSniper_autoTB',520)} , [], this);//step2
             this.time.delayedCall(32500, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
         }
     }

@@ -7,6 +7,7 @@ class Mainlevel extends Phaser.Scene {
         this.isSprawn = false;//sprawn flag
         //level = 0;
         // define keys    
+        this.dialogSystem = null;
         this.physics.world.setFPS(120);
         this.installShootingLogic(); // ✅ Attach shooting logic to this scene
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -17,6 +18,7 @@ class Mainlevel extends Phaser.Scene {
         keyK = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
         keyJ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.J);
         keyShift = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+        
         
         
         this.current = 0;
@@ -36,8 +38,19 @@ class Mainlevel extends Phaser.Scene {
             },
             fixedWidth: 100
         }
-        this.RumiahealthText = this.add.text(50, 20, '[H]:'+rumia.healthly, this.scoreConfig).setOrigin(0.5)
-        this.CurrentScoreText = this.add.text(50, 40, '[S]:'+ rumia.Playerscore, this.scoreConfig).setOrigin(0.5);
+        this.RumiahealthText = this.add.text(50, 20, '[H]:' + rumia.healthly, {
+            fontSize: '25px',
+            color: '#ffffff', // White text color
+            fontStyle: 'bold' // Bold text
+        }).setOrigin(0.5);
+        
+        this.CurrentScoreText = this.add.text(50, 40, '[S]:' + rumia.Playerscore, {
+            fontSize: '25px',
+            color: '#ffffff', // White text color
+            fontStyle: 'bold' // Bold text
+        }).setOrigin(0.5);
+        this.dialogueIndex = 0;
+
 
         this.anims.create({
             key: 'explodeAnim',
@@ -54,31 +67,47 @@ class Mainlevel extends Phaser.Scene {
         this.boss = null; // ✅ Store the boss reference
     
             // Create Dialogue Box
-        this.dialogueBox = this.add.rectangle(boardwidth / 2, boardheigh - 100, boardwidth - 200, 120, 0x000000, 0.7);
-        this.dialogueText = this.add.text(boardwidth / 2 - 350, boardheigh - 125, '', {
+        this.dialogSystem = new DialogSystem(this);
+
+        // ✅ Create Dialogue UI
+        this.dialogueBox = this.add.rectangle(
+            this.scale.width / 2, 
+            this.scale.height - 100, 
+            this.scale.width - 200, 
+            120, 
+            0x000000, 
+            0.7
+        ).setOrigin(0.5);
+
+        this.dialogueText = this.add.text(this.scale.width / 2 - 350, this.scale.height - 125, '', {
             fontSize: '24px',
             color: '#ffffff',
-            wordWrap: { width: boardwidth - 250 }
-        });
-        this.speakerText = this.add.text(boardwidth / 2 - 350, boardheigh - 160, '', {
+            wordWrap: { width: this.scale.width - 250 }
+        }).setOrigin(0);
+
+        this.speakerText = this.add.text(this.scale.width / 2 - 350, this.scale.height - 160, '', {
             fontSize: '28px',
             color: '#ffcc00',
             fontStyle: 'bold'
-        });
+        }).setOrigin(0);
 
+        // ✅ Hide UI initially
         this.dialogueBox.setVisible(false);
         this.dialogueText.setVisible(false);
         this.speakerText.setVisible(false);
 
+        // ✅ Spacebar to continue dialogue
+        this.input.keyboard.on('keydown-SPACE', () => {
+            if (this.isSpeech) {
+                this.dialogSystem.nextDialogue();
+            }
+        });
+        
+        
         this.dialogueIndex = 0;
         this.isSpeech = false;
         
-        // Spacebar Input to Continue Dialogue
-        this.input.keyboard.on('keydown-SPACE', () => {
-            if (this.isSpeech) {
-                this.nextDialogue();
-            }
-        });
+        
 
     }
 
@@ -117,72 +146,12 @@ class Mainlevel extends Phaser.Scene {
             }
         });
     }
-    startDialogue(playerName, playerSpeech, bossName, bossSpeech) {
-        this.isSpeech = true; // ✅ Pause the game
-        this.playerName = playerName;
-        this.bossName = bossName;
-        this.playerSpeech = playerSpeech;
-        this.bossSpeech = bossSpeech;
-        this.dialogueIndex = 0;
-    
-        // ✅ Show UI Elements
+    startDialogue(key) {
+        this.dialogSystem.startDialogue( key);
         this.dialogueBox.setVisible(true);
         this.dialogueText.setVisible(true);
         this.speakerText.setVisible(true);
-    
-        this.nextDialogue(); // ✅ Start first dialogue line
     }
-    
-    nextDialogue() {
-        // ✅ If both characters have dialogue, alternate turns
-        if (this.playerSpeech.length > 0 && this.bossSpeech.length > 0) {
-            if (this.dialogueIndex % 2 === 0) {
-                // ✅ Player's Turn
-                if (this.dialogueIndex / 2 < this.playerSpeech.length) {
-                    this.speakerText.setText(this.playerName);
-                    this.dialogueText.setText(this.playerSpeech[Math.floor(this.dialogueIndex / 2)]);
-                    this.dialogueIndex++;
-                    return;
-                }
-            } else {
-                // ✅ Boss's Turn
-                if (Math.floor(this.dialogueIndex / 2) < this.bossSpeech.length) {
-                    this.speakerText.setText(this.bossName);
-                    this.dialogueText.setText(this.bossSpeech[Math.floor(this.dialogueIndex / 2)]);
-                    this.dialogueIndex++;
-                    return;
-                }
-            }
-        } 
-        // ✅ If only the player has dialogue, show only the player’s speech
-        else if (this.playerSpeech.length > 0) {
-            if (this.dialogueIndex < this.playerSpeech.length) {
-                this.speakerText.setText(this.playerName);
-                this.dialogueText.setText(this.playerSpeech[this.dialogueIndex]);
-                this.dialogueIndex++;
-                return;
-            }
-        } 
-        // ✅ If only the boss has dialogue, show only the boss’s speech
-        else if (this.bossSpeech.length > 0) {
-            if (this.dialogueIndex < this.bossSpeech.length) {
-                this.speakerText.setText(this.bossName);
-                this.dialogueText.setText(this.bossSpeech[this.dialogueIndex]);
-                this.dialogueIndex++;
-                return;
-            }
-        }
-    
-        // ✅ End dialogue and resume game when both lists are finished
-        this.isSpeech = false;
-        this.dialogueBox.setVisible(false);
-        this.dialogueText.setVisible(false);
-        this.speakerText.setVisible(false);
-    }
-
-
-
-
     //game over
     gameOver(){
         rumia.dropOff();
@@ -261,6 +230,7 @@ class Mainlevel extends Phaser.Scene {
                         return;
                     }else if(!obj.isHit){
                         obj.collideToBullet(bullet);
+                        this.RumiahealthText.setText('[H]:'+rumia.healthly);
                         bullet.dropOff();
                     }
                     //this.colliderObject.destroy();
@@ -278,15 +248,14 @@ class Mainlevel extends Phaser.Scene {
         // Flash effect
         rumia.collide(obj);
         obj.collide(rumia); //  Call obj’s collide behavior
-        if(obj.healthly <= 0)
-            obj.dropOff()
+        
         if(rumia.healthly < 0){
             //this.gameOver();
                 
             //this.gameOver();
         }
         this.RumiahealthText.setText('[H]:'+rumia.healthly);
-        this.CurrentScoreText.setText('[P]:'+rumia.score);
+        this.CurrentScoreText.setText('[P]:'+rumia.Playerscore);
         //rumia.isHit = true;
     }
     DelayXspawnEmeny(numX = 1 , sprateMin = 1,numY, type, Emeny, subtype = '', behavior = '', startY = boardheigh / 2, startX = game.config.width + 120 ){

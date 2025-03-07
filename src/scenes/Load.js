@@ -77,7 +77,10 @@ class Load extends Phaser.Scene {
         this.load.image('Wriggle2', './assets/character/Wriggle2.png');
         this.load.image('Wriggle3', './assets/character/Wriggle3.png');
         this.load.image('WriggleHit', './assets/character/WriggleHit.png');
-        
+        this.load.image('WriggleFly1', './assets/character/WriggleFly1.png');
+        this.load.image('WriggleFly2', './assets/character/WriggleFly2.png');
+        this.load.image('WriggleFly3', './assets/character/WriggleFly3.png');
+
 
         this.load.image('Crino1', './assets/character/crino-fly1.png');
         this.load.image('CrinoFront', './assets/character/crino.png');
@@ -152,7 +155,9 @@ class Load extends Phaser.Scene {
         this.load.image('iceTop','./assets/img/iceTop.png');
         this.load.image('yinYangOrbs','./assets/img/yinYangOrbs.png');
         //element load
-        this.load.image('score','./assets/img/score.png');
+        this.load.image('scoreSmall','./assets/img/scoreSmall.png');
+        this.load.image('scoreMedium','./assets/img/scoreMedium.png');
+        this.load.image('scoreLarge','./assets/img/scoreLarge.png');
         //test load
         //this.load.image('test',  'https://labs.phaser.io/assets/sprites/phaser3-logo.png');
 //ExplosionSmall1_1
@@ -189,7 +194,9 @@ class Load extends Phaser.Scene {
         
         this.load.image('explosionTexture', './assets/img/explosionTexture1.png');
         
-        
+        //JSON
+        this.load.json('dialogEN', './dialogJSON/dialogEN.JSON');
+        this.load.bitmapFont('gem_font', './assets/font/gem.png', './assets/font/gem.xml');
     }
     create() {
 

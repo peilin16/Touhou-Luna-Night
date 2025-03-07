@@ -47,7 +47,7 @@ class Title extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
             score = 0;
             ScoreRate = 1;
-            this.scene.start('level4Scene'); // Start the Play scene
+            this.scene.start('level2Scene'); // Start the Play scene
         }
     }
 }
