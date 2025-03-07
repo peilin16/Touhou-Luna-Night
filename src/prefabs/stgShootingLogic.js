@@ -133,12 +133,23 @@ class stgShootingLogic{
             case 'redArrowBullet':
                 bullet = new arrowBullet(this.scene, shooter.x, shooter.y, null, speed,'ra');
                 break;
+            case 'blueSquareSpecialBullet':
+            case 'redSquareSpecialBullet':
+                bullet = new arrowBullet(this.scene, shooter.x, shooter.y, null, speed,key);
+                break;
             case 'redSpeedPauseBullet':
                 bullet = new speedPauseBullet(this.scene, shooter.x, shooter.y, null, speed,'rs');
                 break;
             case 'blueSpeedPauseBullet':
                 bullet = new speedPauseBullet(this.scene, shooter.x, shooter.y, null, speed,'bs');
-                break;    
+                break;
+                
+            case 'redMusicSign1Bullet':
+            case 'redMusicSign2Bullet':
+            case 'blueMusicSign1Bullet':
+            case 'blueMusicSign2Bullet':
+                bullet = new MusicSignBullet(this.scene, shooter.x, shooter.y, null, speed, key);
+                break;  
             default:
                 console.warn(`Unknown bullet key: ${key}`);
                 return null;
@@ -154,14 +165,34 @@ class stgShootingLogic{
                     this.scene.bulletCollision(rumia, bullet);
                     //}
                 });
-    
-                
             
         }
         bullet.target = rumia;
         return bullet;
     }
+    speedChangeListType_ToTarget(bulletType, shooter, target, startSpeed, endSpeed, speedSpace){
+        let currentSpeed = startSpeed; // ✅ Number of bullets to fire
+        let bulletGroup = []
+        let bullet
+        if (startSpeed > endSpeed){
+            while(currentSpeed > endSpeed){
+                bullet =this.sniperBullet(bulletType, shooter, target, currentSpeed );
+                currentSpeed -= speedSpace
+                this.scene.bulletGroup.add(bullet);
+                bulletGroup.push(bullet);
+            }
+        } 
+        else {
+            while(currentSpeed < endSpeed){
+                bullet = this.sniperBullet(bulletType, shooter, target, currentSpeed );
+                currentSpeed += speedSpace
+                this.scene.bulletGroup.add(bullet);
+                bulletGroup.push(bullet);
+            }
 
+        }  
+        return bulletGroup;
+    }
     //advanced bullet method
     listType_ToTarget(bulletType, num, sperate, shooter, target, speed, offset = 'No') { 
         let bulletGroup = []
@@ -332,16 +363,18 @@ class stgShootingLogic{
 
         return bulletGroup;
     }
-    twirlFanType_ToDirection(bulletType,   anglespace, angleStart, angleEnd, sprateSpace, num, fanAngleStart, fanAngleEnd,  shooter, speed,isCounterclockwise = false){
+    twirlFanType_ToDirection(bulletType,   anglespace, angleStart, angleEnd, sprateSpace, num, fanAngleStart, fanAngleEnd,  shooter, speed,isCounterclockwise = false, isSniper = true){
         let currentAngle = angleStart;
         if(isCounterclockwise)
             currentAngle = angleEnd;
         let bulletGroup = []
+        let behavior = shooter.behavior;
         let fireInterval = this.scene.time.addEvent({
             delay: sprateSpace, // ✅ Delay between each wave
             callback: () => {
-                if(shooter.isDrop )
+                if(shooter.isDrop || shooter.isDone)
                     return;
+                if(shooter.behavior !=behavior)return; 
                 if (currentAngle > angleEnd && ! isCounterclockwise) {
                     fireInterval.remove(); // ✅ Stop firing when exceeding `angleEnd`
                     return;
@@ -352,6 +385,50 @@ class stgShootingLogic{
                     bulletGroup = this.fanShapedType_ToDirection(bulletType, num, fanAngleStart + currentAngle, fanAngleEnd + currentAngle, shooter, speed);
                 else
                     bulletGroup = this.fanShapedType_ToDirection(bulletType, num, fanAngleStart + currentAngle, fanAngleEnd + currentAngle, shooter, speed);
+                if(bulletType == 'redSpeedPauseBullet' || bulletType == 'blueSpeedPauseBullet'){
+                    for (let i = 0; i < bulletGroup.length; ++i) {
+                        bulletGroup[i].pauseMin = 700; // Pause for 1.2 seconds
+                        bulletGroup[i].delayPauseMin = 1000; // Pause starts after 0.8 seconds
+                        bulletGroup[i].isSniper = isSniper; // Will re-aim at target after pause
+                        bulletGroup[i].accelerate = 1.5; // Increases speed by 50% after pausing
+                    }
+                }
+                if(isCounterclockwise)
+                    currentAngle -= anglespace
+                else
+                    currentAngle += anglespace; // ✅ Increment angle for next wave
+            },
+            callbackScope: this,
+            loop: true
+        });
+        return bulletGroup;
+
+    }
+
+
+    twirlRandomFanType_ToDirection(bulletType,   anglespace, angleStart, angleEnd, sprateSpace, num, fanAngleStart, fanAngleEnd,  shooter, speed,isCounterclockwise = false){
+        let currentAngle = angleStart;
+        if(isCounterclockwise)
+            currentAngle = angleEnd;
+        let bulletGroup = []
+        let behavior = shooter.behavior;
+        let fireInterval = this.scene.time.addEvent({
+            delay: sprateSpace, // ✅ Delay between each wave
+            callback: () => {
+                if(shooter.isDrop || shooter.isDone)
+                    return;
+                if(shooter.behavior !=behavior)return; 
+                if (currentAngle > angleEnd && ! isCounterclockwise) {
+                    fireInterval.remove(); // ✅ Stop firing when exceeding `angleEnd`
+                    return;
+                }else if(currentAngle < angleStart &&  isCounterclockwise){
+                    return;
+                }
+                if(isCounterclockwise)
+                    //randomfanShapedType_toDirection(bulletType, num, angleStart, angleEnd, shooter, speed)
+                    bulletGroup = this.randomfanShapedType_toDirection(bulletType, num, fanAngleStart + currentAngle, fanAngleEnd + currentAngle, shooter, speed);
+                else
+                    bulletGroup = this.randomfanShapedType_toDirection(bulletType, num, fanAngleStart + currentAngle, fanAngleEnd + currentAngle, shooter, speed);
                 if(bulletType == 'redSpeedPauseBullet' || bulletType == 'blueSpeedPauseBullet'){
                     for (let i = 0; i < bulletGroup.length; ++i) {
                         bulletGroup[i].pauseMin = 700; // Pause for 1.2 seconds
@@ -371,6 +448,7 @@ class stgShootingLogic{
         return bulletGroup;
 
     }
+
     expandFanType_ToDirection(bulletType, angleSpace, angleStart, angleEnd, sprateSpace, shooter, speed, isCounterclockwise = false) {
         let currentNum = 1; // ✅ Number of bullets to fire
         let StartAngle = angleStart
@@ -383,12 +461,9 @@ class stgShootingLogic{
         
         let currentAngleEnd = StartAngle; // ✅ Initial angle range
         
-        
-
-
         let expandFanLoop = () => {
             if ((!isCounterclockwise && currentAngleEnd > EndAngle) || (isCounterclockwise && currentAngleEnd < EndAngle)) return; // ✅ Stop when max angle is reached
-            if(shooter.isDrop)
+            if(shooter.isDrop || shooter.isDone)
                 return;
             // ✅ Fire bullets in an expanding fan shape
             this.fanShapedType_ToDirection(bulletType, currentNum, StartAngle, currentAngleEnd, shooter, speed);
@@ -405,7 +480,35 @@ class stgShootingLogic{
     
         expandFanLoop(); // ✅ Start expansion
     }
-
+    expandFanType_ToTarget(bulletType, angleSpace, maxOffset, sprateSpace, shooter, target, speed ) {
+        let currentNum = 1; // ✅ Number of bullets to fire
+        let currentOffset = 0; // ✅ Initial angle offset (starts at 0 and expands)
+        
+        let expandFanLoop = () => {
+            // Check if we've reached the maximum offset or if shooter is no longer active
+            if(!shooter)  return;
+            if (currentOffset > maxOffset) return;
+            if (shooter.isDrop || shooter.isDone) return;
+            if (!target || target.isDrop) return;
+            
+            // ✅ Calculate the central angle to the target
+            let centerAngle = Phaser.Math.RadToDeg(
+                Phaser.Math.Angle.Between(shooter.x, shooter.y, target.x, target.y)
+            );
+            
+            // ✅ Fire bullets in an expanding fan shape toward the target
+            this.fanShapedType_ToTarget(bulletType, currentNum, currentOffset, shooter, target, speed);
+    
+            // ✅ Increase bullet count and offset for next loop
+            currentNum++;
+            currentOffset += angleSpace;
+            
+            // ✅ Schedule next step in the expanding fan
+            this.scene.time.delayedCall(sprateSpace, expandFanLoop);
+        };
+    
+        expandFanLoop(); // ✅ Start expansion
+    }
 
     outScreenType_ToDirection(bulletType, num, side, angleStart, angleEnd, rangeStart, rangeEnd, shooter, speed) {
         let bulletGroup=[];
@@ -422,6 +525,9 @@ class stgShootingLogic{
                 bulletY = boardheigh + 30; // Off-screen below
             } else if (side === 'right') {
                 bulletX = boardwidth + 20; // Off-screen right
+                bulletY = Phaser.Math.Between(rangeStart, rangeEnd);
+            }else if (side === 'left') {
+                bulletX = -20; // Off-screen right
                 bulletY = Phaser.Math.Between(rangeStart, rangeEnd);
             } else {
                 console.warn(`Invalid side: ${side}`);

@@ -11,6 +11,16 @@ class arrowBullet extends Bullet {
             bulletType = 'redArrowBullet';
         }
 
+        if (subtype === 'blueSquareSpecialBullet') {
+            texture = 'blueSquareSpecialBullet';
+            bulletType = 'blueSquareSpecialBullet';
+        } else if (subtype === 'redSquareSpecialBullet') {
+            texture = 'redSquareSpecialBullet';
+            bulletType = 'redSquareSpecialBullet';
+            
+        }
+
+
         super(scene, x, y, texture, target, bulletType);
 
         // ✅ Set properties
@@ -21,6 +31,21 @@ class arrowBullet extends Bullet {
         this.body.setVelocity(0, 0);
         //this.body.setSize(23,14)
         this.setDepth(10);
+        if (subtype === 'blueSquareSpecialBullet' || subtype === 'redSquareSpecialBullet') {
+            this.body.setSize(20,20);
+            if (subtype === 'redSquareSpecialBullet'){
+                this.isRed = true;
+                this.ableToReflect = false;
+            }
+            
+            return;
+        }
+
+
+
+
+
+
         this.body.setCircle(12)
         // ✅ If red, mark as non-reflectable
         if (subtype === 'ra') {
