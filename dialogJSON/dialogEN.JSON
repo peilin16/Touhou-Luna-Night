@@ -1,0 +1,56 @@
+[
+	[
+		{
+			"speaker": "Rumia",
+			"dialog": "Test1",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "Wriggle",
+			"dialog": "Test2",
+			"newSpeaker": "true"
+		}
+    ],
+    [
+		{
+			"speaker": "Wriggle",
+			"dialog": "NO!!",
+			"newSpeaker": "true"
+		}
+    ],
+
+	[
+		{
+			"speaker": "Rumia",
+			"dialog": "Test1Test1Test1Test1",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Crino",
+			"dialog": "Test1Test1Test1Test1",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Test1Test1Test1Test1",
+			"newSpeaker": "true"
+		}
+    ],
+	[
+		{
+			"speaker": "Rumia",
+			"dialog": "Test1Test1Test1Test1",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Crino",
+			"dialog": "Test1Test1Test1Test1",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Test1Test1Test1Test1",
+			"newSpeaker": "true"
+		}
+    ]
+]
