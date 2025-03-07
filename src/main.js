@@ -28,7 +28,7 @@ let config = {
             }
         }
     },
-    scene: [Load, Title, Mainlevel,Level1]
+    scene: [Load, Title, Mainlevel, Level1, Level2,Level3,Level4]
 }
 
 // uncomment the following line if you need to purge local storage data
@@ -38,6 +38,8 @@ let score = 0;
 let ScoreRate = 1;
 let treeSpeed = 2;
 let keyA,keyS,keyD,keyW,keyK,keyJ,keyShift,keyESC,keySpace
+let playerScore = 0;
+let playerHealthly = 30;
 let emenySpeed = 3;
 let shootingLogic // tool class
 let rumia
