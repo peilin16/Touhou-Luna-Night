@@ -43,16 +43,54 @@ class Bullet extends Phaser.GameObjects.Sprite {
     }
     */
     setOrientation(oX, oY) {
+        // Calculate angle between direction vector and origin
         let angle = Phaser.Math.Angle.Between(0, 0, oX, oY);
         
-        this.rotation = angle; // ✅ Rotate the sprite
-    
-        // ✅ Adjust physics body shape (if long bullet)
-        //this.body.setSize(this.width, this.height * 0.3); // Adjust hitbox size
-        //this.body.setOffset(this.width / 2, this.height / 2); // Center hitbox
-    
-        // ✅ Rotate the physics body
-        this.body.angle = Phaser.Math.RadToDeg(angle);
+        // Set sprite rotation
+        this.rotation = angle;
+        
+        // Get bullet dimensions
+        const bulletWidth = this.width;
+        const bulletHeight = this.height;
+        
+        // Store original dimensions if not already stored
+        if (!this.originalWidth) this.originalWidth = bulletWidth;
+        if (!this.originalHeight) this.originalHeight = bulletHeight;
+        
+        // Determine if this is a "long" bullet (significantly longer in one dimension)
+        const isLongBullet = this.originalHeight > this.originalWidth * 1.5 || 
+                             this.originalWidth > this.originalHeight * 1.5;
+        
+        if (isLongBullet) {
+            // For long bullets, we need to adjust the hitbox based on rotation
+            
+            // Calculate the absolute sine and cosine of the angle
+            const absCos = Math.abs(Math.cos(angle));
+            const absSin = Math.abs(Math.sin(angle));
+            
+            // Calculate rotated dimensions
+            const rotatedWidth = this.originalWidth * absCos + this.originalHeight * absSin;
+            const rotatedHeight = this.originalWidth * absSin + this.originalHeight * absCos;
+            
+            // Set the physics body size to match the rotated dimensions
+            this.body.setSize(rotatedWidth * 0.8, rotatedHeight * 0.8);
+            
+            // Center the hitbox
+            this.body.setOffset(
+                (this.originalWidth - rotatedWidth * 0.8) / 2,
+                (this.originalHeight - rotatedHeight * 0.8) / 2
+            );
+        } else {
+            // For roughly square bullets, use a circular hitbox
+            const minDimension = Math.min(this.originalWidth, this.originalHeight) * 0.8;
+            this.body.setCircle(minDimension / 2);
+            
+            // Center the circular hitbox
+            this.body.setOffset(
+                (this.originalWidth - minDimension) / 2,
+                (this.originalHeight - minDimension) / 2
+            );
+        }
     }
 
 
