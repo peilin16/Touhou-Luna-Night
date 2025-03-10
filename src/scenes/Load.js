@@ -55,6 +55,11 @@ class Load extends Phaser.Scene {
         this.load.image('dandelionFairy2', './assets/character/DandelionFairy2.png');
         this.load.image('dandelionFairy3', './assets/character/DandelionFairy3.png');
         this.load.image('dandelionFairyHit', './assets/character/DandelionFairy-hit.png');
+
+        this.load.image('roseFairy1', './assets/character/roseFairy1.png');
+        this.load.image('roseFairy2', './assets/character/roseFairy2.png');
+        this.load.image('roseFairy3', './assets/character/roseFairy3.png');
+        this.load.image('roseFairyHit', './assets/character/roseFairyHit.png');
         //maid fairy load
         this.load.image('MaidFairy1_1', './assets/character/MaidFairy1.png');
         this.load.image('MaidFairy1_2', './assets/character/MaidFairy2.png');
@@ -77,14 +82,28 @@ class Load extends Phaser.Scene {
         this.load.image('Wriggle2', './assets/character/Wriggle2.png');
         this.load.image('Wriggle3', './assets/character/Wriggle3.png');
         this.load.image('WriggleHit', './assets/character/WriggleHit.png');
+        this.load.image('Crino1', './assets/character/crino-fly1.png');
+        this.load.image('CrinoFront', './assets/character/crino.png');
+        this.load.image('CrinoHit', './assets/character/CrinoHit.png');
+        //move exit
+
+
         this.load.image('WriggleFly1', './assets/character/WriggleFly1.png');
         this.load.image('WriggleFly2', './assets/character/WriggleFly2.png');
         this.load.image('WriggleFly3', './assets/character/WriggleFly3.png');
 
+        this.load.image('crinoflyRight1', './assets/character/crino-flyRight1.png');
 
-        this.load.image('Crino1', './assets/character/crino-fly1.png');
-        this.load.image('CrinoFront', './assets/character/crino.png');
-        this.load.image('CrinoHit', './assets/character/CrinoHit.png');
+        this.load.image('SunnyMilkFlyRight1', './assets/character/SunnyMilkFlyRight1.png');
+        this.load.image('SunnyMilkFlyRight2', './assets/character/SunnyMilkFlyRight2.png');
+
+        this.load.image('Daiyousei-nothingRight1', './assets/character/Daiyousei-nothingRight1.png');
+
+        this.load.image('MystiaLoreleiRight1', './assets/character/MystiaLoreleiRight1.png');
+
+        this.load.image('LilyWhiteRight1', './assets/character/LilyWhiteRight1.png');
+        this.load.image('LilyWhiteRight2', './assets/character/LilyWhiteRight2.png');
+
         
         //level2
         this.load.image('SunnyMilk1', './assets/character/SunnyMilk1.png');
@@ -103,6 +122,11 @@ class Load extends Phaser.Scene {
         this.load.image('KawashiroIdle', './assets/character/KawashiroIdle.png');        
         this.load.image('KawashiroSecondState', './assets/character/KawashiroSecondState.png');   
         this.load.image('KawashiroSecondStateHit', './assets/character/KawashiroSecondStateHit.png');   
+        this.load.image('StarSapphireRight2', './assets/character/StarSapphireRight2.png');
+        this.load.image('StarSapphireRight1', './assets/character/StarSapphireRight1.png');
+        this.load.image('LunaRight1', './assets/character/LunaRight1.png');    
+        this.load.image('LunaRight2', './assets/character/LunaRight2.png'); 
+
         //level3
         this.load.image('LilyWhite1', './assets/character/LilyWhite1.png');
         this.load.image('LilyWhite2', './assets/character/LilyWhite2.png');
@@ -185,12 +209,31 @@ class Load extends Phaser.Scene {
         this.load.image('ExplosionLarge1_6','./assets/img/ExplosionLarge1_6.png');
         this.load.image('ExplosionLarge1_7','./assets/img/ExplosionLarge1_7.png');
         this.load.image('ExplosionLarge1_8','./assets/img/ExplosionLarge1_8.png');
-
+        //sound Effect
         this.load.audio('hitHurt1', './assets/audio/hitHurt1.wav');
         this.load.audio('hitHurt2', './assets/audio/hitHurt2.wav');
         this.load.audio('hitHurt3', './assets/audio/hitHurt3.wav');
         this.load.audio('pickUp1', './assets/audio/pickupCoin.wav');
-        this.load.audio('background', './assets/audio/background1.wav');
+        this.load.audio('bulletHit1', './assets/audio/bulletHit1.mp3');
+        this.load.audio('bulletHit2', './assets/audio/bulletHit2.mp3');
+        this.load.audio('bulletHit3', './assets/audio/bulletHit3.mp3');
+
+        this.load.audio('shooting1', './assets/audio/shooting1.mp3');
+        this.load.audio('shooting2', './assets/audio/shooting2.mp3');
+        this.load.audio('shooting3', './assets/audio/shooting3.mp3');
+        this.load.audio('speedPause1', './assets/audio/speedPause1.mp3');
+        this.load.audio('dialogue1', './assets/audio/dialogue1.wav');
+        
+        //BGM
+        this.load.audio('level1', './assets/bgm/level1.wav');
+        this.load.audio('level1Final', './assets/bgm/level1Final.wav');
+        this.load.audio('level2', './assets/bgm/level2.wav');
+        this.load.audio('level2Mid', './assets/bgm/level2Mid.wav');
+        this.load.audio('level2Final', './assets/bgm/level2Final.wav');
+        this.load.audio('level3', './assets/bgm/level3.wav');
+        this.load.audio('level3Final', './assets/bgm/level3Final.wav');
+        this.load.audio('level4', './assets/bgm/level4.wav');
+        this.load.audio('level4Final', './assets/bgm/level4Final.wav');
         
         this.load.image('explosionTexture', './assets/img/explosionTexture1.png');
         

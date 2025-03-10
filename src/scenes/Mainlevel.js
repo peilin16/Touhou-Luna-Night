@@ -1,9 +1,16 @@
 class Mainlevel extends Phaser.Scene {
     constructor(key) {
-        super(key);
+        //super(key);
+        super({ key:key, physics: { default: 'matter', matter: { gravity: { y: 0 } } } });
     }
 
     create() {
+
+
+
+
+
+
         this.isSprawn = false;//sprawn flag
         //level = 0;
         // define keys    
@@ -19,6 +26,7 @@ class Mainlevel extends Phaser.Scene {
         keyJ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.J);
         keyShift = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         
+        this.soundManager = new SoundManager(this);
         
         
         this.current = 0;
@@ -137,6 +145,12 @@ class Mainlevel extends Phaser.Scene {
             // this.bossHealthBar.x = boardwidth / 2 - 200 + (newWidth / 2);
         }
     }
+    spawnSpace(key){
+        if(!this.isSprawn){
+            this.isSprawn = true;
+            this.time.delayedCall(key, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
+        }
+    }
     nextWave() {
         this.emenySpawn[this.current](); // ✅ Call the current wave function
         // update emeny state
@@ -154,30 +168,15 @@ class Mainlevel extends Phaser.Scene {
     }
     //game over
     gameOver(){
-        rumia.dropOff();
-            rumia.time.delayedCall(3000, () => {
-                this.bgMusic.stop(); // Stop background music
-                this.scene.start('titleScene');
-            }, [], this);        
+        playerScore = rumia.Playerscore;
+        playerHealthly = rumia.healthly;
+        this.time.delayedCall(2000, () => {
+            //this.bgMusic.stop(); // Stop background music
+            this.scene.start('gameOverScene');
+        }, [], this);        
         //
     }
-    
-    getAudio(require) {
-        if (!this.sound) return null; // Safety check
-    
-        if (require === 'p') {
-            return this.sound.add('pickUp1'); // ✅ Correctly add sound
-        } 
-        else if (require === 'h') {
-            let hitSounds = ['hitHurt1', 'hitHurt2', 'hitHurt3'];
-            let randomSoundKey = Phaser.Math.RND.pick(hitSounds); // ✅ Pick a random sound
-            return this.sound.add(randomSoundKey); // ✅ Return a Phaser sound object
-        } 
-        return null; // Invalid input
-    }
-    getBGM(require){
 
-    }
 
     
     isPositionValid(newY, positionList) {
@@ -249,10 +248,10 @@ class Mainlevel extends Phaser.Scene {
         rumia.collide(obj);
         obj.collide(rumia); //  Call obj’s collide behavior
         
-        if(rumia.healthly < 0){
+        if(rumia.healthly <= 0){
             //this.gameOver();
                 
-            //this.gameOver();
+            this.gameOver();
         }
         this.RumiahealthText.setText('[H]:'+rumia.healthly);
         this.CurrentScoreText.setText('[P]:'+rumia.Playerscore);
@@ -390,9 +389,8 @@ class Mainlevel extends Phaser.Scene {
                 emeny = new DivineSpirit(this, posX, posY,subtype);
                 break;
             case 'SunFlowerFairy' :
-                emeny = new FlowerFairy(this, posX, posY, subtype);
-                break;
             case 'DandelionFairy':
+            case 'RoseFairy':
                 emeny = new FlowerFairy(this, posX, posY, subtype);
                 break;
             case 'MaidFairy':
@@ -413,7 +411,6 @@ class Mainlevel extends Phaser.Scene {
             case 'SunnyMilk':
                 emeny = new SunnyMilk(this, posX, posY, subtype);
                 break;
-                
             case 'Luna':
                 emeny = new Luna(this, posX, posY, subtype);
                 break; 
@@ -469,7 +466,23 @@ class Mainlevel extends Phaser.Scene {
     
         return rate;
     }
-
+    sprawnDestruction(num,key,t = 1000){
+        let b = [ 250,300,450,400,500,550,600,650,700,750,800,850,900];
+           
+        for(let i = 1; i < num; i+= 1){
+                // Create a local variable for each iteration
+            const randomY = Phaser.Math.RND.pick(b);
+                
+            this.time.delayedCall(t * i, () => {
+                switch(key){
+                    case 'flower':
+                    this.spawnEmeny(1,'list','Flower','flower','flowerHit',-70, randomY)
+                    break;
+                }
+                
+            }, [], this);
+        }
+    }
     
     
     reflect(bullet, normalX = 0, normalY = -1) {

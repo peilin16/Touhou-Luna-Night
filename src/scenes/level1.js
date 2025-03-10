@@ -12,7 +12,8 @@ class Level1 extends Mainlevel {
         this.backgroundforest = this.add.tileSprite(0, 420, boardwidth, boardheigh, 'backgrounddown').setOrigin(0, 0);
 
         rumia = new Rumia(this, 150, 100, ).setOrigin(0.5, 0);
-
+        rumia.Playerscore = playerScore;
+        rumia.healthly = playerHealthly;
         super.create(); // Call MainLevel create method
        
         
@@ -72,6 +73,7 @@ class Level1 extends Mainlevel {
         this.current = 0;
         this.emenySpawn = [
             //this.emenySpawn6.bind(this),
+            this.movingSpawn.bind(this),
             this.emenySpawn1.bind(this),
             this.emenySpawn2.bind(this),
             this.emenySpawn3.bind(this),
@@ -90,7 +92,7 @@ class Level1 extends Mainlevel {
             this.nextlevel.bind(this)
         ];
 
-
+        
         this.isSpeech = false;
         // ✅ Start the first wave
         //this.scene.start('level2Scene');
@@ -125,10 +127,40 @@ class Level1 extends Mainlevel {
         //
         this.nextWave();
     }
-    
+    movingSpawn(){
+        if(!this.isSprawn){
+            this.isSprawn = true;
+            let wriggle = this.spawnEmeny(1, 'list', 'Wriggle','','',300,360);
+            wriggle.isMoveExit = true;
+
+            let crino = this.spawnEmeny(1, 'list', 'Crino','','',390,390);
+            crino.isMoveExit = true;
+
+            let daiyousei = this.spawnEmeny(1, 'list', 'Daiyousei','','',260,410);
+            daiyousei.isMoveExit = true;
+
+            let sunnyMilk = this.spawnEmeny(1, 'list', 'SunnyMilk','','',430,510);
+            sunnyMilk.isMoveExit = true;
+
+            let Luna = this.spawnEmeny(1, 'list', 'Luna','','',330,510);
+            Luna.isMoveExit = true;
+
+            let starSapphire = this.spawnEmeny(1, 'list', 'StarSapphire','','',230,490);
+            starSapphire.isMoveExit = true;
+
+            let lilyWhite = this.spawnEmeny(1, 'list', 'Lily','white','',120,320);
+            lilyWhite.isMoveExit = true;
+
+            let mystiaLorelei = this.spawnEmeny(1, 'list', 'MystiaLorelei','','',430,290);
+            mystiaLorelei.isMoveExit = true;
+            MystiaLorelei
+            this.time.delayedCall(10000, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
+        }
+    }
     //spawn emeny
     emenySpawn1(){
         if(!this.isSprawn){
+            this.soundManager.playBGM('level1');
             //alert('emenySpawn1')
             this.isSprawn = true;
             super.spawnEmeny(5,'list','Kedama','','l2',200)
@@ -332,13 +364,14 @@ class Level1 extends Mainlevel {
             this.boss = null;
             this.startDialogue(3);
             
-            playerScore = rumia.Playerscore;
-            playerHealthly = rumia.healthly;
+            
             //this.scene.start('level2');
         }
     }
     nextlevel(){
         if(!this.isSpeech){
+            playerScore = rumia.Playerscore;
+            playerHealthly = rumia.healthly;
             this.time.delayedCall(8500, () =>{this.scene.start('level2Scene'); } , [], this);//step2
         }
     }

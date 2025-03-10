@@ -28,7 +28,7 @@ let config = {
             }
         }
     },
-    scene: [Load, Title, Mainlevel, Level1, Level2,Level3,Level4]
+    scene: [Load, Title,DifficultySelection,LevelChoose,GameOver,LevelTransition, Mainlevel, Level1, Level2,Level3 ,Level4]
 }
 
 // uncomment the following line if you need to purge local storage data
