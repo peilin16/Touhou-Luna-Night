@@ -72,7 +72,7 @@ class DialogSystem {
             console.error(`Dialogue key ${key} not found!`);
             return;
         }
-
+        
         this.currentDialogIndex = 0;
         this.scene.isSpeech = true; // Pause the game
 
@@ -91,7 +91,7 @@ class DialogSystem {
                 this.nextDialogue();
             }
         });
-
+        this.scene.soundManager.stopBGM();
         this.nextDialogue(); // Start first dialogue
     }
 
@@ -113,11 +113,12 @@ class DialogSystem {
             if (this.typewriterTimer) {
                 this.typewriterTimer.remove();
             }
-
+            this.scene.soundManager.playEffectSpecify('dialogue1',-1,0.6);
             // Typewriter effect: Display characters one by one
             this.typewriterTimer = this.scene.time.addEvent({
                 delay: 50, // Speed of text appearance (adjust as needed)
                 callback: () => {
+                    
                     if (this.currentCharIndex < this.currentText.length) {
                         this.scene.dialogueText.setText(
                             this.scene.dialogueText.text + this.currentText[this.currentCharIndex]
@@ -142,8 +143,10 @@ class DialogSystem {
         if (this.dbox) {
             this.dbox.destroy();
         }
-
+        this.scene.soundManager.playBGM();
         // Hide dialogue elements
+
+        
         this.scene.dialogueBox.setVisible(false);
         this.scene.dialogueText.setVisible(false);
         this.scene.speakerText.setVisible(false);

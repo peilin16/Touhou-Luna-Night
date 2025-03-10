@@ -173,7 +173,8 @@ class stgShootingLogic{
     speedChangeListType_ToTarget(bulletType, shooter, target, startSpeed, endSpeed, speedSpace){
         let currentSpeed = startSpeed; // ✅ Number of bullets to fire
         let bulletGroup = []
-        let bullet
+        let bullet;
+        this.scene.soundManager.playEffectSpecify('speedPause1',-1,0.4);
         if (startSpeed > endSpeed){
             while(currentSpeed > endSpeed){
                 bullet =this.sniperBullet(bulletType, shooter, target, currentSpeed );
@@ -196,11 +197,13 @@ class stgShootingLogic{
     //advanced bullet method
     listType_ToTarget(bulletType, num, sperate, shooter, target, speed, offset = 'No') { 
         let bulletGroup = []
+        let behavior = shooter.behavior;
         for (let i = 0; i < num; i++) {
             this.scene.time.delayedCall(i * sperate, () => {
-                if(shooter.isDrop)
+                if(shooter.isDrop || behavior != shooter.behavior)
                     return;
                 // ✅ Get a new bullet instance
+                this.scene.soundManager.playEffectSpecify('shooting1');
                 let bullet =this.sniperBullet(bulletType, shooter, target, speed, offset); // ✅ Shoot at target with optional offset
                 this.scene.bulletGroup.add(bullet);
                 bulletGroup.push(bullet);
@@ -210,8 +213,12 @@ class stgShootingLogic{
     }
     listType_ToDirection(bulletType,num, sperateMinute, shooter ,angle,speed){
         let bulletGroup = []
+        let behavior = shooter.behavior;
         for (let i = 0; i < num; i++) {
             this.scene.time.delayedCall(i * sperateMinute, () => {
+                if(shooter.isDrop || behavior != shooter.behavior)
+                    return;
+                this.scene.soundManager.playEffectSpecify('shooting1');
                 let bullet = this.NormalBullet(bulletType, angle, shooter, speed);
                 this.scene.bulletGroup.add(bullet);
                 bulletGroup.push(bullet);
@@ -229,7 +236,7 @@ class stgShootingLogic{
             bulletGroup.push(bullet);
             return bulletGroup;
         }
-        
+        this.scene.soundManager.playEffectSpecify('shooting3',50);
         // ✅ Calculate the angle step to evenly distribute bullets
         let angleStep = (angleEnd - angleStart) / (num - 1);
     
@@ -244,7 +251,7 @@ class stgShootingLogic{
 
     fanShapedType_ToTarget(bulletType, num,  offsetAngle, shooter, target, speed) {
         if (!target) return;
-
+        this.scene.soundManager.playEffect('shooting',50);
         // ✅ Calculate the central angle to the target
         let centerAngle = Phaser.Math.RadToDeg(Phaser.Math.Angle.Between(shooter.x, shooter.y, target.x, target.y));
     
@@ -278,6 +285,7 @@ class stgShootingLogic{
     }
     randomfanShapedType_toDirection(bulletType, num, angleStart, angleEnd, shooter, speed){
         let bulletGroup = []
+        this.scene.soundManager.playEffect('shooting',50);
         for (let i = 0; i < num; i++) {
             let randomAngle = Phaser.Math.Between(angleStart, angleEnd); // ✅ Pick a random angle
             let bullet = this.NormalBullet(bulletType, randomAngle, shooter, speed);
@@ -290,7 +298,7 @@ class stgShootingLogic{
 
     randomFanShapedType_ToTarget(bulletType, num, offsetAngle, shooter, target, speed) {
         if (!target) return;
-    
+        this.scene.soundManager.playEffectSpecify('shooting2',50);
         // ✅ Calculate the central angle to the target
         let centerAngle = Phaser.Math.RadToDeg(Phaser.Math.Angle.Between(shooter.x, shooter.y, target.x, target.y));
         let bulletGroup = []
@@ -453,6 +461,7 @@ class stgShootingLogic{
         let currentNum = 1; // ✅ Number of bullets to fire
         let StartAngle = angleStart
         let EndAngle = angleEnd
+        let behavoir = shooter.behavior;
         if(isCounterclockwise){
             EndAngle = angleStart;
             StartAngle = angleEnd;
@@ -465,6 +474,7 @@ class stgShootingLogic{
             if ((!isCounterclockwise && currentAngleEnd > EndAngle) || (isCounterclockwise && currentAngleEnd < EndAngle)) return; // ✅ Stop when max angle is reached
             if(shooter.isDrop || shooter.isDone)
                 return;
+            if(behavoir != shooter.behavior) return;
             // ✅ Fire bullets in an expanding fan shape
             this.fanShapedType_ToDirection(bulletType, currentNum, StartAngle, currentAngleEnd, shooter, speed);
     
@@ -483,14 +493,14 @@ class stgShootingLogic{
     expandFanType_ToTarget(bulletType, angleSpace, maxOffset, sprateSpace, shooter, target, speed ) {
         let currentNum = 1; // ✅ Number of bullets to fire
         let currentOffset = 0; // ✅ Initial angle offset (starts at 0 and expands)
-        
+        let behavoir = shooter.behavior;
         let expandFanLoop = () => {
             // Check if we've reached the maximum offset or if shooter is no longer active
             if(!shooter)  return;
             if (currentOffset > maxOffset) return;
             if (shooter.isDrop || shooter.isDone) return;
             if (!target || target.isDrop) return;
-            
+            if(behavoir != shooter.behavior) return;
             // ✅ Calculate the central angle to the target
             let centerAngle = Phaser.Math.RadToDeg(
                 Phaser.Math.Angle.Between(shooter.x, shooter.y, target.x, target.y)
