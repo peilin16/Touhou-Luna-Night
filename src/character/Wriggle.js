@@ -27,7 +27,7 @@ class Wriggle extends Character{
         this.anims.play('WriggleFly');
         super.healthly = 15;
         
-        this.behaviors = ['r_sbf4_srf1', 'r_bFr8_rFr8', 'r_bFr12_rA12'];
+        this.behaviors = [ 'r_bFr8_rFr8','r_sbf4_srf1', 'r_bFr12_rA12'];
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.setOffset(5, 6);
@@ -47,6 +47,11 @@ class Wriggle extends Character{
         super.update(time, delta);
         if(this.isDrop)
             return
+        if(this.isMoveExit){
+            super.Level1BossMoveRight();
+            return;
+        }
+
         if(this.isFirst){
             if(!this.first_move())
                 return;
@@ -200,8 +205,8 @@ class Wriggle extends Character{
                 this.scene.time.delayedCall(i * 320, () => {
                     // ✅ Get a new bullet instance
                     if(this.isDrop || this.behavior != 'r_bFr8_rFr8') return
-                    this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 17, 0, 324, this,data.getData('Bullet_speed_130'));//shooting 
-                    this.scene.shootingLogic.randomfanShapedType_toDirection('redMediumCircleBullet',8, 0, 324, this, data.getData('Bullet_speed_150'));//shooting 
+                    this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 19, 0, 360, this,data.getData('Bullet_speed_130'));//shooting 
+                    this.scene.shootingLogic.randomfanShapedType_toDirection('redMediumCircleBullet',9, 0, 360, this, data.getData('Bullet_speed_150'));//shooting 
                 });
             }
             this.scene.time.delayedCall(23100, () => this.isDone = true, [], this);//step2
@@ -238,13 +243,13 @@ class Wriggle extends Character{
 
     }
     r_bFr12_rFr12(){
-        if( this.step == 0 &&this.moveTo(800,270,data.getData('emeny_speed_normal180')) ){
+        if( this.step == 0 &&this.moveTo(800,270,data.getData('emeny_speed_normal170')) ){
             this.step +=1
             for (let i = 0; i < 67; i++) {
                 this.scene.time.delayedCall(i * 320, () => {
                     if(this.isDrop|| this.behavior != 'r_bFr12_rFr12') return
-                    this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 20, 0, 324, this,data.getData('Bullet_speed_130'));//shooting 
-                    this.scene.shootingLogic.randomfanShapedType_toDirection('redMediumCircleBullet',9, 0, 324, this, data.getData('Bullet_speed_150'));//shooting 
+                    this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 22, 0, 360, this,data.getData('Bullet_speed_130'));//shooting 
+                    this.scene.shootingLogic.randomfanShapedType_toDirection('redMediumCircleBullet',10, 0, 360, this, data.getData('Bullet_speed_150'));//shooting 
                 });
             }
             this.scene.time.delayedCall(22100, () => this.isDone = true, [], this);//step2

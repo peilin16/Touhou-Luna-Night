@@ -156,10 +156,13 @@ class Destruction extends Character {
                 break;
         }
         if(this.subtype == 'yinYangOrbs'){
-
+            new Explosion(this.scene, this.x, this.y, 'Large');
+            scene.time.delayedCall(500, () => {super.destoryCharacter();});
         }else{
             super.destoryCharacter();
         }
+        
+        
         
     }
     flowerHit(){
@@ -172,7 +175,7 @@ class Destruction extends Character {
             this.Ypos = Phaser.Math.RND.pick([200,300,400,500])
             this.step +=1;
             this.scene.shootingLogic.randomfanShapedType_toDirection('blueCapsuleBullet', 17, 0, 324, this ,data.getData('Bullet_speed_120'));//shooting 
-        }else if(this.step == 1 &&  this.moveTo(-1, this.Ypos, 3)){
+        }else if(this.step == 1 &&  this.moveTo(-1, this.Ypos, data.getData('emeny_speed_normal100'))){
             this.healthly = 0;
         }
     }
@@ -249,17 +252,12 @@ class Destruction extends Character {
         
         // Screen shake effect when bouncing
         if (bounced) {
-            let choose;
-            let b = ['redLargeCircleBullet','blueLargeCircleBullet'];
-            choose = Phaser.Math.RND.pick(b);
-            
             // Create screen shake effect
             this.scene.cameras.main.shake(200, 0.01);
-            
             // Shoot bullets in different patterns when bouncing
             this.scene.shootingLogic.randomfanShapedType_toDirection('blueCapsuleBullet', 14, 0, 324, this, data.getData('Bullet_speed_130'));
             this.scene.shootingLogic.randomfanShapedType_toDirection('redCapsuleBullet', 12, 0, 324, this, data.getData('Bullet_speed_150'));
-            this.scene.shootingLogic.fanShapedType_ToTarget(choose, 16, 180, this, rumia, data.getData('Bullet_speed_170'));
+            this.scene.shootingLogic.fanShapedType_ToTarget(this.getRandomColorBullet('largeCircle'), 23, 180, this, rumia, data.getData('Bullet_speed_170'));
         }
         
         // Check for collision with player

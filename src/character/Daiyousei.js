@@ -33,23 +33,32 @@ class Daiyousei extends Character{
     }
     update(time, delta) {
         super.update(time, delta);
+        if(this.isMoveExit){
+            this.setTexture('Daiyousei-nothingRight1')
+            super.Level1BossMoveRight();
+            return;
+        }
+
+
+
         if(!this.isDrop)
-            this.exitScreen('left')
+            this.exitScreen('left',data.getData('emeny_speed_normal100'))
         else
-            this.exitScreen('top',2,-2);
+            this.exitScreen('top',data.getData('emeny_speed_normal100'),-data.getData('emeny_speed_normal100'));
     }
-    
-    behavior(player){
-        this.isDrop = true;
-        if(this.behavior == 'healthly'){
+    collide(player){
+        
+        if(this.behavior == 'healthly' && !this.isDrop ){
+            this.setTexture('DaiyouseiNothing1')
             player.healthly += 1;
         }
-        
+        this.isDrop = true;
     }
     dropOff(){
-        this.setTexture('DaiyouseiNothing1')
-        //this.anims.stop();
-        //this.play('DaiyouseiNothing'); // Play the 'rumiaFly' animation
+        if(!this.isDrop)
+        
+        this.isDrop = true;
+        
     }
 
 

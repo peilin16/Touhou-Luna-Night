@@ -21,41 +21,52 @@ class MystiaLorelei extends Character{
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.setOffset(3, 0);
-        this.healthly =500;
+        this.healthly = 700;
         this.isDrop = false;
         this.kind = 'f'
         this.firstState = true;
         this.isEmeny = true;
-        this.isDone = true;
+        this.isDone = false;
         this.isFirst = true
         this.score = 23
         this.TwirlFanCount = 6;
-        this.previousBehavior =this.behavior;
+        this.current =0
         this.secondState = false;
         this.currentMoveTo;
     }
 
 
-    update(){
-        super.update();
+    update(time, delta){
+        if(this.isDelay) return;
+        super.update(time, delta);
         if(this.isDrop)
             return
+
+        if(this.isMoveExit){
+            this.setTexture('MystiaLoreleiRight1')
+            super.Level1BossMoveRight();
+            return;
+        }
         if(this.isFirst){
+            if(!this.moveTo(850,270,data.getData('emeny_speed_normal110')))
+                return
+            this.scene.soundManager.playBGM('level3Final');
             this.behavior = 'MusicSignFanShape'
-            this.previousBehavior =this.behavior;
             this.isFirst = false
-            
+            this.isDelay = true
+            this.scene.time.delayedCall(2000, () => this.isDelay = false , [], this);//step2
+            return;
         }
         else if(this.isDone){
-            this.behavior = this.getBehavior(this.previousBehavior);
-            this.previousBehavior =this.behavior;
+            this.behavior = this.getBehavior();
             this.step = 0;
             
         }else if(!this.secondState && this.healthly <150 ){
             this.secondState = true;
-            this.behavior = this.getBehavior(this.previousBehavior);
-            this.previousBehavior =this.behavior;
+            this.behavior = this.getBehavior();
             this.step = 0;
+            this.sprawnScore(367);
+            this.isSprawnScore = false;
         }
         
         this.isDone = false;
@@ -79,25 +90,26 @@ class MystiaLorelei extends Character{
         
 
     }
-    getBehavior(previous) {
+    getBehavior() {
         if(this.healthly <= 150)
-            return 'DoubleTwirlFan180_SniperBullet';
+            return 'DoubleTwirlFan180_SniperBulletEnhance';
 
         let behaviors = ['MusicSignFanShape', 'DoubleTwirlFan180_SniperBullet','OutScreenMusicSign_MoveFan360','ExpandFanToTarget_BlueRedBullet' ];
         
-        if (behaviors.length <= 1) return behaviors[0]; // ✅ Avoid infinite loops if only one element
-    
-        let newBehavior;
-        
-        do {
-            newBehavior = Phaser.Math.RND.pick(behaviors); // ✅ Randomly select from the list
-        } while (newBehavior === previous); // ✅ Ensure it's not the same as before
-
-        return newBehavior;
+        if(this.current >= behaviors.length - 1)
+            this.current = 0;
+        else
+            this.current++;
+        return behaviors[this.current];
     }
-    
+    dropOff(){
+        if(!this.isDrop)
+            this.setTexture('MystiaLoreleiHit');
+        this.sprawnScore(667);
+        super.dropOff();
+    }
     MusicSignFanShape(){
-        if(this.step == 0 && this.moveTo(850,270,2)){
+        if(this.step == 0 && this.moveTo(850,270,data.getData('emeny_speed_normal110'))){
             this.step+=1;
             
             for (let i = 0; i < 7; i++) {
@@ -115,7 +127,7 @@ class MystiaLorelei extends Character{
         }
     }
     DoubleTwirlFan180_SniperBullet(){
-        if(this.step == 0 && this.moveTo(890,270,2)){
+        if(this.step == 0 && this.moveTo(890,270,data.getData('emeny_speed_normal110'))){
             this.step +=1
             let choose
             let b = ['redLargeCircleBullet','blueLargeCircleBullet']
@@ -140,24 +152,19 @@ class MystiaLorelei extends Character{
         }
     }
     DoubleTwirlFan180_SniperBulletEnhance(){
-        if(this.step == 0 && this.moveTo(890,270,2)){
+        if(this.step == 0 && this.moveTo(890,270,data.getData('emeny_speed_normal110'))){
             this.step +=1
-            let choose
-            let b = ['redLargeCircleBullet','blueLargeCircleBullet']
             this.choose = Phaser.Math.RND.pick(this.musicGroup3);
             //    twirlFanType_ToDirection(bulletType,   anglespace, angleStart, angleEnd, sprateSpace, num, fanAngleStart, fanAngleEnd,  shooter, speed,isCounterclockwise = false)
-            this.scene.shootingLogic.twirlFanType_ToDirection('blueMusicSign1Bullet', 3, 0, 360, 140, 5, 0, 120,   this, data.getData('Bullet_speed_150'));//shooting 
-            this.scene.shootingLogic.twirlFanType_ToDirection('redMusicSign1Bullet', 3, 0, 360, 140, 5, 0, 120,   this, data.getData('Bullet_speed_150'),true);//shooting 
+            this.scene.shootingLogic.twirlFanType_ToDirection('blueMusicSign1Bullet', 6, 0, 360, 140, 5, 0, 120,   this, data.getData('Bullet_speed_150'));//shooting 
+            this.scene.shootingLogic.twirlFanType_ToDirection('redMusicSign1Bullet', 6, 0, 360, 140, 5, 0, 120,   this, data.getData('Bullet_speed_150'),true);//shooting 
             //speedChangeListType_ToTarget(bulletType, shooter, target, startSpeed, endSpeed, speedSpace)
             
-            for (let i = 0; i < 14; i++) {
-                this.scene.time.delayedCall(i * 450, () => {
+            for (let i = 0; i <= 3; i++) {
+                this.scene.time.delayedCall(i * 850, () => {
                     if(this.isDrop || this.behavior != 'DoubleTwirlFan180_SniperBulletEnhance')
                         return
-                    // ✅ Get a new bullet instance
-                    //this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 12, 80, 260, this, data.getData('Bullet_speed_130'));//shooting
-                    choose = Phaser.Math.RND.pick(b);
-                    this.scene.shootingLogic.speedChangeListType_ToTarget(choose, this, rumia,  data.getData('Bullet_speed_200'),  data.getData('Bullet_speed_120'), 1)
+                    this.scene.shootingLogic.speedChangeListType_ToTarget(this.getRandomColorBullet('largeCircle'), this, rumia,  data.getData('Bullet_speed_200'),  data.getData('Bullet_speed_120'), 1)
 
                 });
             }
@@ -169,22 +176,22 @@ class MystiaLorelei extends Character{
             this.currentMoveTo = 890;
             this.step+=1;
         }
-        if(this.step < 12 && this.moveTo(this.currentMoveTo,400,2) && this.currentMoveTo > 90){
+        if(this.step < 12 && this.moveTo(this.currentMoveTo,400,data.getData('emeny_speed_normal110')) && this.currentMoveTo > 90){
             this.currentMoveTo -= 50;
             this.OutScreenMusicSign_MoveFan360Help();
             this.step +=1
-        }else if(this.step < 25 && this.step >=12 && this.moveTo(this.currentMoveTo,100,2) && this.currentMoveTo <990){
+        }else if(this.step < 25 && this.step >=12 && this.moveTo(this.currentMoveTo,100,data.getData('emeny_speed_normal110')) && this.currentMoveTo <990){
             this.currentMoveTo +=50
             this.OutScreenMusicSign_MoveFan360Help();
             this.step +=1;
         }
         if(this.step == 25){
             this.scene.time.delayedCall(2000, () => this.isDone = true , [], this);//step2
-            
+            this.step +=1;
         }
     }
     ExpandFanToTarget_BlueRedBullet(){
-        if(this.step == 0 && this.moveTo(850,270,2)){
+        if(this.step == 0 && this.moveTo(850,270,data.getData('emeny_speed_normal110'))){
             this.step +=1
             this.ExpandFanToTarget_BlueRedBulletHelp('blueLongSemicircleBullet')
         }else if(this.step == 2 ){

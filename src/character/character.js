@@ -9,11 +9,12 @@ class Character extends Phaser.GameObjects.Sprite {
         // Default properties for all characters
         this.healthly = 3; 
         this.dt = 0;
-        
+        this.isDelay = false;
         this.isEmeny = false; 
         this.isDrop = false; 
         this.type = type; 
         this.ableToDefence = false; 
+        this.isMoveExit = false;
         this.behavior = '';
         this.subType = '';
         this.step = 0; // Prevents double shooting
@@ -53,6 +54,12 @@ class Character extends Phaser.GameObjects.Sprite {
         
         this.checkDestroy('bottom');
     }
+
+    Level1BossMoveRight(){
+        this.exitScreen('right',data.getData('emeny_speed_normal120'));
+    }
+
+
     getRandomColorBullet(key) {
         let bulletGroup;
         switch(key) {
@@ -69,7 +76,7 @@ class Character extends Phaser.GameObjects.Sprite {
                 bulletGroup = ['blueCapsuleBullet', 'redCapsuleBullet'];
                 break;
             case 'longSemicircle':
-                bulletGroup = ['blueLongSemicircleBullet', 'redLongSemicircleBullet', 'redExtremeLongSemicircleBullet'];
+                bulletGroup = ['blueLongSemicircleBullet', 'redLongSemicircleBullet'];
                 break;
             case 'arrow':
                 bulletGroup = ['blueArrowBullet', 'redArrowBullet'];
@@ -362,8 +369,9 @@ class Character extends Phaser.GameObjects.Sprite {
     }
 
     sprawnScore(score) {
+        if(this.isSprawnScore) return;
         if (!this.scene) return;
-    
+        this.isSprawnScore = true;
         let scoreValues = { small: 1, medium: 10, large: 50 };
         let scoreTypes = { large: "scoreLarge", medium: "scoreMedium", small: "scoreSmall" };
     

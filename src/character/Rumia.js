@@ -203,8 +203,7 @@ class Rumia extends Character{
                 //obj.behavior(this);
                 //obj.dropOff();
             } else if (!this.isHit) { // If colliding with an enemy
-                let hitSound = this.scene.getAudio('h'); // ✅ Call from scene
-                if (hitSound) hitSound.play();
+                this.scene.soundManager.playEffect('hitHurt');
                 if(this.isdefence && obj.type == 'Kedama'){
                     return;
                 }else if(this.isdefence || this.unableDefence == 3){
@@ -252,8 +251,7 @@ class Rumia extends Character{
             score -= 5;
             this.setTexture('rumiaflyhit');
     
-            let hitSound = this.scene.getAudio('h'); // ✅ Play hit sound
-            if (hitSound) hitSound.play();
+            
     
             // Damage effect (flashing)
             this.anims.stop();

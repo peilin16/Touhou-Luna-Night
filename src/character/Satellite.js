@@ -33,13 +33,9 @@ class Satellite extends Character{
     }
     
 
-    update(){
-        if(this.healthly <= 0)
-        {
-            this.dropOff();
-            return
-        }   
-        //super.update();
+    update(time, delta){
+        super.update(time, delta);
+        if(this.isDrop) return;
         
         if(this.isDone){
             if(this.isFirst){
@@ -91,11 +87,12 @@ class Satellite extends Character{
     dropOff(){
         this.isDrop = true;
         new Explosion(this.scene, this.x, this.y, 'Large');
+        this.sprawnScore(316);
         super.destoryCharacter();
     }
 
     r_tblr_trlr(){
-        if(this.step == 0 && this.moveTo(520,50,3)){
+        if(this.step == 0 && this.moveTo(520,50,data.getData('emeny_speed_normal110'))){
             this.step += 1
             this.scene.shootingLogic.twirlListType_ToDirection('redArrowBullet', 5, 0, 90, 280, this, data.getData('Bullet_speed_160'));
             this.scene.shootingLogic.twirlListType_ToDirection('redArrowBullet', 5, 90, 180, 280, this, data.getData('Bullet_speed_160'),true);
@@ -106,7 +103,7 @@ class Satellite extends Character{
                 this.scene.time.delayedCall(i * 430, () => {
                     if(this.isDrop)
                         return;
-                    this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 14, 0, 180, this,data.getData('Bullet_speed_130'));//shooting 
+                    this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 16, 0, 180, this,data.getData('Bullet_speed_130'));//shooting 
                     
                 });
             }
@@ -114,7 +111,7 @@ class Satellite extends Character{
         }
     }
     r_sbf5_srf5(){
-        if(this.step == 0 && this.moveTo(520,50,3)){
+        if(this.step == 0 && this.moveTo(520,50,data.getData('emeny_speed_normal110'))){
             this.step += 1
             let choose;
             let r = ['redLargeCircleBullet', 'blueLargeCircleBullet'];

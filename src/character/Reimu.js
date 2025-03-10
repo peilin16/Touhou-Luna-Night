@@ -23,7 +23,7 @@ class Reimu extends Character{
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.setOffset(15, 6);
-        this.healthly = 170;
+        this.healthly =190// 4670;
         this.isDrop = false;
         this.kind = 'f'
         this.isEmeny = true;
@@ -32,32 +32,35 @@ class Reimu extends Character{
         this.score = 13
         this.b = ['redSquareSpecialBullet', 'blueSquareSpecialBullet'];
         this.yin3Sprawn = false;
-        this.previousBehavior =this.behavior;
-        this.specialBulletGroup = [];
+        this.yinGroup = [];
         this.secondState = false;
+        this.current = 0;
     }
 
 
-    update(){
-        super.update();
-        if(this.isDrop)
-            return
+    update(time, delta){
+        if(this.isDelay) return;
+        super.update(time, delta);
+        if(this.isDrop) return
+        if(this.isFirst && !this.moveTo(850,320,data.getData('emeny_speed_normal100')))return;
         if(this.isFirst){
-            this.behavior = 'SecondState'
-            this.previousBehavior =this.behavior;
+            this.scene.soundManager.playBGM('level4Final');
+            this.behavior = 'RandomTwirFan360_TwrilListBullet'
             this.isFirst = false
-            
+            this.isDelay = true;
+            this.scene.time.delayedCall(3500, () => this.isDelay = false, [], this);//step2
+            return;
         }
-        else if(this.isDone){
-            this.behavior = this.getBehavior(this.previousBehavior);
-            this.previousBehavior =this.behavior;
+        else if(this.isDone && !this.secondState){
+            this.behavior = this.getBehavior();
             this.step = 0;
             
         }
-        if(!this.secondState && this.healthly <=170 ){
+        if(!this.secondState && this.healthly <=180 ){
             this.secondState = true;
-            this.behavior = this.getBehavior(this.previousBehavior);
-            this.previousBehavior =this.behavior;
+            this.sprawnScore(713);
+            this.isSprawnScore = false;
+            this.behavior = this.getBehavior();
             this.step = 0;
         }
         
@@ -69,6 +72,9 @@ class Reimu extends Character{
             case 'OutScreenShootTBLR_RandomFan':
                 this.OutScreenShootTBLR_RandomFan();
                 break;
+            case 'ExpandFanToTargetSpeedChangelList':
+                this.ExpandFanToTargetSpeedChangelList();
+                break;
             case 'FansShape360_RanDomFan360_ListType':
                 this.FansShape360_RanDomFan360_ListType();
                 break;
@@ -79,35 +85,29 @@ class Reimu extends Character{
                 this.SecondState();
                 break;
         }
-
-
     }
-    getBehavior(previous) {
-        if(this.healthly <= 170)
+    getBehavior() {
+        if(this.healthly <= 180)
             return 'SecondState';
 
-        let behaviors = ['RandomTwirFan360_TwrilListBullet', 'OutScreenShootTBLR_RandomFan','FansShape360_RanDomFan360_ListType','OutScreenShootLRBT_RandomFan' ];
+        let behaviors = ['RandomTwirFan360_TwrilListBullet', 'OutScreenShootTBLR_RandomFan','FansShape360_RanDomFan360_ListType','OutScreenShootLRBT_RandomFan' ,'ExpandFanToTargetSpeedChangelList'];
         
-        if (behaviors.length <= 1) return behaviors[0]; // ✅ Avoid infinite loops if only one element
-    
-        let newBehavior;
-        
-        do {
-            newBehavior = Phaser.Math.RND.pick(behaviors); // ✅ Randomly select from the list
-        } while (newBehavior === previous); // ✅ Ensure it's not the same as before
-
-        return newBehavior;
+        if(this.current >= behaviors.length - 1)
+            this.current = 0;
+        else
+            this.current++;
+        return behaviors[this.current];
     }
 
     RandomTwirFan360_TwrilListBullet(){
-        if(this.step == 0 && this.moveTo(850,320,2)){
+        if(this.step == 0 && this.moveTo(850,320,data.getData('emeny_speed_normal100'))){
             this.step +=1
             let choose
             
             //twirlFanType_ToDirection(bulletType,   anglespace, angleStart, angleEnd, sprateSpace, num, fanAngleStart, fanAngleEnd,  shooter, speed,isCounterclockwise = false){
                 //blueLongSemicircleBullet
             //   twirlRandomFanType_ToDirection(bulletType,   anglespace, angleStart, angleEnd, sprateSpace, num, fanAngleStart, fanAngleEnd,  shooter, speed,isCounterclockwise = false)
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 7; i++) {
                 this.scene.time.delayedCall(i * 1500, () => {
                     if(this.isDrop || this.behavior != 'RandomTwirFan360_TwrilListBullet')
                         return
@@ -118,46 +118,93 @@ class Reimu extends Character{
                     this.scene.shootingLogic.speedChangeListType_ToTarget(choose, this, rumia, data.getData('Bullet_speed_200'), data.getData('Bullet_speed_100'), 1)
                 });
             }
-            this.scene.shootingLogic.twirlRandomFanType_ToDirection('redSquareSpecialBullet', 3, 0, 360, 170, 5, 0, 180,   this, data.getData('Bullet_speed_160'));//shooting 
-            this.scene.shootingLogic.twirlRandomFanType_ToDirection('blueSquareSpecialBullet', 3, 0, 360, 170, 5, 0, 180,   this, data.getData('Bullet_speed_160'),true);//shooting 
+            this.scene.shootingLogic.twirlRandomFanType_ToDirection('redSquareSpecialBullet', 6, 0, 360, 170, 5, 0, 180,   this, data.getData('Bullet_speed_160'));//shooting 
+            this.scene.shootingLogic.twirlRandomFanType_ToDirection('blueSquareSpecialBullet', 6, 0, 360, 170, 5, 0, 180,   this, data.getData('Bullet_speed_160'),true);//shooting 
             //this.scene.shootingLogic.twirlRandomFanType_ToDirection('blueSquareSpecialBullet', 3, 0, 360, 170, 5, 0, 180,   this, data.getData('Bullet_speed_160'),true);//shooting 
-            this.scene.time.delayedCall(22500, () => this.step +=1 , [], this);//step2
+            this.scene.time.delayedCall(13500, () => this.isDone = true , [], this);//step2
+        }
+    }
+    ExpandFanToTargetSpeedChangelList(){
+        if(this.step == 0 && this.moveTo(850,320,data.getData('emeny_speed_normal140'))){
+            this.step +=1
+            this.ExpandFanToTargetSpeedChangelListHelp();
+            this.scene.time.delayedCall(1800, () => this.step +=1 , [], this);//step2
+        }else if(this.step == 2 && this.moveTo(450,220,data.getData('emeny_speed_normal140'))){
+            this.step +=1
+            this.ExpandFanToTargetSpeedChangelListHelp();
+            this.scene.time.delayedCall(1800, () => this.step +=1 , [], this);//step2
+        }else if(this.step == 4 && this.moveTo(650,420,data.getData('emeny_speed_normal140'))){
+            this.step +=1
+            this.ExpandFanToTargetSpeedChangelListHelp();
+            this.scene.time.delayedCall(1800, () => this.step +=1 , [], this);//step2
+        }
+        else if(this.step == 6 && this.moveTo(710,520,data.getData('emeny_speed_normal140'))){
+            this.step +=1
+            this.ExpandFanToTargetSpeedChangelListHelp();
+            this.scene.time.delayedCall(1800, () => this.isDone = true, [], this);//step2
         }
     }
 
+
+    ExpandFanToTargetSpeedChangelListHelp(){
+        
+            //let choose
+            
+            //twirlFanType_ToDirection(bulletType,   anglespace, angleStart, angleEnd, sprateSpace, num, fanAngleStart, fanAngleEnd,  shooter, speed,isCounterclockwise = false){
+                //blueLongSemicircleBullet
+            //   twirlRandomFanType_ToDirection(bulletType,   anglespace, angleStart, angleEnd, sprateSpace, num, fanAngleStart, fanAngleEnd,  shooter, speed,isCounterclockwise = false)
+            for (let i = 0; i < 3; i++) {
+                this.scene.time.delayedCall(i * 700, () => {
+                    if(this.isDrop || this.behavior != 'ExpandFanToTargetSpeedChangelList')
+                        return
+                    // ✅ Get a new bullet instance
+                    //this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 12, 80, 260, this, data.getData('Bullet_speed_130'));//shooting
+                    //choose = Phaser.Math.RND.pick(this.b );
+                    let b =this.getRandomColorBullet('squareSpecial');
+                    this.scene.shootingLogic.fanShapedType_ToTarget(b,22, 180,  this, rumia, data.getData('Bullet_speed_170')) ;//shooting 
+                    if(b == 'blueSquareSpecialBullet')
+                        this.scene.shootingLogic.speedChangeListType_ToTarget('blueSquareSpecialBullet', this, rumia, data.getData('Bullet_speed_200'), data.getData('Bullet_speed_100'), 1)
+                    else
+                        this.scene.shootingLogic.speedChangeListType_ToTarget('redSquareSpecialBullet', this, rumia, data.getData('Bullet_speed_200'), data.getData('Bullet_speed_100'), 1)
+                });
+            }
+            this.scene.shootingLogic.expandFanType_ToTarget(this.getRandomColorBullet('squareSpecial'), 3, 24, 260, this, rumia, data.getData('Bullet_speed_170') );
+            
+        
+    }
     OutScreenShootTBLR_RandomFan(){
-        if(this.step == 0 && this.moveTo(850,320,2)){
+        if(this.step == 0 && this.moveTo(850,320,data.getData('emeny_speed_normal110'))){
             this.step +=1
             let choose;
             let XPos1 = 0;
             let Xpos2 = 1000;
             for (let i = 0; i <230; i++) {
                 this.scene.time.delayedCall(i * 230, () => {
-                    if(this.isDrop || this.behavior != 'OutScreenShootTBR_RandomFan') return
+                    if(this.isDrop || this.behavior != 'OutScreenShootTBLR_RandomFan') return
                     // ✅ Get a new bullet instance
                     if(!this.isDrop){
                         this.scene.shootingLogic.outScreenType_ToDirection('redSquareSpecialBullet', 3 , 'right', 180,180,  0,100, this,data.getData('Bullet_speed_130'));//shooting 
-                        this.scene.shootingLogic.outScreenType_ToDirection('redSquareSpecialBullet', 3, 'left', 180,180,  500,600, this,data.getData('Bullet_speed_130'));//shooting 
+                        this.scene.shootingLogic.outScreenType_ToDirection('redSquareSpecialBullet', 3, 'left', 0,0,  500,600, this,data.getData('Bullet_speed_130'));//shooting 
                     }
                 });
             }
 
             let outScreenBulletTB1 = (XPos1,Xpos2,topType,bottomType) => {
-                if(this.isDrop || this.behavior != 'OutScreenShootTBR_RandomFan') return
+                if(this.isDrop || this.behavior != 'OutScreenShootTBLR_RandomFan') return
                 
                 if(XPos1 >=1000 ||Xpos2 <= 0) return;
                 Xpos2-= 30
                 XPos1 +=30
                 
-                this.scene.shootingLogic.outScreenType_ToDirection(topType, 8, 'top', 90,90, Xpos2, Xpos2 + 70, this, data.getData('Bullet_speed_160'), true);//shooting from top
+                this.scene.shootingLogic.outScreenType_ToDirection(topType, 8, 'top', 90,90, Xpos2, Xpos2 + 70, this, data.getData('Bullet_speed_155'), true);//shooting from top
                         
-                this.scene.shootingLogic.outScreenType_ToDirection(bottomType, 8, 'bottom', 270,270, XPos1,XPos1 + 70, this, data.getData('Bullet_speed_160'), true);//shooting from bottom    
+                this.scene.shootingLogic.outScreenType_ToDirection(bottomType, 8, 'bottom', 270,270, XPos1,XPos1 + 70, this, data.getData('Bullet_speed_155'), true);//shooting from bottom    
                 this.scene.time.delayedCall(630, () => {outScreenBulletTB1(XPos1,Xpos2,topType,bottomType)});
                 
             };
             for (let i = 0; i <12; i++) {
                 this.scene.time.delayedCall(i * 4130, () => {
-                    if(this.isDrop || this.behavior != 'OutScreenShootTBR_RandomFan') return
+                    if(this.isDrop || this.behavior != 'OutScreenShootTBLR_RandomFan') return
                     choose = Phaser.Math.RND.pick(this.b );
                     if(choose == 'redSquareSpecialBullet')
                         outScreenBulletTB1(XPos1,Xpos2, 'redSquareSpecialBullet','blueSquareSpecialBullet'); // ✅ Start expansion
@@ -173,38 +220,40 @@ class Reimu extends Character{
 
     FansShape360_RanDomFan360_ListType(){
         
-        if(this.step == 0 && this.moveTo(750,120,1.6)){
+        if(this.step == 0 && this.moveTo(750,120,data.getData('emeny_speed_normal130'))){
             this.step +=1
             this.FansShape360_RanDomFan360_ListTypeHelp();
-            
-        }else if(this.step == 1 && this.moveTo(650,120,1.6)){
+            this.scene.time.delayedCall(1300, () =>  this.step +=1, [], this);//step2
+        }else if(this.step == 2 && this.moveTo(650,120,data.getData('emeny_speed_normal130'))){
             this.step +=1
             this.FansShape360_RanDomFan360_ListTypeHelp();
-            
-        }else if(this.step == 2 && this.moveTo(600,320,1.6)){
+            this.scene.time.delayedCall(1300, () =>  this.step +=1, [], this);//step2
+        }else if(this.step == 4 && this.moveTo(600,320,data.getData('emeny_speed_normal130'))){
             this.step +=1
             this.FansShape360_RanDomFan360_ListTypeHelp();
-            
-        }else if(this.step == 3 && this.moveTo(510,320,1.6)){
+            this.scene.time.delayedCall(1300, () =>  this.step +=1, [], this);//step2
+        }else if(this.step == 6 && this.moveTo(510,320,data.getData('emeny_speed_normal130'))){
             this.step +=1
             this.FansShape360_RanDomFan360_ListTypeHelp();
-            
-        }else if(this.step == 4 && this.moveTo(430,320,1.6)){
+            this.scene.time.delayedCall(1300, () =>  this.step +=1, [], this);//step2
+        }else if(this.step == 8 && this.moveTo(430,320,data.getData('emeny_speed_normal130'))){
             this.step +=1
             this.FansShape360_RanDomFan360_ListTypeHelp();
-            
-        }else if(this.step == 5 && this.moveTo(500,420,1.6)){
+            this.scene.time.delayedCall(1300, () =>  this.step +=1, [], this);//step2
+        }else if(this.step == 10 && this.moveTo(500,420,data.getData('emeny_speed_normal130'))){
             this.step +=1
             this.FansShape360_RanDomFan360_ListTypeHelp();
-            
-        }else if(this.step == 6 && this.moveTo(600,420,1.6)){
+            this.scene.time.delayedCall(1300, () =>  this.step +=1, [], this);//step2
+        }else if(this.step == 12 && this.moveTo(600,420,data.getData('emeny_speed_normal130'))){
             this.step +=1
             this.FansShape360_RanDomFan360_ListTypeHelp();
-            
-        }else if(this.step == 7 && this.moveTo(700,370,1.6)){
+            this.scene.time.delayedCall(1300, () =>  this.step +=1, [], this);//step2
+        }else if(this.step == 14 && this.moveTo(700,370,data.getData('emeny_speed_normal130'))){
             this.step +=1
             this.FansShape360_RanDomFan360_ListTypeHelp();
-            
+            this.scene.time.delayedCall(1300, () =>  this.step +=1, [], this);//step2
+        }else if(this.step == 16 && this.moveTo(800,310,data.getData('emeny_speed_normal130'))){
+            this.isDone = true;
         }
     }
     FansShape360_RanDomFan360_ListTypeHelp(){
@@ -212,17 +261,19 @@ class Reimu extends Character{
         choose = Phaser.Math.RND.pick(this.b );
         if(choose == 'redSquareSpecialBullet'){
             this.scene.shootingLogic.fanShapedType_ToTarget(choose,42, 180,  this, rumia, data.getData('Bullet_speed_160')) ;//shooting 
+            this.scene.shootingLogic.fanShapedType_ToTarget(choose,39, 180,  this, rumia, data.getData('Bullet_speed_140')) ;//shooting 
             this.scene.shootingLogic.randomfanShapedType_toDirection('blueSquareSpecialBullet', 37, 0, 324, this,data.getData('Bullet_speed_120'));//shooting 
             this.scene.shootingLogic.listType_ToTarget('redSquareSpecialBullet', 8, 100, this, rumia, data.getData('Bullet_speed_200')) ;
         }else{
             this.scene.shootingLogic.fanShapedType_ToTarget('redSquareSpecialBullet',42, 180,  this, rumia, data.getData('Bullet_speed_160')) ;//shooting 
+            this.scene.shootingLogic.fanShapedType_ToTarget('redSquareSpecialBullet',39, 180,  this, rumia, data.getData('Bullet_speed_140')) ;//shooting 
             this.scene.shootingLogic.randomfanShapedType_toDirection(choose, 37, 0, 324, this,data.getData('Bullet_speed_120'));//shooting 
             this.scene.shootingLogic.listType_ToTarget('blueSquareSpecialBullet', 8, 100, this, rumia, data.getData('Bullet_speed_200')) ;
         }
     }
 
     OutScreenShootLRBT_RandomFan(){
-        if(this.step == 0 && this.moveTo(850,320,2)){
+        if(this.step == 0 && this.moveTo(850,320,data.getData('emeny_speed_normal110'))){
             this.step +=1
             let choose;
             let XPos1 = 0;
@@ -270,7 +321,7 @@ class Reimu extends Character{
     }
 
     SecondState(){
-        if(this.step == 0 && this.moveTo(550,100,3)){
+        if(this.step == 0 && this.moveTo(550,100,data.getData('emeny_speed_normal110'))){
             this.step+=1;
 
             let yin1 = this.scene.spawnEmeny(1, 'list', 'yinYangOrbs','yinYangOrbs','yinYangOrbsHit',100,this.x+140);
@@ -279,7 +330,8 @@ class Reimu extends Character{
             yin1.master =this;
             yin2.master = this;
            // yin3.master = this;
-            
+           this.yinGroup.push(yin1);
+           this.yinGroup.push(yin2);
         }else if(this.step == 1 ){
             this.step+=1;
             for (let i = 0; i <230; i++) {
@@ -297,16 +349,21 @@ class Reimu extends Character{
             }
             this.scene.time.delayedCall(52300, () => this.step = 1 , [], this);//step2
         }
-        if(this.healthly <= 30 && !this.yin3Sprawn){
+        if(!this.yin3Sprawn && this.healthly <= 30 ){
             this.yin3Sprawn = true;
             let yin3 = this.scene.spawnEmeny(1, 'list', 'yinYangOrbs','yinYangOrbs','yinYangOrbsHit',140,this.x);
             //let yin3 = this.scene.spawnEmeny(1, 'list', 'yinYangOrbs','yinYangOrbs','yinYangOrbsHit',150,this.x);
             yin3.master =this;
+            this.yinGroup.push(yin3);
         }
     }
     dropOff(){
         this.isDrop = true;
-
+        this.sprawnScore(821);
+        for (let i = 0; i < this.yinGroup.length; ++i) {
+            this.yinGroup[i].dropOff();
+        }
+        
     }
 
 }

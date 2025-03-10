@@ -13,6 +13,15 @@ class StarSapphire extends Character{
             repeat: -1 // Loop infinitely
         });
         
+        this.anims.create({
+            key: 'StarSapphireRight',
+            frames: [
+                { key: 'StarSapphireRight1' },
+                { key: 'StarSapphireRight2' },
+            ],
+            frameRate: 10, // 10 frames per second
+            repeat: -1 // Loop infinitely
+        });
         this.subType = subtype;
         this.anims.play('StarSapphire');
         
@@ -26,44 +35,48 @@ class StarSapphire extends Character{
         this.firstState = true;
         this.isEmeny = true;
         this.isDone = true;
-        this.isFirst = true
+        this.isFirst = false
         this.score = 23
         this.previousBehavior =this.behavior;
+        this.movingFanCircleBullet_b = 'redMediumCircleBullet';
     }
     
 
-    update(){
+
+    update(time, delta){
+        
+        super.update(time, delta);
+        if(this.isMoveExit){
+            this.anims.play('StarSapphireRight');
+            super.Level1BossMoveRight();
+            return;
+        }
         if(this.scene.Sangetsusei.healthly <= 0)
         {
             this.dropOff();
             return
         }   
-        //super.update();
         
-        if(this.scene.Sangetsusei.isDone){
-            if(this.isFirst ){
-                this.behavior = 'b_sbf3t_t'
-                this.isFirst = false
-                this.behavior = this.scene.Sangetsusei.behavior
-            }
-            
+        if(this.isFirst){
+            this.moveTo(900,-1,data.getData('emeny_speed_normal120'));
+            return;
         }
         
         this.isDone = false;
         switch(this.scene.Sangetsusei.behavior){
-            case 'b_sbf3t_t':
-                this.b_sbf3t_t();
+            case 'FanType17TwirlFanDouble':
+                this.FanType17TwirlFanDouble();
                 break;
-            case 'b_srf4t_t':
-                this.b_srf4t_t();
+            case 'movingFanCircleBullet':
+                this.movingFanCircleBullet();
                 break;
-            case 'b_srfts':
-                this.b_srfts();
+            case 'speedPause19ExpandFanDouble':
+                this.speedPause19ExpandFanDouble();
                 break;
         }
     }
-    b_srfts(){
-        if(this.step == 0 && this.moveTo(900)){
+    speedPause19ExpandFanDouble(){
+        if(this.step == 0 && this.moveTo(900,-1,data.getData('emeny_speed_normal120'))){
             this.step +=1
 
             this.scene.shootingLogic.expandFanType_ToDirection('blueLongSemicircleBullet', 8, 80, 180, 200, this, data.getData('Bullet_speed_150'),true);//shooting
@@ -75,23 +88,37 @@ class StarSapphire extends Character{
             this.scene.time.delayedCall(5500, () => this.step =0, [], this);//step2
         }
     }
-    b_srf4t_t(){
-        let b = 'redMediumCircleBullet';
+
+
+
+
+
+    movingFanCircleBullet(){
+        
         if (this.step === 0) {
-            if (this.moveTo(-70, 70,3)) { // Move to the left side (100px from the left)
-                b = 'redMediumCircleBullet'
+            if (this.moveTo(-70, 70,data.getData('emeny_speed_normal110'))) { // Move to the left side (100px from the left)
+                this.movingFanCircleBullet_b ='blueMediumCircleBullet' 
+                this.anims.stop();
+                this.anims.play('StarSapphireRight');
                 this.step = 1;
             }
         } else if (this.step === 1) {
-            if (this.moveTo(boardwidth + 70,70,3)) { // Move back to the right side
+            if (this.moveTo(boardwidth + 70,70, data.getData('emeny_speed_normal110'))) { // Move back to the right side
                 this.step = 0; // Reset to repeat the pattern
-                b = 'blueMediumCircleBullet'
+                this.movingFanCircleBullet_b = 'redMediumCircleBullet'
+                this.anims.stop();
+                this.anims.play('StarSapphire');
+
             }
         }
     
         // ✅ Shoot a bullet whenever X position is divisible by 50
-        if (this.x % 100 === 0) {
-            this.scene.shootingLogic.randomfanShapedType_toDirection(b, 12, 0, 180, this,data.getData('Bullet_speed_120'));//shooting 
+        let roundedX = Math.round(this.x / 100) * 100; // Round to nearest 100
+        if (roundedX % 100 === 0 && roundedX !== this.lastShotX) {
+            this.scene.shootingLogic.randomfanShapedType_toDirection(
+                this.movingFanCircleBullet_b, 8, 0, 180, this, data.getData('Bullet_speed_120')
+            );
+            this.lastShotX = roundedX; // ✅ Update last fired position
         }
     }
     collideToBullet(bullet){
@@ -99,8 +126,8 @@ class StarSapphire extends Character{
             this.scene.Sangetsusei.healthly -= bullet.atk;
         }
     } 
-    b_sbf3t_t(){
-        if(this.step == 0 && this.moveTo(900)){
+    FanType17TwirlFanDouble(){
+        if(this.step == 0 && this.moveTo(900,-1,data.getData('emeny_speed_normal120'))){
             this.step += 1
             this.scene.shootingLogic.twirlFanType_ToDirection('redMediumCircleBullet', 9, 0, 360, 140, 4,10, 50,   this, data.getData('Bullet_speed_140'),true);//shooting
             this.scene.time.delayedCall(5600, () => this.step = 0, [], this);//step2
@@ -108,7 +135,8 @@ class StarSapphire extends Character{
     }
 
     dropOff(){
-        //this.isDrop = true;
-        
+        this.isDrop = true;
+        this.setTexture('StarSapphireHit')
+        super.dropOff();
     }
 }

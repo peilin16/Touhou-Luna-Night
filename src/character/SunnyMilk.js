@@ -25,7 +25,15 @@ class SunnyMilk extends Character{
             });
             this.anims.play('SunnyMilk');
         }
-        
+        this.anims.create({
+            key: 'SunnyMilkFlyRight',
+            frames: [
+                { key: 'SunnyMilkFlyRight1' },
+                { key: 'SunnyMilkFlyRight2' },
+            ],
+            frameRate: 10, // 10 frames per second
+            repeat: -1 // Loop infinitely
+        });
         //this.Xspeed = data.getData('blueDivineSpirit_speed'); // Move speed
         this.body.setSize(data.getData('SunnyMilk_width'), data.getData('SunnyMilk_height'));
         
@@ -38,50 +46,74 @@ class SunnyMilk extends Character{
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.setOffset(10, 2);
-        this.healthly = 4 //440;
+        this.healthly = 440;
         this.isDrop = false;
         this.kind = 'f'
         this.firstState = true;
         this.isEmeny = true;
-        this.isDone = true;
-        this.isFirst = true
+        this.isDone = false;
+        this.isFirst = true;
         this.score = 23
         this.previousBehavior =this.behavior;
+        this.behaviors = ['speedPause19ExpandFanDouble','movingFanCircleBullet','FanType17TwirlFanDouble'];
+        this.current = -1;
+        this.secondState = false;
     }
     
 
-    update(){
-        if(this.firstState){
-            if(this.healthly <= 0)
-            {
-                this.dropOff();
-                return
-            }   
-        }else{
+    update(time, delta){
+        
+        super.update(time, delta);
+        if(this.isDrop ||this.scene.isSpeech) return;
+
+        if(this.isMoveExit){
+            this.anims.play('SunnyMilkFlyRight');
+            super.Level1BossMoveRight();
+            return;
+        }
+
+        if(!this.firstState){
             if(this.scene.Sangetsusei.healthly <= 0)
             {
                 this.dropOff();
                 return
-            }   
+            }
+            if(this.isFirst ){
+                if(this.moveTo(760,-1,data.getData('emeny_speed_normal120'))){
+
+                    this.scene.soundManager.playBGM('level2Final');
+                    this.scene.Sangetsusei.isDone = false;
+                    this.isDone = false;
+                    this.scene.time.delayedCall(2500, () => { 
+                        this.luna.isFirst = true;
+                        this.startSapphire.isFirst = true;
+                    }, [], this);//step2
+                    this.scene.time.delayedCall(8500, () => { 
+                        this.scene.Sangetsusei.isDone = true;
+                        this.luna.isFirst = false;
+                        this.startSapphire.isFirst = false;
+
+                     }, [], this);//step2
+                    this.isFirst = false;
+                }else
+                return;
+            }
         }
-        if(this.scene.Sangetsusei.healthly < 290){
+        if( !this.firstState && !this.secondState &&this.scene.Sangetsusei.healthly < 610 ){
             this.isDone = true
+            this.sprawnScore(265);
+            this.isSprawnScore = false;
+            this.secondState = true;
         }
-        //super.update();
-        
         if(this.isDone || this.scene.Sangetsusei.isDone ){
             if(this.firstState){
-                this.behavior = 'r_sbrF'
+                this.behavior = 'ShootingFanShape360_SpeedPauseSniper'
                 this.isFirst = false
                 this.step = 0;
             }else{
-
-                
-                this.scene.Sangetsusei.behavior = 'b_hit_player'
-
                 this.scene.Sangetsusei.step = 0;
                 this.scene.Sangetsusei.behavior = this.getBehavior(this.scene.Sangetsusei.previousBehavior);
-                this.scene.Sangetsusei.previousBehavior =this.scene.Sangetsusei.behavior;
+                //this.scene.Sangetsusei.previousBehavior =this.scene.Sangetsusei.behavior;
                 this.luna.step = 0;
                 this.luna.behavior =  this.scene.Sangetsusei.behavior;
                 this.startSapphire.step = 0;
@@ -95,71 +127,71 @@ class SunnyMilk extends Character{
         
         if(this.firstState){
             switch(this.behavior){
-                case 'r_sbrF':
-                    this.r_sbrF();
+                case 'ShootingFanShape360_SpeedPauseSniper':
+                    this.ShootingFanShape360_SpeedPauseSniper();
                     break;
             }
         }else{
             switch(this.scene.Sangetsusei.behavior){
-                case 'b_sbf3t_t':
-                    this.b_sbf3t_t();
+                case 'FanType17TwirlFanDouble':
+                    this.FanType17TwirlFanDouble();
                     break;
-                case 'b_srf4t_t':
-                    this.b_srf4t_t();
+                case 'movingFanCircleBullet':
+                    this.movingFanCircleBullet();
                     break;
-                case 'b_srfts':
-                    this.b_srfts();
+                case 'speedPause19ExpandFanDouble':
+                    this.speedPause19ExpandFanDouble();
                     break;
+
+
+
+
                 case 'b_hit_player':
-                    this.b_hit_player(4);
+                    this.b_hit_player(data.getData('emeny_speed_normal190'));
                     break;
             }
 
         }
-        
-        
 
     }
+
     dropOff(){
         this.isDrop = true;
         if(this.firstState){
-            
+            this.sprawnScore(366);
             this.exitScreen('top', 2, 1);
         }else{
             this.scene.Sangetsusei.isDrop = true;
             this.setTexture('SunnyMilkHit')
+            this.sprawnScore(466);
             super.dropOff();
         }
     }
 
     getBehavior(previous) {
-        if(this.scene.Sangetsusei.healthly <= 290){
+        
+        if(this.scene.Sangetsusei.healthly <= 610){
             return 'b_hit_player';
         }
-        let behaviors = ['b_sbf3t_t', 'b_srf4t_t','b_srfts'];
         
-        if (behaviors.length <= 1) return behaviors[0]; // ✅ Avoid infinite loops if only one element
-    
-        let newBehavior;
-        
-        do {
-            newBehavior = Phaser.Math.RND.pick(behaviors); // ✅ Randomly select from the list
-        } while (newBehavior === previous); // ✅ Ensure it's not the same as before
-
-        return newBehavior;
+        if(this.current >= this.behaviors.length - 1)
+            this.current = 0;
+        else
+            this.current++;
+        return this.behaviors[this.current];
     }
 
-
+    
     b_hit_player(speed) {
         //if (rumia) return; // ✅ Ensure the player exists
         let direction
         if(!this.hitPlayer){
-            if(this.moveTo( this.scene.Sangetsusei.x,this.scene.Sangetsusei.y+40,2) && this.luna.moveTo(this.scene.Sangetsusei.x+20,this.scene.Sangetsusei.y-40,2) 
-                && this.startSapphire.moveTo(this.scene.Sangetsusei.x-40, this.scene.Sangetsusei.y-10,2)){
+            if(this.moveTo( this.scene.Sangetsusei.x,this.scene.Sangetsusei.y+40,data.getData('emeny_speed_normal120')) && this.luna.moveTo(this.scene.Sangetsusei.x+20,this.scene.Sangetsusei.y-40,data.getData('emeny_speed_normal120')) 
+                && this.startSapphire.moveTo(this.scene.Sangetsusei.x-40, this.scene.Sangetsusei.y-10,data.getData('emeny_speed_normal120'))){
                 this.hitPlayer= true;
                 direction = new Phaser.Math.Vector2(rumia.x - this.scene.Sangetsusei.x, rumia.y - this.scene.Sangetsusei.y).normalize();
-                this.vx = direction.x * speed;
-                this.vy = direction.y * speed;
+                this.vx = direction.x * speed * this.dt;
+                this.vy = direction.y * speed * this.dt;
             }
         }
 
@@ -172,8 +204,8 @@ class SunnyMilk extends Character{
         
                 // ✅ Calculate new direction towards player
                 direction = new Phaser.Math.Vector2(rumia.x - this.scene.Sangetsusei.x, rumia.y - this.scene.Sangetsusei.y).normalize();
-                this.vx = direction.x * speed;
-                this.vy = direction.y * speed;
+                this.vx = direction.x * speed * this.dt;
+                this.vy = direction.y * speed * this.dt;
             }
         
             // ✅ Continue moving in the same direction
@@ -231,29 +263,33 @@ class SunnyMilk extends Character{
         this.x += this.vx;
         this.y += this.vy;*/
     }
-    
-    b_srfts(){
-        if(this.scene.Sangetsusei.step == 0 && this.moveTo(760)){
+    movingFanCircleBullet(){
+        if(this.scene.Sangetsusei.step == 0 && this.moveTo(760,-1,data.getData('emeny_speed_normal120'))){
             this.scene.Sangetsusei.step +=1;
             let r = ['redCapsuleBullet', 'blueCapsuleBullet'];
             let choose;
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 28; i++) {
                 this.scene.time.delayedCall(i * 1230, () => {
                     // ✅ Get a new bullet instance
                     choose = Phaser.Math.RND.pick(r);
                     //this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 12, 80, 260, this, data.getData('Bullet_speed_130'));//shooting
-                    if(!this.isDrop && this.behavior == 'b_srfts'){
-                        this.scene.shootingLogic.fanShapedType_ToTarget(choose, 17,  180 , this, rumia, data.getData('Bullet_speed_130'))
+                    if(!this.isDrop &&  this.scene.Sangetsusei.behavior == 'movingFanCircleBullet'){
+                        this.scene.shootingLogic.fanShapedType_ToTarget(choose, 14,  180 , this, rumia, data.getData('Bullet_speed_130'))
                     }
                 });
             }
-            this.scene.time.delayedCall(29600, () => this.scene.Sangetsusei.isDone = true, [], this);//step2
+            this.scene.time.delayedCall(37000, () => {this.scene.Sangetsusei.isDone = true
+                this.luna.anims.play('Luna');
+                this.startSapphire.anims.play('StarSapphire');
+
+
+            }, [], this);//step2
         }
     }
 
 
-    b_srf4t_t(){
-        if(this.scene.Sangetsusei.step == 0 && this.moveTo(900)){
+    FanType17TwirlFanDouble(){
+        if(this.scene.Sangetsusei.step == 0 && this.moveTo(900,-1,data.getData('emeny_speed_normal120'))){
             this.scene.Sangetsusei.step +=1;
 
         
@@ -264,7 +300,7 @@ class SunnyMilk extends Character{
                     // ✅ Get a new bullet instance
                     choose = Phaser.Math.RND.pick(r);
                     //this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 12, 80, 260, this, data.getData('Bullet_speed_130'));//shooting
-                    if(!this.isDrop && this.behavior == 'b_srf4t_t'){
+                    if(!this.isDrop &&  this.scene.Sangetsusei.behavior == 'FanType17TwirlFanDouble'){
                         this.scene.shootingLogic.randomfanShapedType_toDirection(choose, 18, 0, 324, this,data.getData('Bullet_speed_120'));//shooting 
                     }
                 });
@@ -274,15 +310,15 @@ class SunnyMilk extends Character{
         }
 
     }
-    b_sbf3t_t(){
-        if(this.scene.Sangetsusei.step == 0 && this.moveTo(900)){
+    speedPause19ExpandFanDouble(){
+        if(this.scene.Sangetsusei.step == 0 && this.moveTo(900,-1,data.getData('emeny_speed_normal120'))){
             this.scene.Sangetsusei.step +=1;
 
             let b = ['blueSpeedPauseBullet', 'redSpeedPauseBullet'];
             let choose;
             for (let i = 0; i < 14; i++) {
                 this.scene.time.delayedCall(i * 1100, () => {
-                    if(this.isDrop || this.behavior != 'b_sbf3t_t')
+                    if(this.isDrop ||  this.scene.Sangetsusei.behavior != 'speedPause19ExpandFanDouble')
                         return
                     // ✅ Get a new bullet instance
                     //this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 12, 80, 260, this, data.getData('Bullet_speed_130'));//shooting
@@ -311,21 +347,17 @@ class SunnyMilk extends Character{
         }
     } 
 
-
-
-    r_sbrF(){
-        if(this.step == 0 && this.moveTo(760)){
+    //first state
+    ShootingFanShape360_SpeedPauseSniper(){
+        if(this.step == 0 && this.moveTo(760,-1,data.getData('emeny_speed_normal120'))){
             this.step += 1;
-            let b = ['blueSpeedPauseBullet', 'redSpeedPauseBullet'];
-            let r = ['redLargeCircleBullet', 'blueLargeCircleBullet'];
-            let choose;
             for (let i = 0; i < 50; i++) {
                 this.scene.time.delayedCall(i * 1230, () => {
                     // ✅ Get a new bullet instance
-                    choose = Phaser.Math.RND.pick(r);
+                    
                     //this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 12, 80, 260, this, data.getData('Bullet_speed_130'));//shooting
                     if(!this.isDrop){
-                        this.scene.shootingLogic.randomfanShapedType_toDirection('redLargeCircleBullet', 30, 0, 324, this,data.getData('Bullet_speed_100'));//shooting 
+                        this.scene.shootingLogic.fanShapedType_ToDirection('redLargeCircleBullet', 50, 0, 360, this,data.getData('Bullet_speed_130'));//shooting 
                     }
                 });
             }
@@ -335,8 +367,8 @@ class SunnyMilk extends Character{
                         return
                     // ✅ Get a new bullet instance
                     //this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 12, 80, 260, this, data.getData('Bullet_speed_130'));//shooting
-                    choose = Phaser.Math.RND.pick(b);
-                    let bulletGroup = this.scene.shootingLogic.fanShapedType_ToTarget(choose, 4,  10, this, rumia, data.getData('Bullet_speed_150'))
+                    
+                    let bulletGroup = this.scene.shootingLogic.fanShapedType_ToTarget(this.getRandomColorBullet('speedPause'), 4,  10, this, rumia, data.getData('Bullet_speed_150'))
                     for (let i = 0; i < bulletGroup.length; ++i) {
                         bulletGroup[i].pauseMin = 700; // Pause for 1.2 seconds
                         bulletGroup[i].delayPauseMin = 1000; // Pause starts after 0.8 seconds

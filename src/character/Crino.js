@@ -22,23 +22,33 @@ class Crino extends Character{
         this.behaviors = ['r_sTf9_sTf8', 'r_bfr4_rfl4', 'iceGenerate1'];
         this.current = 0;
         this.isSecondState = false;
+        this.isSecondSprawn = false
     }
 
     update(time, delta){
         super.update(time, delta);
         if(this.isDrop)
             return
-
+        if(this.isMoveExit){
+            this.setTexture('crinoflyRight1')
+            super.Level1BossMoveRight();
+            return;
+        }
         if(this.isFirst){
             this.behavior = 'iceGenerate1'
             this.previousBehavior =this.behavior;
-            if(this.moveTo(800,270,data.getData('emeny_speed_normal120')))
-                this.isFirst = false
-            return;
+            if(!this.moveTo(800,270,data.getData('emeny_speed_normal120')))
+                return;
+            this.isFirst = false
+            this.scene.soundManager.playBGM('level1Final');
         }else if(!this.isSecondState && this.healthly < 320){
             this.isDone = true;
             this.isSecondState = true;
-            this.sprawnScore(316);
+            if(!this.isSecondSprawn)
+            {
+                this.sprawnScore(316);
+                this.isSprawnScore = false;
+            }
         }
         if(this.isDone){
             this.behavior = this.getBehavior(this.previousBehavior);
@@ -84,10 +94,6 @@ class Crino extends Character{
         if(this.isDestory){
             super.dropOff(1600,data.getData('emeny_speed_normal150'), data.getData('emeny_speed_normal110'));
         }
-
-        
-
-        
     }
     getBehavior() {
         if(this.healthly <= 320)
