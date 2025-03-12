@@ -16,7 +16,7 @@ class Rumia extends Character{
 
 
         this.hitPoint = scene.add.sprite(0,0,'HitPoint')
-
+        this.hitPoint.setDepth(10);
         this.hitPoint.setVisible(false);
 
         this.isHit = false;

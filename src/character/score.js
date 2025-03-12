@@ -7,10 +7,9 @@ class Score extends Character {
         this.isEmeny = false;
         this.isDrop = false;
         this.value = 1;
-        
+        this.healthly = 5;
         scene.add.existing(this);
         scene.physics.add.existing(this);
-        this.body.setCollideWorldBounds(true);
         if(subtype == 'scoreSmall'){
             this.value = 1;
             this.body.setOffset(-10, 10);  
@@ -24,13 +23,14 @@ class Score extends Character {
             this.body.setOffset(-20, 20);  
             this.body.setSize(35, 35, true); // Adjust hitbox size
         } 
+        this.body.setOffset(3, 0);
         this.body.setImmovable(true);
     }
 
     update(time, delta) {
         super.update(time, delta);
         if(this.isDrop) return;
-        this.exitScreen('left',120);
+        this.exitScreen('left',data.getData('emeny_speed_normal100'));
     }
     collide(player){
         //this.isDrop = true;

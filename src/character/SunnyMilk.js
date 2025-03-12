@@ -159,7 +159,7 @@ class SunnyMilk extends Character{
         this.isDrop = true;
         if(this.firstState){
             this.sprawnScore(366);
-            this.exitScreen('top', 2, 1);
+            this.exitScreen('top', data.getData('emeny_speed_normal120'), data.getData('emeny_speed_normal110'));
         }else{
             this.scene.Sangetsusei.isDrop = true;
             this.setTexture('SunnyMilkHit')

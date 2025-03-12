@@ -24,6 +24,7 @@ class Character extends Phaser.GameObjects.Sprite {
         this.body.setVelocity(0, 0);  // ✅ Ensures Rumia stays in place
         this.isSprawnScore = false;
         // Adjust hitbox
+        this.setDepth(8);
         this.isDone = false;
         this.lastFrameTime = performance.now();
         this.body.setSize(50, 50);

@@ -55,7 +55,7 @@ class FlowerFairy extends Character{
             this.healthly = 175;
             //this.speed = data.getData('dandelionFairy_speed') 
         }
-        
+        this.subType = type;
         
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -258,12 +258,22 @@ class FlowerFairy extends Character{
 
     dropOff(){
         this.anims.stop();
-        if(this.type == 'sunflowerFairy' || this.type == 'SunFlowerFairy')
-            this.setTexture('sunflowerFairyHit');
-        else if(this.type == 'dandelionFairy' || this.type == 'DandelionFairy')
-            this.setTexture('dandelionFairyHit');
-        else if(this.type == 'roseFairy' || this.type == 'roseFairy')
-            this.setTexture('roseFairyHit');
+        if(!this.isDrop){
+            if(this.subType  == 'sunFlowerFairy' || this.subType  == 'SunFlowerFairy'){
+                this.setTexture('sunflowerFairyHit');
+                this.sprawnScore(103);
+            }
+            else if(this.subType  == 'dandelionFairy' || this.subType  == 'DandelionFairy'){
+                this.sprawnScore(133);
+                this.setTexture('dandelionFairyHit');
+            }
+            else if(this.subType  == 'roseFairy' || this.subType  == 'roseFairy'){
+                this.setTexture('roseFairyHit');
+                this.sprawnScore(163);
+            }
+                
+        }
+        
         super.dropOff();
         
     }

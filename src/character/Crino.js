@@ -209,7 +209,8 @@ class Crino extends Character{
                 destructionIce = this.scene.spawnEmeny(1, 'list', 'DestructionIce','iceTop','iceSelfDestructY2',-60, 720);
                 destructionIce.master =this;
             }, [], this);//step2
-            this.scene.time.delayedCall(30800, () =>{ this.setTexture('Crino1'); this.isDone = true}, [], this);//step2
+            this.scene.time.delayedCall(30800, () =>{if(!this || this.isDrop) return;
+                 this.setTexture('Crino1'); this.isDone = true}, [], this);//step2
         }
         
 
@@ -223,64 +224,64 @@ class Crino extends Character{
             destructionIce.master =this;
             //destructionIce.behavior = 'iceSelfDestruct1';
             this.scene.time.delayedCall(2000, () => {
-                if(this.isDrop || this.behavior != 'iceGenerate2')
+                if(!this || this.isDrop || this.behavior != 'iceGenerate2')
                     return;
                 destructionIce = this.scene.spawnEmeny(1, 'list', 'DestructionIce','ice','iceSelfDestructX3',170);
                 destructionIce.master =this;
             }, [], this);//step2
             
             this.scene.time.delayedCall(4800, () => {
-                if(this.isDrop|| this.behavior != 'iceGenerate2')
+                if(!this ||this.isDrop|| this.behavior != 'iceGenerate2')
                     return;
                 destructionIce = this.scene.spawnEmeny(1, 'list', 'DestructionIce','iceTop','iceSelfDestructY1',-60, 620);
                 destructionIce.master =this;
             }, [], this);//step2
 
             this.scene.time.delayedCall(7800, () => {
-                if(this.isDrop|| this.behavior != 'iceGenerate2')
+                if(!this ||this.isDrop|| this.behavior != 'iceGenerate2')
                     return;
                 destructionIce = this.scene.spawnEmeny(1, 'list', 'DestructionIce','iceTop','iceSelfDestructY2',-60, 520);
                 destructionIce.master =this;
             }, [], this);//step2
             
             this.scene.time.delayedCall(9800, () => {
-                if(this.isDrop|| this.behavior != 'iceGenerate2')
+                if(!this ||this.isDrop|| this.behavior != 'iceGenerate2')
                     return;
                 destructionIce = this.scene.spawnEmeny(1, 'list', 'DestructionIce','iceTop','iceSelfDestructY6',660, 920);
                 destructionIce.master =this;
             }, [], this);//step2
             this.scene.time.delayedCall(13600, () => {
-                if(this.isDrop|| this.behavior != 'iceGenerate2')
+                if(!this ||this.isDrop|| this.behavior != 'iceGenerate2')
                     return;
                 destructionIce = this.scene.spawnEmeny(1, 'list', 'DestructionIce','iceTop','iceSelfDestructY5',660, 720);
                 destructionIce.master =this;
             }, [], this);//step2
             this.scene.time.delayedCall(16800, () => {
-                if(this.isDrop|| this.behavior != 'iceGenerate2')
+                if(!this ||this.isDrop|| this.behavior != 'iceGenerate2')
                     return;
                 destructionIce = this.scene.spawnEmeny(1, 'list', 'DestructionIce','ice','iceSelfDestructX2',420);
                 destructionIce.master =this;
             }, [], this);//step2
             this.scene.time.delayedCall(19800, () => {
-                if(this.isDrop|| this.behavior != 'iceGenerate2')
+                if(!this ||this.isDrop|| this.behavior != 'iceGenerate2')
                     return;
                 destructionIce = this.scene.spawnEmeny(1, 'list', 'DestructionIce','ice','iceSelfDestructX3',120);
                 destructionIce.master =this;
             }, [], this);//step2
             this.scene.time.delayedCall(22000, () => {
-                if(this.isDrop|| this.behavior != 'iceGenerate2')
+                if(!this ||this.isDrop|| this.behavior != 'iceGenerate2')
                     return;
                 destructionIce = this.scene.spawnEmeny(1, 'list', 'DestructionIce','ice','iceSelfDestructX1',220);
                 destructionIce.master =this;
             }, [], this);//step2
             this.scene.time.delayedCall(24000, () => {
-                if(this.isDrop|| this.behavior != 'iceGenerate2')
+                if(!this ||this.isDrop|| this.behavior != 'iceGenerate2')
                     return;
                 destructionIce = this.scene.spawnEmeny(1, 'list', 'DestructionIce','iceTop','iceSelfDestructY1',-60, 620);
                 destructionIce.master =this;
             }, [], this);//step2
             this.scene.time.delayedCall(27000, () => {
-                if(this.isDrop|| this.behavior != 'iceGenerate2')
+                if(!this ||this.isDrop|| this.behavior != 'iceGenerate2')
                     return;
                 destructionIce = this.scene.spawnEmeny(1, 'list', 'DestructionIce','iceTop','iceSelfDestructY5',660, 820);
                 destructionIce.master =this;

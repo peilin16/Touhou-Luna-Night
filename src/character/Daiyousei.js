@@ -23,7 +23,7 @@ class Daiyousei extends Character{
         scene.add.existing(this);
         scene.physics.add.existing(this);
         //this.play('DaiyouseiScore'); // Play the 'rumiaFly' animation
-
+        this.healthly = 999999
         this.behavior = 'healthly'
         this.isEmeny = false;
         this.isDrop = false;
