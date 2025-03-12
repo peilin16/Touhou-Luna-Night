@@ -39,7 +39,7 @@ class Level3 extends Mainlevel {
         ]
         super.showLevel('LEVEL 3');
 
-        this.soundManager.playBGM('level3');
+        this.soundManager.playBGM('LEVEL 3');
     }
     update(){        
         if(this.isSpeech)
