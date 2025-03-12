@@ -33,7 +33,7 @@ class Score extends Character {
         this.exitScreen('left',120);
     }
     collide(player){
-        this.isDrop = true;
+        //this.isDrop = true;
         this.healthly = 0;
         player.Playerscore += this.value;
     }

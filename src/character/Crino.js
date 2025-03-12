@@ -40,7 +40,8 @@ class Crino extends Character{
             if(!this.moveTo(800,270,data.getData('emeny_speed_normal120')))
                 return;
             this.isFirst = false
-            this.scene.soundManager.playBGM('level1Final');
+            if(!this.isSecondSprawn)
+                this.scene.soundManager.playBGM('level1Final');
         }else if(!this.isSecondState && this.healthly < 320){
             this.isDone = true;
             this.isSecondState = true;

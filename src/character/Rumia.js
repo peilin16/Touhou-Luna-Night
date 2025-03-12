@@ -13,14 +13,21 @@ class Rumia extends Character{
         this.collideCircleRadius = 22;
         this.collideCircleRadiusOffset = [30,14]
         this.unableDefence = 0;
-        
+
+
+        this.hitPoint = scene.add.sprite(0,0,'HitPoint')
+
+        this.hitPoint.setVisible(false);
+
         this.isHit = false;
         scene.add.existing(this);
         scene.physics.add.existing(this);
+
+
         this.body.setCollideWorldBounds(true);
         this.body.setCircle(data.getData('rumia_circle')); // ✅ Set a circular hitbox with radius 25
         //this.body.setSize(25, 25); // ✅ Adjust width/height to fit the oval shape
-        this.body.setOffset(45, 24);
+        this.body.setOffset(data.getData('rumiaXoffset'),data.getData('rumiaYoffset'));
         // ✅ Create countdown text (initially hidden)
         this.defenseCountdownText = scene.add.text(this.x, this.y - 40, '', {
             fontSize: '18px',
@@ -67,8 +74,17 @@ class Rumia extends Character{
         this.play('rumiaFly'); // Play the 'rumiaFly' animation
         
     }
+
+
+
+
     update(time, delta){
         super.update(time, delta);
+
+
+        this.hitPoint.x = this.x ;
+        this.hitPoint.y = this.y + 37;
+
         if(!this.isDrop){
             this.playerMoving();
         }else{
@@ -86,6 +102,9 @@ class Rumia extends Character{
             this.defenseCountdownText.setVisible(false); // Hide when countdown ends
         }
     }
+
+
+
     notDefenceState() {
         // Spawn trees at intervals
         if(!this.ableToDefence)
@@ -125,8 +144,10 @@ class Rumia extends Character{
         
             if (!keyShift.isDown) {
                 this.speed =  data.getData('rumia_speed_Normal')  ;
+                this.hitPoint.setVisible(false);
             }
             if (keyShift.isDown) {
+                this.hitPoint.setVisible(true);
                 this.speed =  data.getData('rumia_speed_Slow') ;
             }
         
@@ -182,7 +203,7 @@ class Rumia extends Character{
         //alert('aaa')
         this.isdefence = false;
         this.body.setCircle(data.getData('rumia_circle'));  // Reset collider size
-        this.body.setOffset(45, 24); // Reset offset
+        this.body.setOffset(data.getData('rumiaXoffset'),data.getData('rumiaYoffset'));
         this.once('animationcomplete', () => {
             this.setTexture('rumiafly1'); // Reset to normal state
             //this.isSpecialanimePlaying = false;

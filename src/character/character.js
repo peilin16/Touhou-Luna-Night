@@ -127,6 +127,7 @@ class Character extends Phaser.GameObjects.Sprite {
         }
     }    
     destoryCharacter(){
+        if(!this) return;
         if (this.collider) {
             this.collider.destroy(); // ✅ Remove collider from physics world
             this.collider = null;    // ✅ Avoid referencing it again

@@ -23,7 +23,7 @@ class Reimu extends Character{
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.setOffset(15, 6);
-        this.healthly =190// 4670;
+        this.healthly = 4670;//190//
         this.isDrop = false;
         this.kind = 'f'
         this.isEmeny = true;
@@ -359,7 +359,7 @@ class Reimu extends Character{
     }
     dropOff(){
         this.isDrop = true;
-        this.sprawnScore(821);
+        //this.sprawnScore(821);
         for (let i = 0; i < this.yinGroup.length; ++i) {
             this.yinGroup[i].dropOff();
         }

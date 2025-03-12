@@ -155,9 +155,10 @@ class Destruction extends Character {
                 this.flowerDestruct();
                 break;
         }
-        if(this.subtype == 'yinYangOrbs'){
+        if(this.subtype == 'yinYangOrbs' && !this.isDrop){
             new Explosion(this.scene, this.x, this.y, 'Large');
-            scene.time.delayedCall(500, () => {super.destoryCharacter();});
+            this.isDrop = true;
+            //this.scene.time.delayedCall(500, () => {super.destoryCharacter();});
         }else{
             super.destoryCharacter();
         }
@@ -201,7 +202,7 @@ class Destruction extends Character {
             this.step = 1;
             // Set initial velocity in a random direction
             const angle = Phaser.Math.Between(0, 360) * (Math.PI / 180);
-            const speed = 5;
+            const speed =340 * this.dt; // data.getData('emeny_speed_normal200')
             this.vx = Math.cos(angle) * speed;
             this.vy = Math.sin(angle) * speed;
             

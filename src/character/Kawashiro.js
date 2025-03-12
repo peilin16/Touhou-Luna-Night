@@ -9,7 +9,7 @@ class Kawashiro extends Character{
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.setOffset(3, 0);
-        this.healthly = 1490;
+        this.healthly = 1390;
         this.isDrop = false;
         this.kind = 'f'
         this.firstState = true;

@@ -25,7 +25,7 @@ class Wriggle extends Character{
         });
         this.subType = subtype;
         this.anims.play('WriggleFly');
-        super.healthly = 15;
+        
         
         this.behaviors = [ 'r_bFr8_rFr8','r_sbf4_srf1', 'r_bFr12_rA12'];
         scene.add.existing(this);
