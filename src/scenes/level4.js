@@ -9,6 +9,8 @@ class Level4 extends Mainlevel {
         this.startfield = this.add.tileSprite(0, 0, boardwidth, boardheigh, 'backgroundtop').setOrigin(0, 0);
         this.backgroundforest = this.add.tileSprite(0, 420, boardwidth, boardheigh, 'backgrounddown').setOrigin(0, 0);
         rumia = new Rumia(this, 150, 100, ).setOrigin(0.5, 0);
+        rumia.Playerscore = playerScore;
+        rumia.healthly = playerHealthly;
         super.create(); // Call MainLevel create method
         this.soundManager.playBGM('level4');
         

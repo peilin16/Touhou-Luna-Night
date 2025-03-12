@@ -90,6 +90,13 @@ class DifficultySelection extends Phaser.Scene {
     }
 
     startGame(mode) {
-        this.scene.start('gameStartScene', { level: this.level });
+        if(this.level == 1)
+            this.scene.start('gameStartScene', { level: this.level });
+        else if(this.level == 2)
+            this.scene.start('level2Scene');
+        else if(this.level == 3)
+            this.scene.start('level3Scene');
+        else if(this.level == 4)
+            this.scene.start('level4Scene');
     }
 }

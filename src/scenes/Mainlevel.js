@@ -286,7 +286,7 @@ class Mainlevel extends Phaser.Scene {
             this.gameOver();
         }
         this.RumiahealthText.setText('[H]:'+rumia.healthly);
-        this.CurrentScoreText.setText('[P]:'+rumia.Playerscore);
+        this.CurrentScoreText.setText('[S]:'+rumia.Playerscore);
         //rumia.isHit = true;
     }
     DelayXspawnEmeny(numX = 1 , sprateMin = 1,numY, type, Emeny, subtype = '', behavior = '', startY = boardheigh / 2, startX = game.config.width + 120 ){
@@ -560,9 +560,11 @@ class Mainlevel extends Phaser.Scene {
         newBullet.isReflected = true;    
         newBullet.setTint(0x00ff00);
         this.EmenyGroup.children.iterate(emeny => {
-            this.physics.add.overlap(emeny, newBullet, (emeny, newBullet) => {
-                this.bulletCollision(emeny, newBullet);
-            });
+            if(emeny.isEmeny){
+                this.physics.add.overlap(emeny, newBullet, (emeny, newBullet) => {
+                    this.bulletCollision(emeny, newBullet);
+                });
+            }
         });
        
 

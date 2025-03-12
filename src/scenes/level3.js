@@ -39,7 +39,7 @@ class Level3 extends Mainlevel {
         ]
         super.showLevel('LEVEL 3');
 
-        this.soundManager.playBGM('LEVEL 3');
+        this.soundManager.playBGM('level3');
     }
     update(){        
         if(this.isSpeech)
@@ -214,7 +214,9 @@ class Level3 extends Mainlevel {
         if(!this.isSpeech){
             playerScore = rumia.Playerscore;
             playerHealthly = rumia.healthly;
-            this.time.delayedCall(8500, () =>{this.scene.start('level4Scene'); } , [], this);//step2
+            this.time.delayedCall(8500, () =>{
+                this.soundManager.stopBGM();
+                this.scene.start('level4Scene'); } , [], this);//step2
         }
     }
 }

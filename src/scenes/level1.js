@@ -294,7 +294,7 @@ class Level1 extends Mainlevel {
     emenySpawn10(){
         if(!this.isSprawn){
             this.isSprawn = true;
-            this.time.delayedCall(1000, () =>{super.spawnEmeny(1,'list','SunFlowerFairy','sunflowerFairy','fromRight_shootRedFanBlueFan_autoTB',120)} , [], this);//step2
+            this.time.delayedCall(1000, () =>{super.spawnEmeny(1,'list','SunFlowerFairy','sunFlowerFairy','fromRight_shootRedFanBlueFan_autoTB',120)} , [], this);//step2
             this.time.delayedCall(1000, () =>{super.DelayXspawnEmeny(7,3200, 1,'list','MaidFairy','MaidFairy3','r_sbf3t_srf2t',440)} , [], this);//step2
             this.time.delayedCall(31000, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
         }
@@ -374,7 +374,9 @@ class Level1 extends Mainlevel {
         if(!this.isSpeech){
             playerScore = rumia.Playerscore;
             playerHealthly = rumia.healthly;
-            this.time.delayedCall(8500, () =>{this.scene.start('level2Scene'); } , [], this);//step2
+            this.time.delayedCall(8500, () =>{
+                this.soundManager.stopBGM();
+                this.scene.start('level2Scene'); } , [], this);//step2
         }
     }
 }
