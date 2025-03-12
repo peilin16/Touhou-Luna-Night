@@ -21,14 +21,14 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true,
+            debug: false,
             gravity: {
                 x: 0,
                 y: 0
             }
         }
     },
-    scene: [Load, Title,DifficultySelection,LevelChoose,GameOver,GameEnd,GameStart, Mainlevel, Level1, Level2,Level3 ,Level4]
+    scene: [Load, Title,DifficultySelection,LevelChoose,GameOver,GameEnd,Design, GameStart, Mainlevel, Level1, Level2,Level3 ,Level4]
 }
 
 // uncomment the following line if you need to purge local storage data
