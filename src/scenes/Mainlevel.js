@@ -66,6 +66,8 @@ class Mainlevel extends Phaser.Scene {
             frameRate: 10,
             hideOnComplete: true
         });
+
+        
         // ✅ Boss Health Bar UI (Centered at the bottom)
         //this.bossHealthBarBG = this.add.rectangle(boardwidth / 2 , boardheigh - 20, 500, 20, 0x000000)//.setOrigin(0.5, 0.5);
         this.bossHealthBar = this.add.rectangle(boardwidth / 2 , boardheigh - 20, 500, 20, 0xffffff)//.setOrigin(0.5, 0.5);
@@ -107,7 +109,16 @@ class Mainlevel extends Phaser.Scene {
         // ✅ Spacebar to continue dialogue
         this.input.keyboard.on('keydown-SPACE', () => {
             if (this.isSpeech) {
-                this.dialogSystem.nextDialogue();
+                if (!this.dialogSystem.isTextComplete) {
+                    // ✅ If text is still being revealed, complete it instantly
+                    this.dialogueText.setText(this.dialogSystem.currentText);
+                    this.dialogSystem.currentCharIndex = this.dialogSystem.currentText.length;
+                    this.dialogSystem.typewriterTimer.remove();
+                    this.dialogSystem.isTextComplete = true; // ✅ Mark as completed
+                } else {
+                    // ✅ If text is already fully revealed, move to the next dialogue
+                    this.dialogSystem.nextDialogue();
+                }
             }
         });
         
@@ -144,6 +155,27 @@ class Mainlevel extends Phaser.Scene {
             // ✅ Keep the health bar centered (如果需要居中)
             // this.bossHealthBar.x = boardwidth / 2 - 200 + (newWidth / 2);
         }
+    }
+
+    showLevel(level){
+        let levelText = this.add.text(this.scale.width / 2, this.scale.height / 2, level, {
+            fontSize: '80px', // ✅ Large size
+            color: '#ffffff', // ✅ White text
+            fontStyle: 'bold',
+            align: 'center'
+        }).setOrigin(0.5).setAlpha(1); // Center text, fully visible
+        this.time.delayedCall(2500, () =>{
+                // ✅ Fade out and destroy after 2 seconds
+            this.tweens.add({
+                targets: levelText,
+                alpha: 0, // Fade to transparent
+                duration: 2000, // Fade-out duration (2 seconds)
+                ease: 'Linear',
+                onComplete: () => {
+                    levelText.destroy(); // ✅ Remove text from scene
+                }
+            });
+        } , [], this);//step2
     }
     spawnSpace(key){
         if(!this.isSprawn){

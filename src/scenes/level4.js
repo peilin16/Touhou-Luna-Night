@@ -13,7 +13,7 @@ class Level4 extends Mainlevel {
         this.soundManager.playBGM('level4');
         
         this.choose = 300
-        
+        super.showLevel('LEVEL 4');
         this.current = 0;
         this.emenySpawn = [
             //this.finalBossSpawn.bind(this),         
@@ -23,11 +23,11 @@ class Level4 extends Mainlevel {
             this.emenySpawn3.bind(this),
             this.emenySpawn4.bind(this),
             this.emenySpawn5.bind(this),
-            this.midBossSpawn.bind(this),
+            this.midBossSpawn.bind(this),//6
             this.spawnSpace.bind(this),
             this.emenySpawn7.bind(this),
             this.emenySpawn8.bind(this),
-            this.emenySpawn9.bind(this),
+            this.emenySpawn9.bind(this),//10
             this.spawnSpace.bind(this),
             this.emenySpawn10.bind(this),
             this.emenySpawn11.bind(this),
@@ -157,15 +157,17 @@ class Level4 extends Mainlevel {
             this.bossHealthBar.setVisible(true);
             this.boss.isSecondSprawn = true;
             this.boss.healthly = 270;
+
             this.time.delayedCall(2800, () => {
-                this.startDialogue(2);
+                this.startDialogue(14);
             });
+            
         }
         else if(this.boss.isDrop){
             this.current += 1;
             this.isSprawn = false;
             this.boss = null;
-            this.startDialogue(3);
+            
             
             
             //this.scene.start('level2');
@@ -205,21 +207,30 @@ class Level4 extends Mainlevel {
             this.bossHealthBar.setVisible(true);
             
             this.time.delayedCall(2700, () => {
-                this.startDialogue(3);
+                this.startDialogue(15);
             });
         }else if(this.boss.isDrop){
             this.current += 1;
             this.isSprawn = false;
             this.boss = null;
-            this.startDialogue(3);
+            this.startDialogue(16);
 
         }
     }
-    ending(){
-        if(!this.isSpeech){
-            playerScore = rumia.Playerscore;
+    ending() {
+        if (!this.isSprawn) {
+            playerScore = rumia.Playerscore + 821;
             playerHealthly = rumia.healthly;
-            this.time.delayedCall(8500, () =>{this.scene.start('titleScene'); } , [], this);//step2
+            this.isSprawn = true;
+            // Fade the screen to black over 1 second (1000 ms)
+            this.cameras.main.fadeOut(1200, 0, 0, 0);
+            //this.startDialogue(17);
+            // After the fade completes, start the dialogue
+            this.time.delayedCall(1200, () => {
+                this.soundManager.stopBGM();
+                this.scene.start('gameEndScene');
+                
+            }, [], this);
         }
     }
 }

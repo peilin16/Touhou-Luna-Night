@@ -33,7 +33,7 @@ class Level2 extends Mainlevel {
         });*/
         
         
-        this.current = 14;
+        this.current = 0;
         this.emenySpawn = [
             /*this.emenySpawn13.bind(this),
             this.finalBossSpawn.bind(this),*/
@@ -60,7 +60,7 @@ class Level2 extends Mainlevel {
             this.nextlevel.bind(this),
         ];
 
-        
+        super.showLevel('LEVEL 2');
         this.isSpeech = false;
 
         this.Sangetsusei = new Character(this,760,310,'');//super(scene, x, y, 'Kedama','Kedama', frame)
@@ -112,7 +112,7 @@ class Level2 extends Mainlevel {
             //this.time.delayedCall(4600, () =>{super.DelayXspawnEmeny(7,2200,5,'list','Kedama','','l2',80)} , [], this);//step2
             this.time.delayedCall(4000, () =>{super.DelayXspawnEmeny(13,1700,1,'list','MaidFairy','MaidFairy2','fromTop_shootBlueFan2ToTarget_shootRedList1_toTarget',130)} , [], this);//step2
             this.time.delayedCall(4000, () =>{super.spawnEmeny(1,'list','DandelionFairy','dandelionFairy','fromRight_shootRedTwrilFan_shootBlueTwirlFan_UNSniper_autoTB',520)} , [], this);//step2
-            this.time.delayedCall(32500, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
+            this.time.delayedCall(34500, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
         }
     }
     emenySpawn3(){
@@ -121,12 +121,13 @@ class Level2 extends Mainlevel {
             this.boss = super.spawnEmeny(1,'list','SunnyMilk','SunnyMilkFly','ShootingFanShape360_SpeedPauseSniper',320)
             this.bossHealthTotal = this.boss.healthly;
             this.bossHealthBar.setVisible(true);
-            /*
-            this.time.delayedCall(2800, () => {
-                this.startDialogue('Rumia', this.rumiaSpeechWithCrino, 'Crino', this.crinoSpeech);
-            });*/
+            
+            this.time.delayedCall(2600, () => {
+                this.startDialogue(4);
+            });
         }else if(this.boss.isDrop){
             this.current += 1;
+            this.startDialogue(5);
             this.isSprawn = false;
             this.boss = null;
         }
@@ -164,7 +165,7 @@ class Level2 extends Mainlevel {
             this.bossHealthBar.setVisible(true);
             
             this.time.delayedCall(2800, () => {
-                this.startDialogue(0);
+                this.startDialogue(6);
             });
         }else if(this.boss.isDrop){
             this.current += 1;
@@ -173,7 +174,7 @@ class Level2 extends Mainlevel {
 
 
             this.time.delayedCall(100, () => {
-                this.startDialogue(0);
+                this.startDialogue(7);
             });
         }
     }
@@ -184,8 +185,8 @@ class Level2 extends Mainlevel {
             this.bossHealthTotal = this.boss.healthly;
             this.bossHealthBar.setVisible(true);
         
-            this.time.delayedCall(2800, () => {
-                this.startDialogue(0);
+            this.time.delayedCall(2700, () => {
+                this.startDialogue(8);
             });
         }else if(this.boss.isDrop){
             this.current += 1;
@@ -269,14 +270,14 @@ class Level2 extends Mainlevel {
             this.bossHealthBar.setVisible(true);
             
             this.time.delayedCall(4000, () => {
-                this.startDialogue(0);
+                this.startDialogue(9);
             });
         }else if(this.boss.isDrop){
             this.current += 1;
             this.isSprawn = false;
             this.boss = null;
             this.time.delayedCall(100, () => {
-                this.startDialogue(0);
+                this.startDialogue(10);
             });
         }
     }

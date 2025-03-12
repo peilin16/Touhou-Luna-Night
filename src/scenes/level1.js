@@ -52,6 +52,8 @@ class Level1 extends Mainlevel {
         */
         //emeny occur
         
+            // ✅ Create the Level 1 title text
+       
         
         
         
@@ -92,7 +94,7 @@ class Level1 extends Mainlevel {
             this.nextlevel.bind(this)
         ];
 
-        
+        super.showLevel('LEVEL 1');
         this.isSpeech = false;
         // ✅ Start the first wave
         //this.scene.start('level2Scene');

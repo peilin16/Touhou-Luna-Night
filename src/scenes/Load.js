@@ -11,6 +11,9 @@ class Load extends Phaser.Scene {
         //hit
         this.load.image('rumiaflyhit', './assets/character/rumia-fly-hit.png');
         this.load.image('rumiaflydown', './assets/character/rumia-fly-down.png');
+        this.load.image('HitPoint', './assets/character/HitPoint.png');
+
+
         //defence
         this.load.image('rumiaDefence1', './assets/character/rumia-fly-defence1.png');
         this.load.image('rumiaDefence2', './assets/character/rumia-fly-defence2.png');

@@ -90,6 +90,6 @@ class DifficultySelection extends Phaser.Scene {
     }
 
     startGame(mode) {
-        this.scene.start('levelTransitionScene', { level: this.level });
+        this.scene.start('gameStartScene', { level: this.level });
     }
 }

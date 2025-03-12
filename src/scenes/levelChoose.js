@@ -73,15 +73,15 @@ class LevelChoose extends Phaser.Scene {
                     break;
                 case 1:
                     // Select Level 2
-                    this.selectLevel(2);
+                    this.scene.start('level2Scene')
                     break;
                 case 2:
                     // Select Level 3
-                    this.selectLevel(3);
+                    this.scene.start('level3Scene')
                     break;
                 case 3:
                     // Select Level 4
-                    this.selectLevel(4);
+                    this.scene.start('level4Scene')
                     break;
             }
         }

@@ -37,7 +37,7 @@ class Level3 extends Mainlevel {
             this.finalBossSpawn.bind(this),    //13        
             this.nextlevel.bind(this),
         ]
-
+        super.showLevel('LEVEL 3');
 
         this.soundManager.playBGM('level3');
     }
@@ -128,7 +128,7 @@ class Level3 extends Mainlevel {
             this.bossHealthBar.setVisible(true);
             
             this.time.delayedCall(2200, () => {
-                this.startDialogue(0);
+                this.startDialogue(11);
             });
         }else if(this.boss.isDrop){
             this.current += 1;
@@ -200,13 +200,13 @@ class Level3 extends Mainlevel {
             this.bossHealthBar.setVisible(true);
             
             this.time.delayedCall(2500, () => {
-                this.startDialogue(0);
+                this.startDialogue(12);
             });
         }else if(this.boss.isDrop){
             this.current += 1;
             this.isSprawn = false;
             this.boss = null;
-            this.startDialogue(0);
+            this.startDialogue(13);
         }
         
     }
