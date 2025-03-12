@@ -1,0 +1,510 @@
+[
+	[
+		{
+			"speaker": "露米娅",
+			"dialog": "嘿嘿，找到你了，莉格露！你躲得可真不够隐蔽啊～",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "莉格露",
+			"dialog": "切，被你发现了……不过，我可不会这么轻易就被你抓住！看我的虫之舞！",
+			"newSpeaker": "true"
+		}
+    ],
+    [
+		{
+			"speaker": "莉格露",
+			"dialog": "呜……我认输了，你抓住我了。",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "嘿嘿，知道我的厉害了吧！不过，你躲得还不错，差点就让你溜走了。",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "莉格露",
+			"dialog": "哼，要不是我大意了，才不会这么容易被你抓到呢！不过，既然被你抓住了，我就告诉你一个秘密吧。",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "?",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "莉格露",
+			"dialog": "琪露诺那家伙，刚才还在湖边炫耀自己是最强的。她现在应该还在那里，你可以去找她。",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "湖边吗？谢谢你啦，莉格露！我这就去抓她！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "莉格露",
+			"dialog": "等等！你可别告诉她是我说的啊！我可不想被她冻成冰块……",
+			"newSpeaker": "true"
+		}
+    ],
+    [
+		{
+			"speaker": "露米娅",
+			"dialog": "找到你了，琪露诺！你果然在这里！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "琪露诺",
+			"dialog": "哇！吓我一跳！原来是露米娅啊～不过，你找到我也没用，我可是最强的！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "最强？嘿嘿，那可不一定哦！我可是已经抓住莉格露了，接下来就轮到你了。",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "琪露诺",
+			"dialog": "哼！莉格露那家伙太弱了！我可不一样，看我的冰之弹幕，把你冻成冰块！",
+			"newSpeaker": "true"
+		}
+    ],
+    [
+		{
+			"speaker": "琪露诺",
+			"dialog": "呜……怎么可能！我明明是最强的，怎么会输给你！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "嘿嘿，这下你也被我抓住啦！最强什么的，下次再努力吧！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "琪露诺",
+			"dialog": "哼！这次是我大意了！下次我一定会赢的！",
+			"newSpeaker": "true"
+		}
+    ],
+    [
+		
+        {
+			"speaker": "桑尼米尔克",
+			"dialog": "“呜……你还真厉害！不过，我可不会这么容易被抓住！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "诶？等等！你已经被我打败了，快乖乖认输！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "桑尼米尔克",
+			"dialog": "才不要！我可是三月精之一，怎么能一个人被抓？等我找到露娜和斯塔，我们再一起对付你！",
+			"newSpeaker": "true"
+		}
+    ]
+    ,
+    [
+		
+        {
+			"speaker": "露米娅",
+			"dialog": "“咦？荷取！你怎么在这里？难道你也在玩捉迷藏？",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "荷城荷取",
+			"dialog": "啊？捉迷藏？不不不，我只是在帮灵梦送她的机器而已。我可没时间参加你们的游戏。",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "送货？别骗我啦！你一定是来帮桑尼的！快告诉我她往哪儿跑了！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "荷城荷取",
+			"dialog": "我真的只是路过……不过，如果你非要问的话，她好像往那边飞走了。",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "嘿嘿，谢啦！不过，既然你也在这里，那就一起玩吧！我可不能放过你！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "荷城荷取",
+			"dialog": "等等！我都说了我没参加游戏！你别乱来啊！",
+			"newSpeaker": "true"
+		}
+    ]
+    ,
+    [
+		
+        
+        {
+			"speaker": "荷城荷取",
+			"dialog": "糟了！我的机器！露米娅，你看看你干了什么！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "诶？这是什么？看起来好奇怪……它怎么自己动起来了？",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "荷城荷取",
+			"dialog": "完了完了！这台机器还没调试好，现在被激活了，完全不受控制了！",
+			"newSpeaker": "true"
+		}
+    ]  
+     ,
+    [
+        {
+			"speaker": "露米娅",
+			"dialog": "呼……总算停下来了！诶？等等，这是什么声音？不会吧……哇！怎么爆炸了！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "不过，至少机器停下来了，对吧？",
+			"newSpeaker": "true"
+		}
+    ],
+    [
+		
+        
+        {
+			"speaker": "露米娅",
+			"dialog": "哈哈，终于找到你了！这下可跑不掉了吧！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "桑尼米尔克",
+			"dialog": "露米娅，你还真是执着啊！不过，现在我们三个都在，你可没那么容易赢！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露娜",
+			"dialog": "没错！我们三月精可是最强的组合！你一个人可对付不了我们！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "斯塔",
+			"dialog": "嘿嘿，露米娅，要不要认输啊？现在放弃还来得及哦！",
+			"newSpeaker": "true"
+		}
+    ],
+    [
+		
+        
+        {
+			"speaker": "露米娅",
+			"dialog": "嘿嘿，这下你们都被我抓住啦！三月精也不过如此嘛！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "桑尼米尔克",
+			"dialog": "呜……怎么可能！我们三个一起上，居然还输了！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露娜",
+			"dialog": "露米娅，你的弹幕什么时候变得这么厉害了？这不公平！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "斯塔",
+			"dialog": "就是就是！你一定是偷偷练习了！不然怎么可能赢我们！",
+			"newSpeaker": "true"
+		}
+    ]
+    ,
+    [ 
+		{
+			"speaker": "露米娅",
+			"dialog": "( ⸝⸝•ᴗ•⸝⸝ )",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "莉莉白",
+			"dialog": "( ˶ˆᗜˆ˵ )",
+			"newSpeaker": "true"
+		}
+    ]
+    ,
+    [
+        {
+			"speaker": "露米娅",
+			"dialog": "米斯蒂娅！终于找到你了！你倒是挺悠闲的嘛！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "米斯蒂娅・萝蕾拉",
+			"dialog": "哎呀，露米娅？你怎么找到这儿来了？我正在练习新歌呢～",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "别装傻啦！我们正在玩捉迷藏呢！现在轮到我来抓你了！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "米斯蒂娅・萝蕾拉",
+			"dialog": "哦？捉迷藏啊～不过，我可不想这么轻易就被抓住。要不要听听我的新歌？说不定会让你放松警惕哦！",
+			"newSpeaker": "true"
+		}
+    ]
+	,
+    [
+        
+        {
+			"speaker": "米斯蒂娅・萝蕾拉",
+			"dialog": "呜……没想到你的弹幕这么厉害。我认输了，你抓住我了。",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "嘿嘿，这下所有人都被我抓住啦！今晚的捉迷藏，我可是大赢家！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "米斯蒂娅・萝蕾拉",
+			"dialog": "哼，下次我可不会这么轻易认输了！到时候一定要用我的歌声打败你！",
+			"newSpeaker": "true"
+		}
+    ]
+	,
+    [
+        
+        {
+			"speaker": "琪露诺",
+			"dialog": "露米娅！终于找到你了！灵梦可是很生气哦！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "诶？琪露诺？我不是已经抓住你了吗？你怎么又来了？",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "琪露诺",
+			"dialog": "哼！这次可不是捉迷藏！你弄坏了荷取的机器，灵梦现在到处找你，命令我一定要抓住你！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "啊哈哈……那个机器是自己爆炸的嘛！而且，我可不想被灵梦抓住！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "琪露诺",
+			"dialog": "那可不行！我可是最强的！这次一定要抓住你，交给灵梦！",
+			"newSpeaker": "true"
+		}
+    ],
+    [
+        
+        
+        {
+			"speaker": "露米娅",
+			"dialog": "咦？大家怎么都在跑？发生什么事了？",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "灵梦",
+			"dialog": "露米娅，你可真是让我好找啊！琪露诺那家伙，果然靠不住。",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "灵梦？你怎么来了？我只是在玩捉迷藏而已……",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "灵梦",
+			"dialog": "捉迷藏？你玩得太过头了！荷取送来的的机器被你弄坏了，那可是很重要的东西！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "那个……机器是自己爆炸的嘛！而且我也不是故意的……",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "灵梦",
+			"dialog": "不管是不是故意的，你都得接受惩罚！我可不能让你再这么胡闹下去了！",
+			"newSpeaker": "true"
+		}
+    ],
+    [
+        
+		{
+			"speaker": "灵梦",
+			"dialog": "没想到你居然能坚持这么久……看来我小看你了。",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "露米娅",
+			"dialog": "嘿嘿，灵梦，我可是很强的！想要抓住我，可没那么容易！",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "灵梦",
+			"dialog": "不过，游戏到此为止了。接下来，我可不会手下留情了！",
+			"newSpeaker": "true"
+		}
+    ]
+	,
+	[
+		{
+			"speaker": "故事",
+			"dialog": "在神社的院子里，露米娅和其他小伙伴们排成一排，灵梦正叉着腰训话。",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "灵梦",
+			"dialog": "你们几个，真是闹得太过头了！露米娅，尤其是你！捉迷藏就算了，还把荷取送来的机器弄坏了！”",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "露米娅",
+			"dialog": "呜……我知道错了嘛！灵梦好凶……",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "琪露诺",
+			"dialog": "真是的，为什么连我也被卷进来了！我可是被灵梦命令去抓露米娅的！",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "大妖精",
+			"dialog": "琪露诺，你明明自己也玩得很开心吧？",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "琪露诺",
+			"dialog": "“才、才没有呢！",
+			"newSpeaker": "true"
+		}
+		,
+		{
+			"speaker": "桑尼米尔克",
+			"dialog": "我们只是陪露米娅玩而已，谁知道会变成这样……",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "露娜",
+			"dialog": "不过，今晚的捉迷藏还挺有趣的，对吧？",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "斯塔",
+			"dialog": "就是就是！虽然最后被灵梦抓住了，但过程很刺激呢！",
+			"newSpeaker": "true"
+		},
+		
+		{
+			"speaker": "莉格露",
+			"dialog": "我可是被露米娅第一个抓住的！真是倒霉……",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "莉莉白",
+			"dialog": "( ^ω^)",
+			"newSpeaker": "true"
+		}
+		,
+		{
+			"speaker": "米斯蒂娅",
+			"dialog": "而且，我的新歌好像也找到灵感了！",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "荷城荷取",
+			"dialog": "喂喂，你们别聊了！我的机器还在冒烟呢！灵梦，神社的电路也被烧坏了，你得负责修理费！",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "灵梦",
+			"dialog": "什么？修理费？荷取，这明明是露米娅的错！",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "露米娅",
+			"dialog": "诶？怎么又是我！",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "大妖精",
+			"dialog": "好啦好啦，大家别吵了。反正事情已经发生了，不如一起帮忙修理吧！",
+			"newSpeaker": "true"
+		}
+
+	]
+
+	,
+	[
+		{
+			"speaker": "场景",
+			"dialog": " 夜晚的魔法森林，月光洒在草地上，露米娅和她的朋友们聚在一起，准备开始捉迷藏游戏。",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "露米娅",
+			"dialog": "好啦，大家都到齐了吧？今晚的捉迷藏，我来当鬼！你们可要藏好了，别被我轻易找到哦！",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "琪露诺",
+			"dialog": "哼！露米娅，你才抓不到我呢！我可是最强的，藏起来谁也找不到！",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "大妖精",
+			"dialog": "琪露诺，你每次都这么说，结果总是第一个被找到……",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "桑尼米尔克",
+			"dialog": "嘿嘿，这次我可不会轻易被抓住！我和露娜、斯塔已经找好了绝佳的藏身地点！",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "露娜",
+			"dialog": "没错！我们三月精可是最擅长捉迷藏的！",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "斯塔",
+			"dialog": "露米娅，你可要小心了！我们的弹幕可不是吃素的！",
+			"newSpeaker": "true"
+		},
+		
+		{
+			"speaker": "莉格露",
+			"dialog": "哼，我可不会输给你们！露米娅，你尽管放马过来吧！",
+			"newSpeaker": "true"
+		}
+		,
+		{
+			"speaker": "莉莉白",
+			"dialog": "(,,・ω・,,)",
+			"newSpeaker": "true"
+		}
+
+		,
+		{
+			"speaker": "米斯蒂娅",
+			"dialog": "啊啦，听起来很有趣呢～不过，我的歌声可能会让你分心哦！",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "露米娅",
+			"dialog": "嘿嘿，大家都这么有信心啊！那我可要认真了！准备好了吗？游戏开始！",
+			"newSpeaker": "true"
+		}
+
+	]
+]

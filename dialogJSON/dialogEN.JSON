@@ -2,55 +2,532 @@
 	[
 		{
 			"speaker": "Rumia",
-			"dialog": "Test1",
+			"dialog": "Hehe, found you, Wriggle! You're not very good at hiding, are you?",
 			"newSpeaker": "true"
 		},
         {
 			"speaker": "Wriggle",
-			"dialog": "Test2",
+			"dialog": "Tch, you caught me... But I'm not going down without a fight! Let's see how you handle my Bug Dance!",
 			"newSpeaker": "true"
 		}
     ],
     [
 		{
+			"speaker": "Rumia",
+			"dialog": "Now you know how powerful I am! But you hid pretty well—I almost lost you.",
+			"newSpeaker": "true"
+		},
+		{
 			"speaker": "Wriggle",
-			"dialog": "NO!!",
+			"dialog": "Hmph, if I hadn't let my guard down, you wouldn't have caught me so easily! But since you did, I'll tell you a little secret.",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "?",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Wriggle",
+			"dialog": "That idiot Cirno was bragging about being the strongest by the lake earlier. She's probably still there if you want to find her.",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "The lake? Thanks, Wriggle! I'll go catch her right now!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Wriggle",
+			"dialog": "Wait! Don't tell her I told you! I don't want to get turned into an ice block…",
 			"newSpeaker": "true"
 		}
-    ],
 
+    ],
+   
 	[
 		{
 			"speaker": "Rumia",
-			"dialog": "Test1Test1Test1Test1",
+			"dialog": "Found you, Cirno! I knew you'd be here!",
 			"newSpeaker": "true"
 		},
 		{
 			"speaker": "Crino",
-			"dialog": "Test1Test1Test1Test1",
+			"dialog": "Whoa! You scared me! Oh, it's just you, Rumia~ But even if you found me, it doesn't matter! I'm the strongest!",
 			"newSpeaker": "true"
 		},
 		{
 			"speaker": "Rumia",
-			"dialog": "Test1Test1Test1Test1",
+			"dialog": "The strongest? We'll see about that! I already caught Wriggle, and now it's your turn!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Crino",
+			"dialog": "Hmph! Wriggle's just weak! I'm different—watch my ice danmaku turn you into a popsicle!",
+			"newSpeaker": "true"
+		}
+    ],
+	[
+		{
+			"speaker": "Crino",
+			"dialog": "Ugh... How is this possible! I'm the strongest! How could I lose to you!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Now I've caught you too! You can try being the strongest next time!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Crino",
+			"dialog": "Hmph! I just went easy on you this time! I'll definitely win next time!",
 			"newSpeaker": "true"
 		}
     ],
 	[
 		{
 			"speaker": "Rumia",
-			"dialog": "Test1Test1Test1Test1",
+			"dialog": "Found you, Sunny! What are you looking for?",
 			"newSpeaker": "true"
 		},
 		{
-			"speaker": "Crino",
-			"dialog": "Test1Test1Test1Test1",
+			"speaker": "Sunny Milk",
+			"dialog": "Whoa! Rumia? How did you find me? I was hiding so well!",
 			"newSpeaker": "true"
 		},
 		{
 			"speaker": "Rumia",
-			"dialog": "Test1Test1Test1Test1",
+			"dialog": " I'm a pro at hide-and-seek! But it looks like you're searching for someone else?",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Sunny Milk",
+			"dialog": " Yeah, I'm looking for Luna and Star! We were supposed to play together, but they wandered off somewhere… But I'm not letting you catch me!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "No way! If I found you, you're mine! Come on, let's see how strong your danmaku is!",
+			"newSpeaker": "true"
+		}
+    ],
+	[
+		{
+			"speaker": "Sunny Milk",
+			"dialog": "Ugh... I'm not going down that easily!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Hey! Wait! You've already lost, so just admit defeat!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Sunny Milk",
+			"dialog": "No way! I'm one of the Three Fairies—I can't get caught alone! Once I find Luna and Star, we'll take you on together!",
+			"newSpeaker": "true"
+		}
+    ],
+	[
+		{
+			"speaker": "Rumia",
+			"dialog": "Huh? Nitori! What are you doing here? Are you playing hide-and-seek too?",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Nitori Kawashiro",
+			"dialog": "Eh? Hide-and-seek? No no no, I'm just delivering the machine for Reimu. I don't have time for games.",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Delivering things? Don't lie to me! You must be here to help Sunny! Tell me which way she went!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Nitori Kawashiro",
+			"dialog": "I'm really just passing through… But if you must know, I think she flew off that way.",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Thanks! But since you're here, why not join the fun? I can't let you go that easily!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Nitori Kawashiro",
+			"dialog": "Wait! I told you I'm not part of this! Don't drag me into it!",
 			"newSpeaker": "true"
 		}
     ]
+    ,
+    [ 
+        {
+			"speaker": "Nitori Kawashiro",
+			"dialog": "Oh no! My machine! Rumia, look what you've done!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Huh? What is this thing? Why is it moving on its own?",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Nitori Kawashiro",
+			"dialog": "This is bad! The machine wasn't fully tested yet, and now it's activated and out of control! ",
+			"newSpeaker": "true"
+		}
+    ]
+	,
+    [ 
+		{
+			"speaker": "Rumia",
+			"dialog": "Phew… I finally stopped it! Huh? Wait, what's that sound? No way… Whoa! It exploded!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "I least the machine stopped, right? ",
+			"newSpeaker": "true"
+		}
+    ],
+	[
+		{
+			"speaker": "Rumia",
+			"dialog": "Haha, I finally found you all! Now you can't run away!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Sunny Milk",
+			"dialog": "Rumia, you're really persistent! But with the three of us together, you're not going to win so easily!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Luna",
+			"dialog": "That's right! We're the Three Fairies, the strongest team! You can't take us on alone!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Star Sapphire",
+			"dialog": "Rumia, why don't you just give up? It's not too late to admit defeat!",
+			"newSpeaker": "true"
+		}
+    ]
+	,
+	[
+		{
+			"speaker": "Rumia",
+			"dialog": "Now I've caught all of you! The Three Fairies aren't so tough after all!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Sunny Milk",
+			"dialog": "Ugh… How is this possible! We lost even with the three of us together!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Luna",
+			"dialog": "Rumia, since when did your danmaku get so strong? That's not fair!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Star Sapphire",
+			"dialog": "Yeah, yeah! You must have been practicing in secret! There's no way you could beat us otherwise!",
+			"newSpeaker": "true"
+		}
+    ]
+	,
+    [ 
+		{
+			"speaker": "Rumia",
+			"dialog": "( ⸝⸝•ᴗ•⸝⸝ )",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Lily White",
+			"dialog": "( ˶ˆᗜˆ˵ )",
+			"newSpeaker": "true"
+		}
+    ]
+	,
+	[
+		{
+			"speaker": "Rumia",
+			"dialog": "Mystia! Finally found you! You sure look relaxed!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Mystia Lorelei",
+			"dialog": "Oh, Rumia? What brings you here? I was just practicing a new song~",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Don't play dumb! We're playing hide-and-seek, and now it's my turn to catch you!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Mystia Lorelei",
+			"dialog": "Oh? Hide-and-seek, huh~ But I'm not going to let you catch me so easily. How about listening to my new song? It might just make you let your guard down!",
+			"newSpeaker": "true"
+		}
+    ]
+	,
+	[
+		
+		{
+			"speaker": "Mystia Lorelei",
+			"dialog": "Ugh... I didn't expect your danmaku to be this strong. I admit defeat, you caught me.",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Now I've caught everyone! I'm the champion of tonight's hide-and-seek!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Mystia Lorelei",
+			"dialog": "Hmph, I won't lose so easily next time! I'll definitely beat you with my song!",
+			"newSpeaker": "true"
+		}
+    ]
+
+	,
+	[
+		
+		{
+			"speaker": "Crino",
+			"dialog": "Rumia! Finally found you! Reimu's really mad, you know!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Huh? Cirno? Didn't I already catch you? Why are you here again?",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Crino",
+			"dialog": "Hmph! This isn't about hide-and-seek anymore! You broke Nitori's machine, and Reimu's looking everywhere for you! She ordered me to catch you!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Ahaha… That machine exploded on its own! And I'm not about to let Reimu catch me!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Crino",
+			"dialog": "No way! I'm the strongest! This time, I'll definitely catch you and hand you over to Reimu!",
+			"newSpeaker": "true"
+		}
+    ],
+	[
+		
+		
+		{
+			"speaker": "Rumia",
+			"dialog": "Huh? Why is everyone running? What's going on?",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Reimu",
+			"dialog": "Rumia, you've been quite the troublemaker! I should've known Cirno wouldn't be able to handle you.",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Reimu? What are you doing here? I was just playing hide-and-seek…",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Reimu",
+			"dialog": "Hide-and-seek? You've gone too far this time! You broke my machine, and it was something really important!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Well… the machine exploded on its own! And it's not like I meant to break it…",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Reimu",
+			"dialog": "Whether you meant to or not, you're going to face the consequences! I can't let you cause any more trouble!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Ugh… Reimu's so scary! But I'm not going down without a fight! If you want to catch me, you'll have to try harder than that!",
+			"newSpeaker": "true"
+		}
+    ],
+	[
+		{
+			"speaker": "Reimu",
+			"dialog": "I didn't expect you to last this long… I underestimated you.",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Reimu, I'm stronger than you think! Catching me won't be so easy!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Reimu",
+			"dialog": "But the game ends here. I'm not holding back anymore!",
+			"newSpeaker": "true"
+		}
+    ]
+
+	,
+	[
+		{
+			"speaker": "Scene",
+			"dialog": "In the shrine's courtyard, Rumia and her friends are lined up as Reimu scolds them with her hands on her hips. Daiyousei, Luna, and Star are also present.",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Reimu",
+			"dialog": "You guys really went too far this time! Rumia, especially you! Playing hide-and-seek is one thing, but destroyed the machine sent by Nitori. That's too much!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Ugh… I'm sorry, okay? Reimu's so mean…",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Crino",
+			"dialog": "Seriously, why did I get dragged into this? I was just following Reimu's orders to catch Rumia!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Daiyousei",
+			"dialog": "Come on, Cirno, you looked like you were having fun too!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Crino",
+			"dialog": "N-no way! I wasn't!",
+			"newSpeaker": "true"
+		}
+		,
+		{
+			"speaker": "Sunny Milk",
+			"dialog": "We were just playing along with Rumia! Who knew things would turn out like this…",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Luna",
+			"dialog": "But hey, tonight's hide-and-seek was pretty fun, right?",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Star Sapphire",
+			"dialog": "Yeah, yeah! Even though we got caught by Reimu in the end, it was super exciting!Yeah, yeah! Even though we got caught by Reimu in the end, it was super exciting!",
+			"newSpeaker": "true"
+		},
+		
+		{
+			"speaker": "Wriggle",
+			"dialog": "I was the first one caught by Rumia! Talk about bad luck…",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Lily",
+			"dialog": "( ^ω^)",
+			"newSpeaker": "true"
+		}
+		,
+		{
+			"speaker": "Mystia Lorelei",
+			"dialog": "And I think I found some inspiration for my new song!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Nitori",
+			"dialog": "Hey, hey, stop chatting! My machine is still smoking! Reimu, the shrine's circuits are fried too—you're paying for the repairs!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Reimu",
+			"dialog": "What? Repair costs? Nitori, this is clearly Rumia's fault!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Huh? Why is it my fault again?",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Daiyousei",
+			"dialog": "Alright, alright, let's not argue. What's done is done. Why don't we all help with the repairs?",
+			"newSpeaker": "true"
+		}
+
+	]
+
+	,
+	[
+		{
+			"speaker": "Scene",
+			"dialog": "In the Forest of Magic under the moonlight, Rumia and her friends gather to start a game of hide-and-seek.",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Alright, is everyone here? Tonight, I'll be 'it'! You better hide well, because I'm coming for you!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Crino",
+			"dialog": "Hmph! Rumia, you'll never catch me! I'm the strongest, and no one can find me when I hide!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Daiyousei",
+			"dialog": "Cirno, you always say that, but you're always the first one found…",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Sunny Milk",
+			"dialog": "I'm not going down so easily this time! Luna, Star, and I have already found the perfect hiding spot!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Luna",
+			"dialog": "That's right! We're the Three Fairies, and we're the best at hide-and-seek!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Star Sapphire",
+			"dialog": "Rumia, you'd better watch out! Our danmaku isn't just for show!",
+			"newSpeaker": "true"
+		},
+		
+		{
+			"speaker": "Wriggle",
+			"dialog": "Hmph, I'm not losing to any of you! Rumia, bring it on!",
+			"newSpeaker": "true"
+		}
+		,
+		{
+			"speaker": "Lily White",
+			"dialog": "(,,・ω・,,)",
+			"newSpeaker": "true"
+		}
+
+		,
+		{
+			"speaker": "Mystia Lorelei",
+			"dialog": "Oh my, this sounds fun~ But my singing might just distract you!",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Rumia",
+			"dialog": "Haha everyone's so confident! I'll have to take this seriously then! Ready or not, here I come!",
+			"newSpeaker": "true"
+		}
+
+	]
+
 ]
