@@ -23,7 +23,7 @@ class CapsuleBullet extends Bullet {
         this.body.setCircle(12)
         this.body.setOffset(-5,-5)
         this.rotationSpeed = 1000;
-        this.setDepth(10);
+        this.setDepth(9);
         this.isTwirl = true;
         // ✅ If red, mark as non-reflectable
         if (subtype === 'rc') {
