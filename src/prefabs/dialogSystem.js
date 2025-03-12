@@ -55,6 +55,7 @@ class DBox {
 class DialogSystem {
     constructor(scene) {
         this.scene = scene;
+        this.isTextComplete = false;
         this.dialogData = null;
         this.currentDialogIndex = 0;
         this.dbox = null;
@@ -91,6 +92,7 @@ class DialogSystem {
                 this.nextDialogue();
             }
         });
+        //this.dbox.setAlpha(1);
         this.scene.soundManager.stopBGM();
         this.nextDialogue(); // Start first dialogue
     }
@@ -98,27 +100,29 @@ class DialogSystem {
     nextDialogue() {
         if (this.currentDialogIndex < this.dialogData.length) {
             let dialog = this.dialogData[this.currentDialogIndex];
-
+    
             // Update speaker if it's a new speaker
             if (dialog.newSpeaker) {
                 this.scene.speakerText.setText(dialog.speaker);
             }
-
+    
             // Initialize text display
             this.scene.dialogueText.setText(""); // Clear previous text
             this.currentText = dialog.dialog; // Store full text
             this.currentCharIndex = 0; // Reset character index
-
+            this.isTextComplete = false; // ✅ New flag to check if text is fully displayed
+    
             // Remove existing typewriter timer before starting a new one
             if (this.typewriterTimer) {
                 this.typewriterTimer.remove();
             }
-            this.scene.soundManager.playEffectSpecify('dialogue1',-1,0.6);
+    
+            this.scene.soundManager.playEffectSpecify('dialogue1', -1, 0.6);
+    
             // Typewriter effect: Display characters one by one
             this.typewriterTimer = this.scene.time.addEvent({
                 delay: 50, // Speed of text appearance (adjust as needed)
                 callback: () => {
-                    
                     if (this.currentCharIndex < this.currentText.length) {
                         this.scene.dialogueText.setText(
                             this.scene.dialogueText.text + this.currentText[this.currentCharIndex]
@@ -126,12 +130,13 @@ class DialogSystem {
                         this.currentCharIndex++;
                     } else {
                         this.typewriterTimer.remove(); // Stop when all text is displayed
+                        this.isTextComplete = true; // ✅ Mark the text as fully displayed
                     }
                 },
                 loop: true
             });
-
-            this.currentDialogIndex++; // Move to next dialogue entry
+    
+            this.currentDialogIndex++; // Move to the next dialogue entry
         } else {
             this.endDialogue(); // End dialogue when finished
         }
