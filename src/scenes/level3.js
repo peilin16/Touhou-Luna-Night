@@ -145,6 +145,7 @@ class Level3 extends Mainlevel {
     }
     emenySpawn8(){
         if(!this.isSprawn){
+            this.time.delayedCall(200, () => {this.spawnEmeny(1, 'list', 'Daiyousei','','healthly',200);});
             this.isSprawn = true;
             this.time.delayedCall(1000, () =>{super.DelayXspawnEmeny(15 ,2000,4,'list','DivineSpirit','blue','r_sbl1_srl1_srl1_tb',200)} , [], this);//step2
             //this.spawnEmeny(4, 'list', 'DivineSpirit','blue','r_shooting2_l',200); // ✅ Spawns one DivineSpirit
@@ -185,6 +186,7 @@ class Level3 extends Mainlevel {
     }
     emenySpawn12(){
         if(!this.isSprawn){
+            this.time.delayedCall(200, () => {this.spawnEmeny(1, 'list', 'Daiyousei','','healthly',200);});
             this.isSprawn = true;
             this.time.delayedCall(1000, () =>{super.DelayXspawnEmeny(7 ,2000,5,'list','Kedama','','hp_3o6',100)} , [], this);//step2
             this.time.delayedCall(16000, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2

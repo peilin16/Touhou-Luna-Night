@@ -130,6 +130,7 @@ class Level4 extends Mainlevel {
     emenySpawn7(){
         if(!this.isSprawn){
             this.isSprawn = true;
+            this.time.delayedCall(200, () => {this.spawnEmeny(1, 'list', 'Daiyousei','','healthly',200);});
             this.spawnEmeny(2, 'wideList', 'DivineSpirit','blue','r_sbl1_srl1_srl1_tb',200);
             this.time.delayedCall(3000, () => {this.spawnEmeny(2, 'wideList', 'DivineSpirit','blue','r_sbl1_srl1_srl1_tb',200);})
             this.time.delayedCall(4500, () => {this.spawnEmeny(2, 'wideList', 'DivineSpirit','blue','r_sbl1_srl1_srl1_tb',200);})
@@ -180,6 +181,7 @@ class Level4 extends Mainlevel {
 
     emenySpawn10(){
         if(!this.isSprawn){
+            this.time.delayedCall(200, () => {this.spawnEmeny(1, 'list', 'Daiyousei','','healthly',200);});
             this.isSprawn = true;
             this.sprawnDestruction(30,'flower')
             
