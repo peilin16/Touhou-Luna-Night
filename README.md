@@ -24,5 +24,5 @@
 ### 2:If you collide with a red bullet in defense mode, there will be a countdown and you cannot enter defense mode before the countdown ends.
 ![Introduct](44.JPG)
 ### 1:Player hitPoint, When you press shift will display the hitPoint, The player's health will only decrease when the player's hitpoint collides with the bullet.
-### 2:Dialog box You can press the spacebar to proceed.
+### 2:Dialog box You can press the space key to proceed.
 ### 3:Boss Healthly bar
