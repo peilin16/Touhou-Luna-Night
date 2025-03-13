@@ -27,7 +27,7 @@ class Wriggle extends Character{
         this.anims.play('WriggleFly');
         
         
-        this.behaviors = [ 'r_bFr8_rFr8','r_sbf4_srf1', 'r_bFr12_rA12'];
+        this.behaviors = [ 'shootBlueRedRandomFanShapedType_toDirection','shootingBlueFan_shootingRedFan', 'shootFanShape_Moving3Time'];
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.setOffset(5, 6);
@@ -57,7 +57,7 @@ class Wriggle extends Character{
                 return;
             this.anims.play('Wriggle');
             this.previousBehavior =this.behavior;
-            this.scene.time.delayedCall(1300, () => this.behavior = 'r_bFr8_rFr8', [], this);//step2
+            this.scene.time.delayedCall(1300, () => this.behavior = 'shootBlueRedRandomFanShapedType_toDirection', [], this);//step2
             this.isFirst = false
         }else if(this.healthly <= 180 && !this.secondState){
             this.secondState = true
@@ -72,16 +72,17 @@ class Wriggle extends Character{
         this.isDone = false;
         switch(this.behavior){
             case 'r_sbf4_srf1':
-                this.r_sbf4_srf1();
+            case 'shootingBlueFan_shootingRedFan':
+                this.shootingBlueFan_shootingRedFan();
                 break;
-            case 'r_bFr8_rFr8':
-                this.r_bFr8_rFr8();
+            case 'shootBlueRedRandomFanShapedType_toDirection':
+                this.shootBlueRedRandomFanShapedType_toDirection();
                 break;
-            case 'r_bFr12_rA12':
-                this.r_bFr12_rA12();
+            case 'shootFanShape_Moving3Time':
+                this.shootFanShape_Moving3Time();
                 break;
-            case 'r_bFr12_rFr12':
-                this.r_bFr12_rFr12();
+            case 'shootBlueRedRandomFanShapedType_toDirectionEnhance':
+                this.shootBlueRedRandomFanShapedType_toDirectionEnhance();
                 break;
         }
         
@@ -90,7 +91,7 @@ class Wriggle extends Character{
 
     getBehavior() {
         if(this.healthly <= 180)
-            return 'r_bFr12_rFr12';
+            return 'shootBlueRedRandomFanShapedType_toDirectionEnhance';
         if(this.current >= this.behaviors.length - 1)
             this.current = 0;
         else
@@ -112,7 +113,7 @@ class Wriggle extends Character{
             return true
         return false;
     }
-    r_sbf4_srf1(){
+    shootingBlueFan_shootingRedFan(){
         if( this.step == 0 &&this.moveTo(800,270,data.getData('emeny_speed_normal170')) ){
             this.step +=1
             this.scene.shootingLogic.fanShapedType_ToDirection('redMediumCircleBullet', 10, 0, 324, this, data.getData('Bullet_speed_180'));//shooting 
@@ -120,7 +121,7 @@ class Wriggle extends Character{
                 for (let i = 0; i < 6; i++) {
                     this.scene.time.delayedCall(i * 150, () => {
                         // ✅ Get a new bullet instance
-                        if(this.isDrop || this.behavior != 'r_sbf4_srf1') return
+                        if(this.isDrop || this.behavior != 'shootingBlueFan_shootingRedFan') return
                         this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 10, 0, 324, this, data.getData('Bullet_speed_180'));//shooting 
                         this.scene.shootingLogic.fanShapedType_ToTarget('blueMediumCircleBullet', 4,  10, this, rumia, data.getData('Bullet_speed_180'))
                     });
@@ -137,7 +138,7 @@ class Wriggle extends Character{
                 for (let i = 0; i < 6; i++) {
                     this.scene.time.delayedCall(i * 150, () => {
                         // ✅ Get a new bullet instance
-                        if(this.isDrop || this.behavior != 'r_sbf4_srf1') return
+                        if(this.isDrop || this.behavior != 'shootingBlueFan_shootingRedFan') return
                         this.scene.shootingLogic.fanShapedType_ToDirection('redMediumCircleBullet', 10, 0, 324, this, data.getData('Bullet_speed_180'));//shooting 
                         this.scene.shootingLogic.fanShapedType_ToTarget('redMediumCircleBullet', 4,  10, this, rumia, data.getData('Bullet_speed_180'))
                     });
@@ -153,7 +154,7 @@ class Wriggle extends Character{
                 for (let i = 0; i < 6; i++) {
                     this.scene.time.delayedCall(i * 150, () => {
                         // ✅ Get a new bullet instance
-                        if(this.isDrop || this.behavior != 'r_sbf4_srf1') return
+                        if(this.isDrop || this.behavior != 'shootingBlueFan_shootingRedFan') return
                         this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 10, 0, 324, this, data.getData('Bullet_speed_180'));//shooting 
                         this.scene.shootingLogic.fanShapedType_ToTarget('redMediumCircleBullet', 4,  15, this, rumia, data.getData('Bullet_speed_180'))
                     });
@@ -169,7 +170,7 @@ class Wriggle extends Character{
                 for (let i = 0; i < 6; i++) {
                     this.scene.time.delayedCall(i * 150, () => {
                         // ✅ Get a new bullet instance
-                        if(this.isDrop || this.behavior != 'r_sbf4_srf1') return
+                        if(this.isDrop || this.behavior != 'shootingBlueFan_shootingRedFan') return
                         this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 10, 0, 324, this, data.getData('Bullet_speed_180'));//shooting 
                         this.scene.shootingLogic.fanShapedType_ToTarget('blueMediumCircleBullet', 4,  15, this, rumia, data.getData('Bullet_speed_180'))
                     });
@@ -184,7 +185,7 @@ class Wriggle extends Character{
                 for (let i = 0; i < 6; i++) {
                     this.scene.time.delayedCall(i * 150, () => {
                         // ✅ Get a new bullet instance
-                        if(this.isDrop || this.behavior != 'r_sbf4_srf1') return
+                        if(this.isDrop || this.behavior != 'shootingBlueFan_shootingRedFan') return
                         this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 10, 0, 324, this, data.getData('Bullet_speed_180'));//shooting 
                         this.scene.shootingLogic.fanShapedType_ToTarget('redMediumCircleBullet', 4,  15, this, rumia, data.getData('Bullet_speed_180'))
                     });
@@ -198,13 +199,13 @@ class Wriggle extends Character{
         }
 
     }
-    r_bFr8_rFr8(){
+    shootBlueRedRandomFanShapedType_toDirection(){
         if( this.step == 0 &&this.moveTo(800,270,data.getData('emeny_speed_normal180')) ){
             this.step +=1
             for (let i = 0; i < 66; i++) {
                 this.scene.time.delayedCall(i * 320, () => {
                     // ✅ Get a new bullet instance
-                    if(this.isDrop || this.behavior != 'r_bFr8_rFr8') return
+                    if(this.isDrop || this.behavior != 'shootBlueRedRandomFanShapedType_toDirection') return
                     this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 19, 0, 360, this,data.getData('Bullet_speed_130'));//shooting 
                     this.scene.shootingLogic.randomfanShapedType_toDirection('redMediumCircleBullet',9, 0, 360, this, data.getData('Bullet_speed_150'));//shooting 
                 });
@@ -213,28 +214,28 @@ class Wriggle extends Character{
         }
         
     }
-    r_bFr12_rA12(){
+    shootFanShape_Moving3Time(){
         if( this.step == 0 &&this.moveTo(800,100,data.getData('emeny_speed_normal180')) ){
             this.step +=1
             let rl = ['redLongSemicircleBullet','blueLongSemicircleBullet']
             for (let i = 0; i < 76; i++) {
                 this.scene.time.delayedCall(i * 450, () => {
                     // ✅ Get a new bullet instance
-                    if(this.isDrop || this.behavior != 'r_bFr12_rA12') return
+                    if(this.isDrop || this.behavior != 'shootFanShape_Moving3Time') return
                     this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 13, 0, 324, this, data.getData('Bullet_speed_130'));//shooting 
                 });
             }
             for (let i = 0; i < 52; i++) {
                 this.scene.time.delayedCall(i * 650, () => {
                     // ✅ Get a new bullet instance
-                    if(this.isDrop|| this.behavior != 'r_bFr12_rA12') return
+                    if(this.isDrop|| this.behavior != 'shootFanShape_Moving3Time') return
                     let t = Phaser.Math.RND.pick(rl);
                     this.scene.shootingLogic.fanShapedType_ToTarget(t, 3,  2, this, rumia, data.getData('Bullet_speed_130'))
                 });
             }
             for (let i = 0; i < 36; i++) {
                 this.scene.time.delayedCall(i * 950, () => {
-                    if(this.isDrop || this.behavior != 'r_bFr12_rA12') return
+                    if(this.isDrop || this.behavior != 'shootFanShape_Moving3Time') return
                     this.scene.shootingLogic.fanShapedType_ToDirection('redMediumCircleBullet', 13, 0, 324, this, data.getData('Bullet_speed_150'))
                 });
             }
@@ -242,12 +243,12 @@ class Wriggle extends Character{
         }
 
     }
-    r_bFr12_rFr12(){
+    shootBlueRedRandomFanShapedType_toDirectionEnhance(){
         if( this.step == 0 &&this.moveTo(800,270,data.getData('emeny_speed_normal170')) ){
             this.step +=1
             for (let i = 0; i < 67; i++) {
                 this.scene.time.delayedCall(i * 320, () => {
-                    if(this.isDrop|| this.behavior != 'r_bFr12_rFr12') return
+                    if(this.isDrop|| this.behavior != 'shootBlueRedRandomFanShapedType_toDirectionEnhance') return
                     this.scene.shootingLogic.randomfanShapedType_toDirection('blueSmallCircleBullet', 22, 0, 360, this,data.getData('Bullet_speed_130'));//shooting 
                     this.scene.shootingLogic.randomfanShapedType_toDirection('redMediumCircleBullet',10, 0, 360, this, data.getData('Bullet_speed_150'));//shooting 
                 });

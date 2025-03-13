@@ -8,8 +8,7 @@ class Score extends Character {
         this.isDrop = false;
         this.value = 1;
         this.healthly = 5;
-        scene.add.existing(this);
-        scene.physics.add.existing(this);
+        
         if(subtype == 'scoreSmall'){
             this.value = 1;
             this.body.setOffset(-10, 10);  
@@ -23,7 +22,9 @@ class Score extends Character {
             this.body.setOffset(-20, 20);  
             this.body.setSize(35, 35, true); // Adjust hitbox size
         } 
-        this.body.setOffset(3, 0);
+        
+        scene.add.existing(this);
+        scene.physics.add.existing(this);
         this.body.setImmovable(true);
     }
 

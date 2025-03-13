@@ -22,10 +22,10 @@ class Kedama extends Character{
         super.update(time, delta);
         
         if(!this.isDrop){
-            if(this.behavior == 'l2'){
-                this.l2();
-            }else if(this.behavior == 'hp_3o6'){
-                this.hp_3o6();
+            if(this.behavior == 'l2' || this.behavior == 'leftExit'){
+                this.leftExit();
+            }else if(this.behavior == 'hp_3o6' || this.behavior == 'hitPlayer'){
+                this.hitPlayer();
             }
         }
     }
@@ -38,10 +38,10 @@ class Kedama extends Character{
         super.dropOff();
     }
 
-    l2(){
+    leftExit(){
         this.exitScreen('left',data.getData('emeny_speed_normal140'));
     }
-    hp_3o6(){
+    hitPlayer(){
         if(this.step == 0) {
             if(this.moveToTarget(rumia,data.getData('emeny_speed_normal200'),0) || rumia.isDrop || rumia.isHit)
                 this.step +=1

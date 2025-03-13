@@ -23,7 +23,7 @@ class Reimu extends Character{
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.setOffset(15, 6);
-        this.healthly = 4670;//190//
+        this.healthly = 4770;//190//
         this.isDrop = false;
         this.kind = 'f'
         this.isEmeny = true;
@@ -56,7 +56,7 @@ class Reimu extends Character{
             this.step = 0;
             
         }
-        if(!this.secondState && this.healthly <=180 ){
+        if(!this.secondState && this.healthly <=190 ){
             this.secondState = true;
             this.sprawnScore(713);
             this.isSprawnScore = false;
@@ -87,7 +87,7 @@ class Reimu extends Character{
         }
     }
     getBehavior() {
-        if(this.healthly <= 180)
+        if(this.healthly <= 190)
             return 'SecondState';
 
         let behaviors = ['RandomTwirFan360_TwrilListBullet', 'OutScreenShootTBLR_RandomFan','FansShape360_RanDomFan360_ListType','OutScreenShootLRBT_RandomFan' ,'ExpandFanToTargetSpeedChangelList'];

@@ -53,7 +53,8 @@ class DivineSpirit extends Character {
                 this.r_shooting2_l();
                 break;
             case 'r_sbl1_srl1_srl1_tb':
-                this.r_sbl1_srl1_srl1_tb();
+            case 'right_shootingBlueList_ShootingRedList_autoTB':
+                this.right_shootingBlueList_ShootingRedList_autoTB();
                 break;
             case 'right_shootingFan2BlueBullet_AutoTopDown':
             case 'r_sr4_tb':
@@ -84,8 +85,7 @@ class DivineSpirit extends Character {
             this.exitScreen('autoTB', data.getData('emeny_speed_normal130'), -data.getData('emeny_speed_normal100'))
         }
     }
-    
-    r_sbl1_srl1_srl1_tb(){
+    right_shootingBlueList_ShootingRedList_autoTB(){
         if(this.step == 0 && this.moveTo(900,-1,data.getData('emeny_speed_normal120'))){
             this.step +=1
             //listType_ToTarget(bulletType, num, sperate, shooter, target, speed, offset = 'No')

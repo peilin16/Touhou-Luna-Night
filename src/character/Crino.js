@@ -19,7 +19,7 @@ class Crino extends Character{
         this.isDone = false;
         this.isFirst = true
         this.previousBehavior =this.behavior;
-        this.behaviors = ['r_sTf9_sTf8', 'r_bfr4_rfl4', 'iceGenerate1'];
+        this.behaviors = ['DoubleTwirlFanType', 'ShootBlueFan_ShootRedFanType', 'iceGenerate1'];
         this.current = 0;
         this.isSecondState = false;
         this.isSecondSprawn = false
@@ -65,14 +65,14 @@ class Crino extends Character{
         this.isDone = false;
 
         switch(this.behavior){
-            case 'r_sTf9_sTf8':
-                this.r_sTf9_sTf8();
+            case 'DoubleTwirlFanType':
+                this.DoubleTwirlFanType();
                 break;
             case 'iceGenerate1':
                 this.iceGenerate1();
                 break;
-            case 'r_bfr4_rfl4':
-                this.r_bfr4_rfl4();
+            case 'ShootBlueFan_ShootRedFanType':
+                this.ShootBlueFan_ShootRedFanType();
                 break;
             case 'iceGenerate2':
                 this.iceGenerate2();
@@ -105,36 +105,36 @@ class Crino extends Character{
             this.current++;
         return this.behaviors[this.current];
     }
-    r_sTf9_sTf8(){
+    DoubleTwirlFanType(){
         if( this.step == 0 &&this.moveTo(800,270, data.getData('emeny_speed_normal120')) ){
             this.step +=1
             //(bulletType,   anglespace, angleStart, angleEnd, sprateSpace, num, fanAngleStart, fanAngleEnd,  shooter,speed)
             this.scene.shootingLogic.twirlFanType_ToDirection('blueMediumCircleBullet', 9, 0, 2060, 140, 4,10, 50,   this, data.getData('Bullet_speed_130'));//shooting 
             this.scene.time.delayedCall(1500, () => {
-                if(this.isDrop || this.behavior != 'r_sTf9_sTf8')
+                if(this.isDrop || this.behavior != 'DoubleTwirlFanType')
                     return;
                 this.scene.shootingLogic.twirlFanType_ToDirection('redMediumCircleBullet', 9, 0, 2060, 140, 4,10, 50,   this, data.getData('Bullet_speed_130'));//shooting 
             }, [], this);//step2
             this.scene.time.delayedCall(30800, () => this.isDone = true, [], this);//step2
         }
     }
-    r_bfr4_rfl4(){
+    ShootBlueFan_ShootRedFanType(){
         if( this.step == 0 &&this.moveTo(800,270,data.getData('emeny_speed_normal140')) ){
-            this.r_bfr4_rfl4_help1()
+            this.ShootBlueFan_ShootRedFanTypeHelp1()
         }else if( this.step == 2 &&this.moveTo(700,130,data.getData('emeny_speed_normal140')) ){
-            this.r_bfr4_rfl4_help1()
+            this.ShootBlueFan_ShootRedFanTypeHelp1()
         }else if( this.step == 4 &&this.moveTo(700,530,data.getData('emeny_speed_normal140')) ){
-            this.r_bfr4_rfl4_help2()
+            this.ShootBlueFan_ShootRedFanTypeHelp2()
         }else if( this.step == 6 &&this.moveTo(500,530,data.getData('emeny_speed_normal140')) ){
-            this.r_bfr4_rfl4_help1()
+            this.ShootBlueFan_ShootRedFanTypeHelp1()
         }else if( this.step == 8 &&this.moveTo(640,430,data.getData('emeny_speed_normal140')) ){
-            this.r_bfr4_rfl4_help2()
+            this.ShootBlueFan_ShootRedFanTypeHelp2()
         }else if( this.step == 10 &&this.moveTo(440,230,data.getData('emeny_speed_normal140')) ){
-            this.r_bfr4_rfl4_help1()
+            this.ShootBlueFan_ShootRedFanTypeHelp1()
         }else if( this.step == 12 &&this.moveTo(600,330,data.getData('emeny_speed_normal140')) ){
-            this.r_bfr4_rfl4_help2()
+            this.ShootBlueFan_ShootRedFanTypeHelp2()
         }else if( this.step == 14 &&this.moveTo(800,330,data.getData('emeny_speed_normal140')) ){
-            this.r_bfr4_rfl4_help1()
+            this.ShootBlueFan_ShootRedFanTypeHelp1()
             this.scene.time.delayedCall(3000, () => this.isDone = true, [], this);//step2
         }
 
@@ -286,11 +286,12 @@ class Crino extends Character{
                 destructionIce = this.scene.spawnEmeny(1, 'list', 'DestructionIce','iceTop','iceSelfDestructY5',660, 820);
                 destructionIce.master =this;
             }, [], this);//step2
-            this.scene.time.delayedCall(30800, () =>{ this.setTexture('Crino1'); this.isDone = true}, [], this);//step2
+            this.scene.time.delayedCall(30800, () =>{
+                if(!this || this.isDrop) return;
+                 this.setTexture('Crino1'); this.isDone = true}, [], this);//step2
         }
     }
-
-    r_bfr4_rfl4_help1(){
+    ShootBlueFan_ShootRedFanTypeHelp1(){
         this.step +=1
         //(bulletType,   anglespace, angleStart, angleEnd, sprateSpace, num, fanAngleStart, fanAngleEnd,  shooter,speed)
         this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 20, 0, 324, this, data.getData('Bullet_speed_100'));//shooting 
@@ -298,7 +299,7 @@ class Crino extends Character{
 
             for (let i = 0; i < 5; i++) {
                 this.scene.time.delayedCall(i * 90, () => {
-                    if(this.isDrop || this.behavior != 'r_bfr4_rfl4')
+                    if(this.isDrop || this.behavior != 'ShootBlueFan_ShootRedFanType')
                         return;
                     // ✅ Get a new bullet instance
                     this.scene.shootingLogic.fanShapedType_ToTarget('redLongSemicircleBullet', 3,  10, this, rumia, data.getData('Bullet_speed_180'))
@@ -307,18 +308,18 @@ class Crino extends Character{
 
         }, [], this);//step2
         this.scene.time.delayedCall(1000, () => {
-            if(this.isDrop || this.behavior != 'r_bfr4_rfl4')
+            if(this.isDrop || this.behavior != 'ShootBlueFan_ShootRedFanType')
                 return;
             this.scene.shootingLogic.fanShapedType_ToDirection('blueSmallCircleBullet', 20, 0, 324, this, data.getData('Bullet_speed_130'));//shooting 
         }, [], this);//step2
         this.scene.time.delayedCall(1400, () => {
-            if(this.isDrop || this.behavior != 'r_bfr4_rfl4')
+            if(this.isDrop || this.behavior != 'ShootBlueFan_ShootRedFanType')
                 return;
             this.scene.shootingLogic.fanShapedType_ToDirection('redSmallCircleBullet', 16, 0, 324, this, data.getData('Bullet_speed_150'));//shooting 
         }, [], this);//step2
         this.scene.time.delayedCall(1600, () => this.step +=1, [], this);//step2
     }
-    r_bfr4_rfl4_help2(){
+    ShootBlueFan_ShootRedFanTypeHelp2(){
         this.step +=1
         //(bulletType,   anglespace, angleStart, angleEnd, sprateSpace, num, fanAngleStart, fanAngleEnd,  shooter,speed)
         this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 20, 0, 324, this, data.getData('Bullet_speed_100'));//shooting 
@@ -327,7 +328,7 @@ class Crino extends Character{
             for (let i = 0; i < 5; i++) {
                 this.scene.time.delayedCall(i * 90, () => {
                     // ✅ Get a new bullet instance
-                    if(this.isDrop || this.behavior != 'r_bfr4_rfl4')
+                    if(this.isDrop || this.behavior != 'ShootBlueFan_ShootRedFanType')
                         return;
                     this.scene.shootingLogic.fanShapedType_ToTarget('blueLongSemicircleBullet', 3,  10, this, rumia, data.getData('Bullet_speed_180'))
                 });
@@ -335,12 +336,12 @@ class Crino extends Character{
 
         }, [], this);//step2
         this.scene.time.delayedCall(1000, () => {
-            if(this.isDrop || this.behavior != 'r_bfr4_rfl4')
+            if(this.isDrop || this.behavior != 'ShootBlueFan_ShootRedFanType')
                 return;
             this.scene.shootingLogic.fanShapedType_ToDirection('blueSmallCircleBullet', 20, 0, 324, this, data.getData('Bullet_speed_130'));//shooting 
         }, [], this);//step2
         this.scene.time.delayedCall(1400, () => {
-            if(this.isDrop || this.behavior != 'r_bfr4_rfl4')
+            if(this.isDrop || this.behavior != 'ShootBlueFan_ShootRedFanType')
                 return;
             this.scene.shootingLogic.fanShapedType_ToDirection('redSmallCircleBullet', 16, 0, 324, this, data.getData('Bullet_speed_150'));//shooting 
         }, [], this);//step2

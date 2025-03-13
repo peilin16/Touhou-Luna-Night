@@ -38,7 +38,7 @@ class Lily extends Character{
                 repeat: -1 // Loop infinitely
             });
             this.anims.play('LilyBlack');
-            this.healthly =750;
+            this.healthly =820;
         }
 
         this.body.setSize(data.getData('Lily_width'), data.getData('Lily_height'));
@@ -74,7 +74,7 @@ class Lily extends Character{
         }
 
 
-        if(this.healthly < 130 && !this.secondState ){
+        if(this.healthly < 100 && !this.secondState ){
             this.isDone = true;
             this.secondState = true;
             this.sprawnScore(314);
@@ -194,10 +194,10 @@ class Lily extends Character{
     getBehavior(previous) {
         let behaviors = ['TwirlFan360_SpeedPauseBullet','ExpandFanToTarget_BlueRedBullet' , 'DoubleTwirlFan180_SpeedPauseBullet'];
         if(this.subType == 'white'){
-            if(this.healthly <= 130)
+            if(this.healthly <= 100)
                 return 'TwirlFan360_SpeedPauseBulletEnhance';
         }else{
-            if(this.healthly <= 130)
+            if(this.healthly <= 100)
                 return 'RandomFan360_TwirlFanBulletEnhance'
             behaviors = ['TwirlFan360_SpeedPauseBulletBlack', 'RandomFan360_TwirlFanBullet','ExpandFanToTarget_BlueRedBullet' ];
         }
@@ -220,7 +220,16 @@ class Lily extends Character{
             this.scene.time.delayedCall(4080, () => this.step +=1 , [], this);//step2
         }
     }
+    TwirlFan360_SpeedPauseBulletEnhance(){
+        if(this.step == 0 && this.moveTo(850,-1,data.getData('emeny_speed_normal120'))){
+            this.step +=1
+            //twirlFanType_ToDirection(bulletType,   anglespace, angleStart, angleEnd, sprateSpace, num, fanAngleStart, fanAngleEnd,  shooter, speed,isCounterclockwise = false){
 
+            this.scene.shootingLogic.twirlFanType_ToDirection('redLongSemicircleBullet', 15, 0, 360, 170, 12, 0, 360,   this, data.getData('Bullet_speed_140'));//shooting 
+            this.scene.shootingLogic.twirlFanType_ToDirection('blueLongSemicircleBullet', 15, 0, 360, 170, 12, 0, 360,   this, data.getData('Bullet_speed_150'),true);//shooting 
+            this.scene.time.delayedCall(4080, () => this.step +=1 , [], this);//step2
+        }
+    }
     DoubleTwirlFan180_SpeedPauseBullet(){
         if(this.step == 0 && this.moveTo(850,-1,data.getData('emeny_speed_normal100'))){
             this.step +=1
@@ -271,16 +280,7 @@ class Lily extends Character{
         this.scene.time.delayedCall(2000, () => this.step +=1 , [], this);//step2
     }
 
-    TwirlFan360_SpeedPauseBulletEnhance(){
-        if(this.step == 0 && this.moveTo(850,-1,data.getData('emeny_speed_normal120'))){
-            this.step +=1
-            //twirlFanType_ToDirection(bulletType,   anglespace, angleStart, angleEnd, sprateSpace, num, fanAngleStart, fanAngleEnd,  shooter, speed,isCounterclockwise = false){
 
-            this.scene.shootingLogic.twirlFanType_ToDirection('redLongSemicircleBullet', 16, 0, 360, 210, 11, 0, 360,   this, data.getData('Bullet_speed_150'),true);//shooting 
-            this.scene.shootingLogic.twirlFanType_ToDirection('blueLongSemicircleBullet', 16, 0, 360, 210, 11, 0, 360,   this, data.getData('Bullet_speed_150'));//shooting 
-            this.scene.time.delayedCall(4080, () => this.step +=1 , [], this);//step2
-        }
-    }
 
     TwirlFan360_SpeedPauseBulletBlack(){
         if(this.step == 0 && this.moveTo(850,-1,data.getData('emeny_speed_normal120'))){
