@@ -5,3 +5,10 @@
 ### When you collide with a red bullet in defense mode, there is a 4 second countdown before you can't enter defense mode
 ## Menu:
 #### W S: make choose. Space: decide
+## Project:
+### Duration Feb 2 2025 ~ March 12 2025
+### Code: Peilin Huang
+### Art: Peilin Huang
+### Audio: Peilin Huang
+### Design: Peilin Huang
+### Test: Peilin Huang
