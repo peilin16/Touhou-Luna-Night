@@ -62,7 +62,7 @@ class Wriggle extends Character{
         }else if(this.healthly <= 180 && !this.secondState){
             this.secondState = true
             this.isDone = true;
-            this.sprawnScore(222);
+            this.scene.sprawnScore(222,this);
         }
         
         if(this.isDone){
@@ -103,7 +103,7 @@ class Wriggle extends Character{
         if(!this.isSprawnScore){
             this.isSprawnScore = true;
             this.setTexture('WriggleHit');
-            this.sprawnScore(307);
+            this.scene.sprawnScore(307,this);
         }
         
         super.dropOff();

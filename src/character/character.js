@@ -61,7 +61,7 @@ class Character extends Phaser.GameObjects.Sprite {
     }
 
 
-    getRandomColorBullet(key) {
+    getRandomColorBullet(key,rate = 50) {
         let bulletGroup;
         switch(key) {
             case 'smallCircle':
@@ -94,7 +94,21 @@ class Character extends Phaser.GameObjects.Sprite {
             default:
                 bulletGroup = ['blueMediumCircleBullet', 'redMediumCircleBullet'];
         }
-        let choose = Phaser.Math.RND.pick(bulletGroup);
+        let choose
+        if(rate == 50)
+            choose = Phaser.Math.RND.pick(bulletGroup);
+        else {
+            // Generate a random number between 0 and 100
+            const random = Phaser.Math.RND.between(0, 100);
+            if (random <= rate) {
+                // First element has rate% chance
+                choose = bulletGroup[0];
+            } else {
+                // Remaining elements share the remaining probability equally
+                const remainingBullets = bulletGroup.slice(1);
+                choose = Phaser.Math.RND.pick(remainingBullets);
+            }
+        }
         return choose;
     }
 
@@ -190,24 +204,43 @@ class Character extends Phaser.GameObjects.Sprite {
     
     moveToTarget(target, speed = 110, offset = 0) {
         if (!target) return true; // ✅ Return true if no target
-    
-        // ✅ Calculate distance to target
-        let distance = Phaser.Math.Distance.Between(this.x, this.y, target.x, target.y);
-    
+
+        // Calculate target position with offset
+        let targetX = target.x;
+        let targetY = target.y;
+
+        // Add body offset if target has rumiaXoffset and rumiaYoffset
+        if(target.type == 'Rumia'){
+            //targetX += data.getData('rumiaXoffset');
+            targetY +=37 //data.getData('rumiaYoffset');
+        }
+
+        // ✅ Calculate distance to target using adjusted position
+        let distance = Phaser.Math.Distance.Between(
+            this.x, 
+            this.y, 
+            targetX, 
+            targetY
+        );
+
         // ✅ If within offset range, stop tracking but continue moving in the same direction
         if (distance <= offset) {
             return true;
         }
-    
-        // ✅ Calculate movement direction
-        let direction = new Phaser.Math.Vector2(target.x - this.x, target.y - this.y).normalize();
-    
+
+        // ✅ Calculate movement direction using adjusted position
+        let direction = new Phaser.Math.Vector2(
+            targetX - this.x, 
+            targetY - this.y
+        ).normalize();
+
         // ✅ Move towards the target
         this.x += direction.x * speed * this.dt;
         this.y += direction.y * speed * this.dt;
-    
+
         return false; // ✅ Return false until target is within offset range
     }
+
 /*
     teleport(Xpos, Ypos, currentX = this.x, currentY = this.y, duration = 800, particleColor = 0x00ffff) {
         return new Promise((resolve) => {
@@ -370,53 +403,7 @@ class Character extends Phaser.GameObjects.Sprite {
         
     }
 
-    sprawnScore(score) {
-        if(this.isSprawnScore) return;
-        if (!this.scene) return;
-        this.isSprawnScore = true;
-        let scoreValues = { small: 1, medium: 10, large: 50 };
-        let scoreTypes = { large: "scoreLarge", medium: "scoreMedium", small: "scoreSmall" };
     
-        let numLarge = Math.floor(score / scoreValues.large);
-        score %= scoreValues.large;
-    
-        let numMedium = Math.floor(score / scoreValues.medium);
-        score %= scoreValues.medium;
-    
-        let numSmall = Math.floor(score / scoreValues.small);
-    
-        let totalObjects = numLarge + numMedium + numSmall;
-        let spreadRadius = 30; // Radius to spread out the score items
-    
-        let spawnScoreItem = (type, xOffset, yOffset) => {
-            let scoreObj = new Score(this.scene, this.x + xOffset, this.y + yOffset, scoreTypes[type]);
-            this.scene.physics.add.overlap(rumia, scoreObj, (rumia, scoreObj) => {
-                if(!this || !this.scene)return;
-                this.scene.handleCollision(rumia, scoreObj);
-            });
-            this.scene.EmenyGroup.add(scoreObj);
-        };
-    
-        let index = 0;
-        for (let i = 0; i < numLarge; i++, index++) {
-            let angle = (index / totalObjects) * Math.PI * 2;
-            let xOffset = Math.cos(angle) * spreadRadius;
-            let yOffset = Math.sin(angle) * spreadRadius;
-            spawnScoreItem("large", xOffset, yOffset);
-        }
-        for (let i = 0; i < numMedium; i++, index++) {
-            let angle = (index / totalObjects) * Math.PI * 2;
-            let xOffset = Math.cos(angle) * spreadRadius;
-            let yOffset = Math.sin(angle) * spreadRadius;
-            spawnScoreItem("medium", xOffset, yOffset);
-        }
-        for (let i = 0; i < numSmall; i++, index++) {
-            let angle = (index / totalObjects) * Math.PI * 2;
-            let xOffset = Math.cos(angle) * spreadRadius;
-            let yOffset = Math.sin(angle) * spreadRadius;
-            spawnScoreItem("small", xOffset, yOffset);
-        }
-    }
 
 
     collideToBullet(bullet){

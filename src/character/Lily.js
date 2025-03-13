@@ -77,7 +77,7 @@ class Lily extends Character{
         if(this.healthly < 100 && !this.secondState ){
             this.isDone = true;
             this.secondState = true;
-            this.sprawnScore(314);
+            this.scene.sprawnScore(314,this);
             this.isSprawnScore = false;
 
         }
@@ -184,9 +184,9 @@ class Lily extends Character{
         if(this.subType == 'white'){
             this.anims.stop();
             //this.setTexture('');
-            this.sprawnScore(614);
+            this.scene.sprawnScore(614,this);
         }else{
-            this.sprawnScore(714);
+            this.scene.sprawnScore(714,this);
         }
         super.dropOff();
     }

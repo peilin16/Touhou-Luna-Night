@@ -250,6 +250,9 @@ class MaidFairy extends Character{
             //this.scene.time.delayedCall(1000, () => this.step +=1, [], this);//step2 
         }
         else if(this.step == 2&& this.moveTo(550,-1,data.getData('emeny_speed_normal120'))){
+            this.step += 1
+            
+        }else if(this.step == 3){
             this.exitScreen('autoTB',data.getData('emeny_speed_normal120'),-data.getData('emeny_speed_normal100'));
         }
         
@@ -274,13 +277,15 @@ class MaidFairy extends Character{
             }
             //this.scene.time.delayedCall(1000, () => this.step +=1, [], this);//step2
         }
-        else if(this.step == 1&& this.moveTo(750,-1,data.getData('emeny_speed_normal100'))){
+        else if(this.step == 1 && this.moveTo(750,-1,data.getData('emeny_speed_normal100'))){
             this.step += 1
             this.scene.shootingLogic.randomFanShapedType_ToTarget(this.getRandomColorBullet('smallCircle'), 4, 55, this, rumia, data.getData('Bullet_speed_130'));
             //this.scene.time.delayedCall(1000, () => this.step +=1, [], this);//step2 
         }
-        else if(this.step == 2&& this.moveTo(550,-1,data.getData('emeny_speed_normal100'))){
-            this.exitScreen('autoTB',data.getData('emeny_speed_normal120'),-data.getData('emeny_speed_normal100'));
+        else if(this.step == 2 && this.moveTo(550, -1 ,data.getData('emeny_speed_normal100'))){
+            this.step += 1
+        }else if(this.step == 3){
+            this.exitScreen('autoTB',data.getData('emeny_speed_normal120'), -data.getData('emeny_speed_normal100'));
         }
     }
 
@@ -308,6 +313,8 @@ class MaidFairy extends Character{
             //this.scene.time.delayedCall(1000, () => this.step +=1, [], this);//step2 
         }
         else if(this.step == 2&& this.moveTo(550,-1,data.getData('emeny_speed_normal120'))){
+            this.step += 1
+        }else if(this.step == 3){
             this.exitScreen('autoTB',data.getData('emeny_speed_normal120'),-data.getData('emeny_speed_normal100'));
         }
     }
@@ -353,7 +360,7 @@ class MaidFairy extends Character{
         this.anims.stop();
         
         if(!this.isDrop){
-            this.sprawnScore(47);
+            this.scene.sprawnScore(47,this);
             switch(this.subtype){
                 case 'MaidFairy1':
                     this.setTexture('MaidFairy1_Hit');

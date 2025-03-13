@@ -101,7 +101,7 @@ class SunnyMilk extends Character{
         }
         if( !this.firstState && !this.secondState &&this.scene.Sangetsusei.healthly < 610 ){
             this.isDone = true
-            this.sprawnScore(265);
+            this.scene.sprawnScore(265,this);
             this.isSprawnScore = false;
             this.secondState = true;
         }
@@ -158,12 +158,12 @@ class SunnyMilk extends Character{
     dropOff(){
         this.isDrop = true;
         if(this.firstState){
-            this.sprawnScore(366);
+            this.scene.sprawnScore(366,this);
             this.exitScreen('top', data.getData('emeny_speed_normal120'), data.getData('emeny_speed_normal110'));
         }else{
             this.scene.Sangetsusei.isDrop = true;
             this.setTexture('SunnyMilkHit')
-            this.sprawnScore(466);
+            this.scene.sprawnScore(466,this);
             super.dropOff();
         }
     }
@@ -368,7 +368,7 @@ class SunnyMilk extends Character{
                     // ✅ Get a new bullet instance
                     //this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 12, 80, 260, this, data.getData('Bullet_speed_130'));//shooting
                     
-                    let bulletGroup = this.scene.shootingLogic.fanShapedType_ToTarget(this.getRandomColorBullet('speedPause'), 4,  10, this, rumia, data.getData('Bullet_speed_150'))
+                    let bulletGroup = this.scene.shootingLogic.fanShapedType_ToTarget(this.getRandomColorBullet('speedPause',70), 4,  10, this, rumia, data.getData('Bullet_speed_150'))
                     for (let i = 0; i < bulletGroup.length; ++i) {
                         bulletGroup[i].pauseMin = 700; // Pause for 1.2 seconds
                         bulletGroup[i].delayPauseMin = 1000; // Pause starts after 0.8 seconds

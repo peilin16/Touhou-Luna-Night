@@ -65,7 +65,7 @@ class MystiaLorelei extends Character{
             this.secondState = true;
             this.behavior = this.getBehavior();
             this.step = 0;
-            this.sprawnScore(367);
+            this.scene.sprawnScore(367,this);
             this.isSprawnScore = false;
         }
         
@@ -105,7 +105,7 @@ class MystiaLorelei extends Character{
     dropOff(){
         if(!this.isDrop)
             this.setTexture('MystiaLoreleiHit');
-        this.sprawnScore(667);
+        this.scene.sprawnScore(667,this);
         super.dropOff();
     }
     MusicSignFanShape(){

@@ -47,7 +47,7 @@ class Crino extends Character{
             this.isSecondState = true;
             if(!this.isSecondSprawn)
             {
-                this.sprawnScore(316);
+                this.scene.sprawnScore(316,this);
                 this.isSprawnScore = false;
             }
         }
@@ -84,7 +84,7 @@ class Crino extends Character{
     dropOff(){
         if(!this.isDrop){
             this.setTexture('CrinoHit');
-            this.sprawnScore(416);
+            this.scene.sprawnScore(416,this);
             new Explosion(this.scene, this.x, this.y, 'Large');
             new Explosion(this.scene, this.x +20, this.y+20, 'Large');
             this.isDrop = true;

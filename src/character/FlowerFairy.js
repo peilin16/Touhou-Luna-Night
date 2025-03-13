@@ -261,15 +261,15 @@ class FlowerFairy extends Character{
         if(!this.isDrop){
             if(this.subType  == 'sunFlowerFairy' || this.subType  == 'SunFlowerFairy'){
                 this.setTexture('sunflowerFairyHit');
-                this.sprawnScore(103);
+                this.scene.sprawnScore(103,this);
             }
             else if(this.subType  == 'dandelionFairy' || this.subType  == 'DandelionFairy'){
-                this.sprawnScore(133);
+                this.scene.sprawnScore(133,this);
                 this.setTexture('dandelionFairyHit');
             }
             else if(this.subType  == 'roseFairy' || this.subType  == 'roseFairy'){
                 this.setTexture('roseFairyHit');
-                this.sprawnScore(163);
+                this.scene.sprawnScore(163,this);
             }
                 
         }

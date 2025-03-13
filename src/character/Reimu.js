@@ -58,7 +58,7 @@ class Reimu extends Character{
         }
         if(!this.secondState && this.healthly <=190 ){
             this.secondState = true;
-            this.sprawnScore(713);
+            this.scene.sprawnScore(713,this);
             this.isSprawnScore = false;
             this.behavior = this.getBehavior();
             this.step = 0;

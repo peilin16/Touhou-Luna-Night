@@ -39,7 +39,7 @@ class Kawashiro extends Character{
         if(!this.secondState && this.healthly <= 380){
             this.secondState= true;
             this.isDone = false;
-            this.sprawnScore(266);
+            this.scene.sprawnScore(266,this);
             this.isSprawnScore = false;
             this.behavior = ''
             this.scene.time.delayedCall(5550, () => {this.behavior = 'OutScreenTopBottom16FanShapeTypeToTarget3';this.step = 0;}, [], this);//step2
@@ -207,8 +207,8 @@ class Kawashiro extends Character{
                     
                     if(this.isDrop || this.behavior != 'OutScreenTopBottom16FanShapeTypeToTarget3') return;
                     choose = this.getRandomColorBullet('mediumCircle');
-                    this.scene.shootingLogic.outScreenType_ToDirection(choose, 16, 'top', 60,100,  0,1090, this,data.getData('Bullet_speed_110'));//shooting 
-                    this.scene.shootingLogic.outScreenType_ToDirection(choose, 16, 'bottom', 250,330,  0,1090, this,data.getData('Bullet_speed_110'));//shooting 
+                    this.scene.shootingLogic.outScreenType_ToDirection(choose, 12, 'top', 60,100,  0,1090, this,data.getData('Bullet_speed_110'));//shooting 
+                    this.scene.shootingLogic.outScreenType_ToDirection(choose, 12, 'bottom', 250,330,  0,1090, this,data.getData('Bullet_speed_110'));//shooting 
                     
                 });
             }
@@ -236,7 +236,7 @@ class Kawashiro extends Character{
 
     dropOff(){
         this.isDrop = true;
-        this.sprawnScore(466);
+        this.scene.sprawnScore(466,this);
         super.dropOff();
     }
 }

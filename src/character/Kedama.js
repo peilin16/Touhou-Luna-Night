@@ -31,10 +31,9 @@ class Kedama extends Character{
     }
     dropOff(){
         this.setTexture('KedamaHit');
-        if(!this.isSprawnScore){
-            this.isSprawnScore = true;
-            this.sprawnScore(2);
-        }
+        
+        this.scene.sprawnScore(2,this);
+        
         super.dropOff();
     }
 

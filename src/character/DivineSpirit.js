@@ -143,7 +143,7 @@ class DivineSpirit extends Character {
         this.healthly -=5
     }
     dropOff(){
-        this.sprawnScore(26);
+        this.scene.sprawnScore(26,this);
         super.dropOff();
     }
     

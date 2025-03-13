@@ -87,7 +87,7 @@ class Satellite extends Character{
     dropOff(){
         this.isDrop = true;
         new Explosion(this.scene, this.x, this.y, 'Large');
-        this.sprawnScore(316);
+        this.scene.sprawnScore(316,this);
         super.destoryCharacter();
     }
 
