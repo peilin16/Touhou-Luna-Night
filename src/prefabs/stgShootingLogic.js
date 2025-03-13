@@ -38,39 +38,27 @@ class stgShootingLogic{
         return bullet
     }
 
-        sniperBullet(bulletType, shooter, target, speed, offset = 'No') {
-        if (!target) return; // Ensure target exists
-        let bullet = this.getBullet(bulletType, shooter, speed);
-        // Calculate direction from bullet to target
-        let direction = new Phaser.Math.Vector2(target.x - bullet.x, target.y - bullet.y).normalize();
-    
-        // ✅ Apply offset adjustments
-        switch (offset) {
-            case 'Top':
-                direction.y -= 0.1; // Slightly move upward
-                break;
-            case 'Down':
-                direction.y += 0.1; // Slightly move downward
-                break;
-        }
-    
-        direction.normalize(); // Re-normalize after applying offset
-        bullet.vx = direction.x
-        bullet.vy = direction.y
-        if(!bullet.isTwirl){
-            bullet.setOrientation(direction.x,direction.y);
-        }
-        return bullet
-        // ✅ Set bullet velocity toward the target
-       // bullet.body.setVelocity(direction.x * bullet.speed, direction.y * bullet.speed);
-    }    
     sniperBullet(bulletType, shooter, target, speed, offset = 'No') {
         if (!target) return; // Ensure target exists
         let bullet = this.getBullet(bulletType, shooter, speed);
-        // Calculate direction from bullet to target
-        let direction = new Phaser.Math.Vector2(target.x - bullet.x, target.y - bullet.y).normalize();
-    
-        // ✅ Apply offset adjustments
+        
+        // Get target position with offset adjustment
+        let targetX = target.x;
+        let targetY = target.y;
+        
+        // If target has body offset data (like your player with rumiaXoffset and rumiaYoffset)
+        //if (target.rumiaXoffset !== undefined && target.rumiaYoffset !== undefined) {
+            // Adjust the target position to aim at the center of the actual collision body
+        if(target.type == 'Rumia'){
+            //targetX += data.getData('rumiaXoffset');
+            targetY +=  37;
+        }
+        //}
+        
+        // Calculate direction from bullet to the adjusted target position
+        let direction = new Phaser.Math.Vector2(targetX - bullet.x, targetY - bullet.y).normalize();
+
+        // Apply additional directional offset if specified
         switch (offset) {
             case 'Top':
                 direction.y -= 0.1; // Slightly move upward
@@ -78,18 +66,25 @@ class stgShootingLogic{
             case 'Down':
                 direction.y += 0.1; // Slightly move downward
                 break;
+            case 'Left':
+                direction.x -= 0.1; // Slightly move left
+                break;
+            case 'Right':
+                direction.x += 0.1; // Slightly move right
+                break;
         }
-    
+
         direction.normalize(); // Re-normalize after applying offset
-        bullet.vx = direction.x * bullet.speed
-        bullet.vy = direction.y * bullet.speed
-        if(!bullet.isTwirl){
-            bullet.setOrientation(direction.x,direction.y);
+        bullet.vx = direction.x * bullet.speed;
+        bullet.vy = direction.y * bullet.speed;
+        
+        if (!bullet.isTwirl) {
+            bullet.setOrientation(direction.x, direction.y);
         }
-        return bullet
-        // ✅ Set bullet velocity toward the target
-       // bullet.body.setVelocity(direction.x * bullet.speed, direction.y * bullet.speed);
+        
+        return bullet;
     }
+
     //setUp bullet
     getBullet(key, shooter, speed, isOverlap = true) {
         let bullet;
