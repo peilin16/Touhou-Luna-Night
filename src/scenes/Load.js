@@ -242,6 +242,7 @@ class Load extends Phaser.Scene {
         
         //JSON
         this.load.json('dialogEN', './dialogJSON/dialogEN.JSON');
+        this.load.json('dialogCN', './dialogJSON/dialogCN.JSON');
         this.load.bitmapFont('gem_font', './assets/font/gem.png', './assets/font/gem.xml');
     }
     create() {
