@@ -12,4 +12,4 @@
 ### Audio: Peilin Huang
 ### Design: Peilin Huang
 ### Test: Peilin Huang
-(22.JPG)
+[!Introduct](22.JPG)
