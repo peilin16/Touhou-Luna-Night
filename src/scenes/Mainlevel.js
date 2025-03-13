@@ -591,7 +591,6 @@ class Mainlevel extends Phaser.Scene {
     
     targetReflect(bullet, target) {
        
-        
         // ✅ Bounce back directly toward shooter
         let direction = new Phaser.Math.Vector2(target.x - bullet.x, target.y - bullet.y).normalize();
         bullet.vx = direction.x * bullet.speed;

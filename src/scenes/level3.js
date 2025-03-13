@@ -17,7 +17,7 @@ class Level3 extends Mainlevel {
         
         
         
-        this.current = 0//13;
+        this.current = 0;
         this.emenySpawn = [
             //this.emenySpawn5.bind(this),  
             
@@ -27,7 +27,7 @@ class Level3 extends Mainlevel {
             this.emenySpawn4.bind(this),
             this.emenySpawn5.bind(this),
             this.emenySpawn6.bind(this),
-            this.midBossSpawn.bind(this),
+            this.midBossSpawn.bind(this),//6
             this.spawnSpace.bind(this),
             this.emenySpawn8.bind(this),
             this.emenySpawn9.bind(this),
@@ -170,7 +170,6 @@ class Level3 extends Mainlevel {
             this.time.delayedCall(1000, () =>{super.DelayXspawnEmeny(12,1700,1,'list','MaidFairy','MaidFairy1','fromBottom_shootRedFan3ToTarget_toTop',430)} , [], this);//step2
             this.time.delayedCall(22000, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
 
-            this.time.delayedCall(28000, () =>{this.isSprawn = false; this.current +=1} , [], this);//step2
         }
         
     }
