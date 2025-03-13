@@ -87,6 +87,36 @@
 			"newSpeaker": "true"
 		}
     ],
+	[
+		
+        
+        {
+			"speaker": "露米娅",
+			"dialog": "找到你了，桑尼！你在找什么呢？",
+			"newSpeaker": "true"
+		},
+        {
+			"speaker": "桑尼米尔克",
+			"dialog": "哇！露米娅？你怎么找到我的！我明明藏得很好！",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "露米娅",
+			"dialog": "嘿嘿，我可是捉迷藏的高手！不过，你看起来好像在找别人？",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "桑尼米尔克",
+			"dialog": "是啊，我在找露娜和斯塔！我们三月精本来要一起玩的，结果她们不知道跑哪儿去了……不过，我可不想被你抓住！",
+			"newSpeaker": "true"
+		},
+		{
+			"speaker": "露米娅",
+			"dialog": "那可不行！既然被我找到了，就得乖乖认输！",
+			"newSpeaker": "true"
+		}
+    ]
+	,
     [
 		
         {
@@ -359,7 +389,7 @@
 	,
 	[
 		{
-			"speaker": "故事",
+			"speaker": "场景",
 			"dialog": "在神社的院子里，露米娅和其他小伙伴们排成一排，灵梦正叉着腰训话。",
 			"newSpeaker": "true"
 		},

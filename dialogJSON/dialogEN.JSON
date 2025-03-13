@@ -526,8 +526,12 @@
 			"speaker": "Rumia",
 			"dialog": "Haha everyone's so confident! I'll have to take this seriously then! Ready or not, here I come!",
 			"newSpeaker": "true"
+		},
+		{
+			"speaker": "Scene",
+			"dialog": "Thank for your play",
+			"newSpeaker": "true"
 		}
-
 	]
 
 ]
