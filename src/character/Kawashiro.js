@@ -9,7 +9,7 @@ class Kawashiro extends Character{
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.setOffset(3, 0);
-        this.healthly = 1390;
+        this.healthly = 1490;
         this.isDrop = false;
         this.kind = 'f'
         this.firstState = true;
@@ -28,7 +28,7 @@ class Kawashiro extends Character{
         if(this.isDrop) return;
         //super.update();
         if(this.isFirst){
-            this.behavior = 'r_sbo_sro'
+            this.behavior = 'outscreenBulletTopBottom'
             this.previousBehavior =this.behavior;
             if(!this.moveTo(730,-1,data.getData('emeny_speed_normal120')))
                 return;
@@ -47,7 +47,7 @@ class Kawashiro extends Character{
         }
         else if(this.isDone){
             if(this.isFirst){
-                this.behavior = 'r_sbTF_srTF'
+                this.behavior = 'fourExpandFan'
                 this.isFirst = false
                 
             }else{
@@ -61,10 +61,10 @@ class Kawashiro extends Character{
         
         this.isDone = false;
         switch(this.behavior){
-            case 'r_sbo_sro':
-                this.r_sbo_sro();
+            case 'outscreenBulletTopBottom':
+                this.outscreenBulletTopBottom();
                 break;
-            case 'r_sbTF_srTF':
+            case 'fourExpandFan':
                 if(this.step == 4 &&  this.r_sbTF_srTFC != 0 &&  this.r_sbTF_srTFC != -1){
                     this.step = 0
                     this.r_sbTF_srTFC -= 1
@@ -74,7 +74,7 @@ class Kawashiro extends Character{
                     this.scene.time.delayedCall(4350, () => {this.isDone = true; this.r_sbTF_srTFC = 0}, [], this);//step2
                     
                 }else{
-                    this.r_sbTF_srTF();
+                    this.fourExpandFan();
                 }
                 
                 break;
@@ -92,7 +92,7 @@ class Kawashiro extends Character{
         if(this.healthly <= 380)
             return 'OutScreenTopBottom16FanShapeTypeToTarget3';
 
-        let behaviors = ['r_sbTF_srTF', 'r_sbo_sro','r_sbot_srot_sbob_srob_sf' ];
+        let behaviors = ['fourExpandFan', 'outscreenBulletTopBottom','r_sbot_srot_sbob_srob_sf' ];
         
         if (behaviors.length <= 1) return behaviors[0]; // ✅ Avoid infinite loops if only one element
     
@@ -104,7 +104,7 @@ class Kawashiro extends Character{
 
         return newBehavior;
     }
-    r_sbo_sro(){
+    outscreenBulletTopBottom(){
         if(this.step == 0 && this.moveTo(730)){
             this.step += 1;
             let b = ['blueMediumCircleBullet', 'redMediumCircleBullet'];
@@ -112,7 +112,7 @@ class Kawashiro extends Character{
             for (let i = 0; i <42; i++) {
                 this.scene.time.delayedCall(i * 1130, () => {
                     // ✅ Get a new bullet instance
-                    if(!this.isDrop && this.behavior == 'r_sbo_sro'){
+                    if(!this.isDrop && this.behavior == 'outscreenBulletTopBottom'){
                         this.scene.shootingLogic.outScreenType_ToDirection('blueMediumCircleBullet', 9, 'left', 0,0,  0,600, this,data.getData('Bullet_speed_110'));//shooting 
                         this.scene.shootingLogic.outScreenType_ToDirection('redMediumCircleBullet', 9, 'right', 180,180,  0,600, this,data.getData('Bullet_speed_110'));//shooting 
 
@@ -125,7 +125,7 @@ class Kawashiro extends Character{
         }
     }
     
-    r_sbTF_srTF(){
+    fourExpandFan(){
         
         if(this.step == 0 && this.moveTo(730,-1,data.getData('emeny_speed_normal110'))){
             this.step +=1
@@ -137,7 +137,7 @@ class Kawashiro extends Character{
             this.scene.shootingLogic.expandFanType_ToDirection('redLongSemicircleBullet', 7, 0, 90 , 300, this, data.getData('Bullet_speed_150'));//shooting
             for (let i = 0; i < 3; i++) {
                 this.scene.time.delayedCall(i * 1700, () => {
-                    if(this.isDrop  || this.behavior != 'r_sbTF_srTF')
+                    if(this.isDrop  || this.behavior != 'fourExpandFan')
                         return;
                     // ✅ Get a new bullet instance
                     //this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 12, 80, 260, this, data.getData('Bullet_speed_130'));//shooting
@@ -154,7 +154,7 @@ class Kawashiro extends Character{
             this.scene.shootingLogic.expandFanType_ToDirection('blueLongSemicircleBullet', 7, 0, 90 , 300, this, data.getData('Bullet_speed_150'),true);//shooting
             for (let i = 0; i < 3; i++) {
                 this.scene.time.delayedCall(i * 1700, () => {
-                    if(this.isDrop || this.behavior != 'r_sbTF_srTF')
+                    if(this.isDrop || this.behavior != 'fourExpandFan')
                         return;
                     // ✅ Get a new bullet instance
                     //this.scene.shootingLogic.fanShapedType_ToDirection('blueMediumCircleBullet', 12, 80, 260, this, data.getData('Bullet_speed_130'));//shooting

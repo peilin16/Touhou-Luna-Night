@@ -94,10 +94,10 @@ class Satellite extends Character{
     r_tblr_trlr(){
         if(this.step == 0 && this.moveTo(520,50,data.getData('emeny_speed_normal110'))){
             this.step += 1
-            this.scene.shootingLogic.twirlListType_ToDirection('redArrowBullet', 5, 0, 90, 280, this, data.getData('Bullet_speed_160'));
-            this.scene.shootingLogic.twirlListType_ToDirection('redArrowBullet', 5, 90, 180, 280, this, data.getData('Bullet_speed_160'),true);
-            this.scene.shootingLogic.twirlListType_ToDirection('redArrowBullet', 5, 0, 90, 280, this, data.getData('Bullet_speed_160'),true);
-            this.scene.shootingLogic.twirlListType_ToDirection('redArrowBullet', 5, 90, 180, 280, this, data.getData('Bullet_speed_160'));
+            this.scene.shootingLogic.twirlListType_ToDirection('redLongSemicircleBullet', 5, 0, 90, 280, this, data.getData('Bullet_speed_160'));
+            this.scene.shootingLogic.twirlListType_ToDirection('redLongSemicircleBullet', 5, 90, 180, 280, this, data.getData('Bullet_speed_160'),true);
+            this.scene.shootingLogic.twirlListType_ToDirection('redLongSemicircleBullet', 5, 0, 90, 280, this, data.getData('Bullet_speed_160'),true);
+            this.scene.shootingLogic.twirlListType_ToDirection('redLongSemicircleBullet', 5, 90, 180, 280, this, data.getData('Bullet_speed_160'));
             for (let i = 0; i < 11; i++) {
 
                 this.scene.time.delayedCall(i * 430, () => {
