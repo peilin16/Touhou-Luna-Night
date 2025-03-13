@@ -498,6 +498,58 @@ class Mainlevel extends Phaser.Scene {
     
         return rate;
     }
+
+
+
+    sprawnScore(score, sprawnObj) {
+        if(sprawnObj.isSprawnScore) return;
+        if (!this) return;
+        sprawnObj.isSprawnScore = true;
+        
+        let scoreValues = { small: 1, medium: 10, large: 50 };
+        let scoreTypes = { large: "scoreLarge", medium: "scoreMedium", small: "scoreSmall" };
+    
+        let numLarge = Math.floor(score / scoreValues.large);
+        score %= scoreValues.large;
+    
+        let numMedium = Math.floor(score / scoreValues.medium);
+        score %= scoreValues.medium;
+    
+        let numSmall = Math.floor(score / scoreValues.small);
+    
+        let totalObjects = numLarge + numMedium + numSmall;
+        let spreadRadius = 30; // Radius to spread out the score items
+    
+        let spawnScoreItem = (type, xOffset, yOffset) => {
+            let scoreObj = new Score(this, sprawnObj.x + xOffset, sprawnObj.y + yOffset, scoreTypes[type]);
+            this.physics.add.overlap(rumia, scoreObj, (rumia, scoreObj) => {
+                if(!this )return;
+                this.handleCollision(rumia, scoreObj);
+            });
+            this.EmenyGroup.add(scoreObj);
+        };
+    
+        let index = 0;
+        for (let i = 0; i < numLarge; i++, index++) {
+            let angle = (index / totalObjects) * Math.PI * 2;
+            let xOffset = Math.cos(angle) * spreadRadius;
+            let yOffset = Math.sin(angle) * spreadRadius;
+            spawnScoreItem("large", xOffset, yOffset);
+        }
+        for (let i = 0; i < numMedium; i++, index++) {
+            let angle = (index / totalObjects) * Math.PI * 2;
+            let xOffset = Math.cos(angle) * spreadRadius;
+            let yOffset = Math.sin(angle) * spreadRadius;
+            spawnScoreItem("medium", xOffset, yOffset);
+        }
+        for (let i = 0; i < numSmall; i++, index++) {
+            let angle = (index / totalObjects) * Math.PI * 2;
+            let xOffset = Math.cos(angle) * spreadRadius;
+            let yOffset = Math.sin(angle) * spreadRadius;
+            spawnScoreItem("small", xOffset, yOffset);
+        }
+    }
+
     sprawnDestruction(num,key,t = 1000){
         let b = [ 250,300,450,400,500,550,600,650,700,750,800,850,900];
            
