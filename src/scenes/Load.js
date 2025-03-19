@@ -87,7 +87,7 @@ class Load extends Phaser.Scene {
         this.load.image('WriggleHit', './assets/character/WriggleHit.png');
         this.load.image('Crino1', './assets/character/crino-fly1.png');
         this.load.image('CrinoFront', './assets/character/crino.png');
-        this.load.image('CrinoHit', './assets/character/CrinoHit.png');
+        this.load.image('CrinoHit', './assets/character/crinoHit.png');
         //move exit
 
 
