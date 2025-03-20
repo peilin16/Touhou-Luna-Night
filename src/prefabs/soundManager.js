@@ -51,6 +51,8 @@ class SoundManager {
         if(this.backgroundMusic && key == ''){
             this.backgroundMusic.play();
             return;
+        }else if ( key == '') {
+            return;
         }
         else if (this.backgroundMusic) {
             this.backgroundMusic.stop();
