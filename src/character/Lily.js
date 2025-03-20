@@ -74,7 +74,7 @@ class Lily extends Character{
         }
 
 
-        if(this.healthly < 100 && !this.secondState ){
+        if(this.healthly < 150 && !this.secondState ){
             this.isDone = true;
             this.secondState = true;
             this.scene.sprawnScore(314,this);
@@ -194,10 +194,10 @@ class Lily extends Character{
     getBehavior(previous) {
         let behaviors = ['TwirlFan360_SpeedPauseBullet','ExpandFanToTarget_BlueRedBullet' , 'DoubleTwirlFan180_SpeedPauseBullet'];
         if(this.subType == 'white'){
-            if(this.healthly <= 100)
+            if(this.healthly <= 150)
                 return 'TwirlFan360_SpeedPauseBulletEnhance';
         }else{
-            if(this.healthly <= 100)
+            if(this.healthly <= 150)
                 return 'RandomFan360_TwirlFanBulletEnhance'
             behaviors = ['TwirlFan360_SpeedPauseBulletBlack', 'RandomFan360_TwirlFanBullet','ExpandFanToTarget_BlueRedBullet' ];
         }
