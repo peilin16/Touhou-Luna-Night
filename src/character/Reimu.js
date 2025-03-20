@@ -87,7 +87,7 @@ class Reimu extends Character{
         }
     }
     getBehavior() {
-        if(this.healthly <= 190)
+        if(this.healthly <= 260)
             return 'SecondState';
 
         let behaviors = ['RandomTwirFan360_TwrilListBullet', 'OutScreenShootTBLR_RandomFan','FansShape360_RanDomFan360_ListType','OutScreenShootLRBT_RandomFan' ,'ExpandFanToTargetSpeedChangelList'];
