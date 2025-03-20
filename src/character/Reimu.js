@@ -56,7 +56,7 @@ class Reimu extends Character{
             this.step = 0;
             
         }
-        if(!this.secondState && this.healthly <=190 ){
+        if(!this.secondState && this.healthly <=260 ){
             this.secondState = true;
             this.scene.sprawnScore(713,this);
             this.isSprawnScore = false;
@@ -349,7 +349,7 @@ class Reimu extends Character{
             }
             this.scene.time.delayedCall(52300, () => this.step = 1 , [], this);//step2
         }
-        if(!this.yin3Sprawn && this.healthly <= 30 ){
+        if(!this.yin3Sprawn && this.healthly <= 40 ){
             this.yin3Sprawn = true;
             let yin3 = this.scene.spawnEmeny(1, 'list', 'yinYangOrbs','yinYangOrbs','yinYangOrbsHit',140,this.x);
             //let yin3 = this.scene.spawnEmeny(1, 'list', 'yinYangOrbs','yinYangOrbs','yinYangOrbsHit',150,this.x);
