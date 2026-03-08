@@ -1,17 +1,27 @@
 # CMPM120Final
-## Game:
-# WASD: moving. K: Enter to defence mode.Left Shift: Move Slowly
-# When you in defence mod you can reflect the blue bullet but can not reflect red bullet
-# When you collide with a red bullet in defense mode, there is a 4 second countdown before you can't enter defense mode
-## Menu:
-#### W S: make choose. Space: decide
-## Project:
-### Duration Feb 2 2025 ~ March 12 2025
-### Code: Peilin Huang
-### Art: Peilin Huang
-### Audio: Peilin Huang
-### Design: Peilin Huang
-### Test: Peilin Huang
+## Overview:
+This project is a Touhou-inspired fan game developed using Phaser with JavaScript.
+It is a side-scrolling bullet hell game where the player survives waves of enemy attacks by reflecting enemy bullets back at them.
+Instead of traditional shooting mechanics, the player’s main attack method is to enter defense mode and reflect specific enemy bullets. Successfully reflecting bullets can defeat enemies and create score items that the player must collect.
+The game contains four level, each level have two different boss and different design.
+## Control:
+W A S D — Move the player
+Left Shift — Move slowly for precise dodging
+K — Enter Defense Mode
+W S: make choose. Space: decide
+
+## Core Mechanics
+Defense Mode
+
+When the player enters Defense Mode, they can reflect certain bullets back toward enemies.
+
+Blue Bullets can be reflected.
+
+Red Bullets cannot be reflected.
+
+If the player collides with a red bullet while in Defense Mode, a 4-second cooldown will begin during which the player cannot enter Defense Mode again.
+
+
 ![Introduct](22.JPG)
 ### 1:Player healthly, When the player's health reaches 0, the game ends.
 ### 2:Player score, player current score.
@@ -26,3 +36,12 @@
 ### 1:Player hitPoint, When you press shift will display the hitPoint, The player's health will only decrease when the player's hitpoint collides with the bullet.
 ### 2:Dialog box You can press the space key to proceed.
 ### 3:Boss Healthly bar
+
+
+## Project:
+Duration Feb 2 2025 ~ March 12 2025
+Code: Peilin Huang
+Art: Peilin Huang
+Audio: Peilin Huang
+Design: Peilin Huang
+Test: Peilin Huang
