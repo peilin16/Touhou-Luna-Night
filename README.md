@@ -1,4 +1,4 @@
-# CMPM120Final
+# Touhou-Luna-Night
 ## Overview:
 This project is a Touhou-inspired fan game developed using Phaser with JavaScript.
 It is a side-scrolling bullet hell game where the player survives waves of enemy attacks by reflecting enemy bullets back at them.
