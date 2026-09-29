@@ -49,7 +49,6 @@ If the player collides with a red bullet while in Defense Mode, a 4-second coold
 
 
 ## Project:
-Duration Feb 2 2025 ~ March 12 2025
 
 Code: peilin16
 
