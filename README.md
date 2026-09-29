@@ -51,14 +51,14 @@ If the player collides with a red bullet while in Defense Mode, a 4-second coold
 ## Project:
 Duration Feb 2 2025 ~ March 12 2025
 
-Code: Peilin Huang
+Code: peilin16
 
-Art: Peilin Huang
+Art: peilin16
 
-Audio: Peilin Huang
+Audio: peilin16
+
+Design: peilin16
+
+Test: peilin16
 
 (UC Santa Cruz)
-
-Design: Peilin Huang
-
-Test: Peilin Huang
