@@ -57,6 +57,8 @@ Art: Peilin Huang
 
 Audio: Peilin Huang
 
+(UC Santa Cruz)
+
 Design: Peilin Huang
 
 Test: Peilin Huang
