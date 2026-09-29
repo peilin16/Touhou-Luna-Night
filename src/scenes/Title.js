@@ -15,7 +15,7 @@ class Title extends Phaser.Scene {
                 storyMode: "Story Mode",
                 levelSelection: "Level Selection",
                 design: "Design",
-                project: "Peilin Huang Final Project",
+                //project: "Peilin Huang Final Project",
                 langSwitch: "Language: Chinese (Press L)"
             },
             CN: {
@@ -23,7 +23,7 @@ class Title extends Phaser.Scene {
                 storyMode: "故事模式",
                 levelSelection: "关卡选择",
                 design: "游戏设计",
-                project: "Peilin Huang",
+                //project: "Peilin Huang",
                 langSwitch: "语言: English (按 L 切换)"
             }
         };
